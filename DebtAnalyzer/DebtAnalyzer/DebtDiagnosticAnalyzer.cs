@@ -29,7 +29,7 @@ namespace DebtAnalyzer
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
 			var attribute = methodSymbol.GetAttributes()
-				.Where(data => false) //data.AttributeClass.Name == typeof (DebtMethod).Name)
+				.Where(data => data.AttributeClass.Name == typeof (DebtMethod).Name)
 				.Select(data => new DebtMethod((int)data.ConstructorArguments[0].Value)).FirstOrDefault() ?? new DebtMethod(0);
 
 			var parameterCount = methodSymbol.Parameters.Length;

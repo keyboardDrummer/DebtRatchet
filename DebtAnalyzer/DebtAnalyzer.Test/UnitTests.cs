@@ -40,11 +40,29 @@ namespace DebtAnalyzer.Test
 			TestFix();
         }
 
+
+		[TestMethod]
+		public void TestDiagnosticAnnotation()
+		{
+			var test = FixedProgram;
+
+			VerifyCSharpDiagnostic(test);
+
+			TestFix();
+		}
+
 		[TestMethod]
 		public void TestFix()
 	    {
 		    var from = TestProgramInput;
-		    var to = @"
+		    var to = FixedProgram;
+		    VerifyCSharpFix(from, to, allowNewCompilerDiagnostics: true);
+	    }
+
+	    static string FixedProgram
+	    {
+		    get {
+			    return @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -64,7 +82,7 @@ namespace DebtAnalyzer.Test
             }
         }
     }";
-		    VerifyCSharpFix(from, to, allowNewCompilerDiagnostics: true);
+		    }
 	    }
 
 	    static string TestProgramInput

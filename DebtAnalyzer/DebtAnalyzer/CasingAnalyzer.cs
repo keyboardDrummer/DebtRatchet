@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace DebtAnalyzer
 {
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
-    public class Analyzer1Analyzer : DiagnosticAnalyzer
+    public class CasingAnalyzer : DiagnosticAnalyzer
     {
         public const string DiagnosticId = "Analyzer1";
 

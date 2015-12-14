@@ -8,8 +8,6 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Rename;
 
 namespace DebtAnalyzer
 {
@@ -18,11 +16,11 @@ namespace DebtAnalyzer
 	{
 		private const string title = "Update technical debt annotation";
 
-		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(DebtDiagnosticAnalyzer.DiagnosticId);
+		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodParameterCountAnalyzer.DiagnosticId);
 
 		public sealed override FixAllProvider GetFixAllProvider()
 		{
-			return null;
+			return WellKnownFixAllProviders.BatchFixer;
 		}
 
 		public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
@@ -46,6 +44,7 @@ namespace DebtAnalyzer
 			var syntaxRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
 			var attributeType = typeof(DebtMethod);
+
 			var parameterCount = methodDecl.ParameterList.Parameters.Count;
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
 								SyntaxFactory.SingletonSeparatedList(

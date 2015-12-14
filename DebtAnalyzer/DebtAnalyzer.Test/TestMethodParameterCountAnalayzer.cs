@@ -7,13 +7,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DebtAnalyzer.Test
 {
-    [TestClass]
-    public class UnitTest : CodeFixVerifier
+	[TestClass]
+    public class TestMethodParameterCountAnalayzer : CodeFixVerifier
     {
 
         //No diagnostics expected to show up
         [TestMethod]
-        public void TestMethod1()
+        public void TestEmptyProgramHasNoDiagnostics()
         {
             var test = @"";
 
@@ -36,33 +36,38 @@ namespace DebtAnalyzer.Test
             };
 
             VerifyCSharpDiagnostic(test, expected);
-
-			TestFix();
         }
 
 
 		[TestMethod]
 		public void TestDiagnosticAnnotation()
 		{
-			var test = FixedProgram;
-
-			VerifyCSharpDiagnostic(test);
-
-			TestFix();
+			VerifyCSharpDiagnostic(new[] { Annotation, FixedProgram });
 		}
 
 		[TestMethod]
 		public void TestFix()
 	    {
-		    var from = TestProgramInput;
-		    var to = FixedProgram;
-		    VerifyCSharpFix(from, to, allowNewCompilerDiagnostics: true);
+			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
 	    }
 
-	    static string FixedProgram
-	    {
-		    get {
-			    return @"
+		static string Annotation => @"using System;
+
+namespace DebtAnalyzer
+{
+    [AttributeUsage(AttributeTargets.Method)]
+    public class DebtMethod : Attribute
+    {
+        public DebtMethod(int parameterCount)
+        {
+            ParameterCount = parameterCount;
+        }
+
+        public int ParameterCount { get; }    
+    }
+}";
+
+		static string FixedProgram => @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -82,14 +87,8 @@ namespace DebtAnalyzer.Test
             }
         }
     }";
-		    }
-	    }
 
-	    static string TestProgramInput
-	    {
-		    get
-		    {
-			    var test = @"
+	    static string TestProgramInput => @"
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -108,9 +107,6 @@ namespace DebtAnalyzer.Test
             }
         }
     }";
-			    return test;
-		    }
-	    }
 
 	    protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
@@ -119,7 +115,7 @@ namespace DebtAnalyzer.Test
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DebtDiagnosticAnalyzer();
+            return new MethodParameterCountAnalyzer();
         }
     }
 }

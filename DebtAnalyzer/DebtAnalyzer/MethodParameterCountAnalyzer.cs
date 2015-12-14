@@ -44,10 +44,7 @@ namespace DebtAnalyzer
 				.Where(data => data.AttributeClass.Name == typeof (DebtMethod).Name && data.ConstructorArguments.Length > 0)
 				.Select(data => new DebtMethod((int) data.ConstructorArguments[0].Value)).FirstOrDefault() ?? new DebtMethod(0);
 
-			//var syntaxMethod = methodSymbol.Locations[0].SourceTree.GetRoot().FindNode(methodSymbol.Locations[0].SourceSpan) as MethodDeclarationSyntax;
-			//syntaxMethod.AttributeLists.Where(attributes => attributes.Attributes.Where(attribute => attribute.ArgumentList.Arguments[0].))
-			var previousParameterCount = debtAttribute.ParameterCount;
-			return previousParameterCount;
+			return debtAttribute.ParameterCount;
 		}
 
 		static int GetMaxParameterCount(IMethodSymbol methodSymbol)

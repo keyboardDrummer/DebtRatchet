@@ -27,15 +27,15 @@ namespace DebtAnalyzer.Test
             var expected = new DiagnosticResult
             {
                 Id = "DebtAnalyzer",
-                Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 5."),
+                Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 14, 18)
+                            new DiagnosticResultLocation("Test0.cs", 15, 18)
                         }
             };
 
-            VerifyCSharpDiagnostic(test, expected);
+            VerifyCSharpDiagnostic(new [] { test, Annotation }, expected);
         }
 
 
@@ -51,10 +51,21 @@ namespace DebtAnalyzer.Test
 			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
 	    }
 
-		static string Annotation => @"using System;
+		public static string Annotation => @"using System;
 
 namespace DebtAnalyzer
 {
+	[AttributeUsage(AttributeTargets.Assembly)]
+	class MaxParameters : Attribute
+	{
+		public MaxParameters(int parameterCount)
+		{
+			ParameterCount = parameterCount;
+		}
+
+		public int ParameterCount { get; }
+	}
+
     [AttributeUsage(AttributeTargets.Method)]
     public class DebtMethod : Attribute
     {
@@ -76,6 +87,7 @@ namespace DebtAnalyzer
     using System.Diagnostics;
     using DebtAnalyzer;
 
+    [assembly: MaxParameters(4)]
     namespace ConsoleApplication1
     {
         class TypeName
@@ -97,6 +109,7 @@ namespace DebtAnalyzer
     using System.Diagnostics;
     using DebtAnalyzer;
 
+    [assembly: MaxParameters(4)]
     namespace ConsoleApplication1
     {
         class TypeName

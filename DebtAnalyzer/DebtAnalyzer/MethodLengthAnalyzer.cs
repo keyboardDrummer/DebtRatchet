@@ -7,10 +7,10 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace DebtAnalyzer
 {
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class MethodLengthAnalayzer : DiagnosticAnalyzer
+	public class MethodLengthAnalyzer : DiagnosticAnalyzer
 	{
 
-		public const string DiagnosticId = "MethodLengthAnalayzer";
+		public const string DiagnosticId = "MethodLengthAnalyzer";
 
 		public const int MaximumMethodLength = 20;
 		

@@ -36,7 +36,7 @@
     <Compile Include="DebtAsError.cs" />
     <Compile Include="DebtAsErrorUtil.cs" />
     <Compile Include="MaxParameters.cs" />
-    <Compile Include="MethodLengthAnalayzer.cs" />
+    <Compile Include="MethodLengthAnalyzer.cs" />
     <Compile Include="TechnicalDebtAnnotationProvider.cs" />
     <Compile Include="MethodParameterCountAnalyzer.cs" />
     <Compile Include="DebtMethod.cs" />

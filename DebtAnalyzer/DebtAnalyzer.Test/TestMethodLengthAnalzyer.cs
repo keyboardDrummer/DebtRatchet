@@ -11,7 +11,7 @@ namespace DebtAnalyzer.Test
 	{
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
-			return new MethodLengthAnalayzer();
+			return new MethodLengthAnalyzer();
 		}
 
 		[TestMethod]
@@ -20,7 +20,7 @@ namespace DebtAnalyzer.Test
 			var test = LongMethod;
 			var expected = new DiagnosticResult
 			{
-				Id = "MethodLengthAnalayzer",
+				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
@@ -38,7 +38,7 @@ namespace DebtAnalyzer.Test
 			var test = LongMethod;
 			var expected = new DiagnosticResult
 			{
-				Id = "MethodLengthAnalayzer",
+				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
 				Severity = DiagnosticSeverity.Error,
 				Locations =

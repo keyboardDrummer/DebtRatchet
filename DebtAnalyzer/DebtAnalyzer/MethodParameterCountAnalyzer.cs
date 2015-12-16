@@ -13,11 +13,10 @@ namespace DebtAnalyzer
 
 		private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
-		public static readonly DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Debt", DiagnosticSeverity.Warning, isEnabledByDefault: true);
 		public const int MaximumParameterCount = 5;
 
 
-		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(Rule);
+		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Debt", DiagnosticSeverity.Warning, isEnabledByDefault: true));
 
 		public override void Initialize(AnalysisContext context)
 		{
@@ -32,7 +31,9 @@ namespace DebtAnalyzer
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)
 			{
-				var diagnostic = Diagnostic.Create(Rule, methodSymbol.Locations[0], methodSymbol.Name, parameterCount, maxParameterCount);
+				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
+				var descriptor = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Debt", severity, true);
+				var diagnostic = Diagnostic.Create(descriptor, methodSymbol.Locations[0], methodSymbol.Name, parameterCount, maxParameterCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}

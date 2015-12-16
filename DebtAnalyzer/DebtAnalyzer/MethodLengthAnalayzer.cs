@@ -34,9 +34,9 @@ namespace DebtAnalyzer
 			var methodLength = endLine - startLine;
 			if (methodLength > MaximumMethodLength)
 			{
-				var debtAsError = DebtAsErrorUtil.GetDebtAsError(methodSymbol);
+				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var diagnosticDescriptor = new DiagnosticDescriptor(DiagnosticId, "Method is too long.",
-					"Method {0} is {1} lines long while it should be longer than {2} lines.", "Debt", debtAsError ? DiagnosticSeverity.Error : DiagnosticSeverity.Warning, true);
+					"Method {0} is {1} lines long while it should be longer than {2} lines.", "Debt", severity, true);
 				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), method.Identifier.Text, methodLength, MaximumMethodLength);
 
 				context.ReportDiagnostic(diagnostic);

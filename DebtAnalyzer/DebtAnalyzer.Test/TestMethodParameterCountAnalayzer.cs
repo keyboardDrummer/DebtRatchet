@@ -20,22 +20,40 @@ namespace DebtAnalyzer.Test
             VerifyCSharpDiagnostic(test);
         }
 
-        [TestMethod]
-        public void TestDiagnostic()
+		[TestMethod]
+		public void TestDiagnostic()
+		{
+			var test = TestProgramInput;
+			var expected = new DiagnosticResult
+			{
+				Id = "DebtAnalyzer",
+				Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+							new DiagnosticResultLocation("Test0.cs", 15, 18)
+						}
+			};
+
+			VerifyCSharpDiagnostic(new[] { test, Annotation }, expected);
+		}
+
+		[TestMethod]
+        public void TestDiagnosticAsError()
         {
             var test = TestProgramInput;
             var expected = new DiagnosticResult
             {
                 Id = "DebtAnalyzer",
                 Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
-                Severity = DiagnosticSeverity.Warning,
+                Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
                             new DiagnosticResultLocation("Test0.cs", 15, 18)
                         }
             };
 
-            VerifyCSharpDiagnostic(new [] { test, Annotation }, expected);
+            VerifyCSharpDiagnostic(new [] { test, Annotation, TestMethodLengthAnalzyer.DebtAsError }, expected);
         }
 
 

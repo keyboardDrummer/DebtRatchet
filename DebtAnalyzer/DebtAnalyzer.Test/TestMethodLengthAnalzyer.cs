@@ -50,7 +50,7 @@ namespace DebtAnalyzer.Test
 			VerifyCSharpDiagnostic(new [] { test, DebtAsError} , expected);
 		}
 
-		static string DebtAsError => @"
+		public static string DebtAsError => @"
 using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;

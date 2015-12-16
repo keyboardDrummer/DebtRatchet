@@ -2,7 +2,7 @@ using System;
 
 namespace DebtAnalyzer
 {
-    [AttributeUsage(AttributeTargets.Method)]
+	[AttributeUsage(AttributeTargets.Method)]
     public class DebtMethod : Attribute
     {
         public DebtMethod(int parameterCount)

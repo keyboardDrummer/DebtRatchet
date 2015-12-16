@@ -1,6 +1,5 @@
 using System;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
@@ -10,11 +9,6 @@ namespace DebtAnalyzer.Test
 	[TestClass]
 	public class TestMethodLengthAnalzyer : CodeFixVerifier
 	{
-		protected override CodeFixProvider GetCSharpCodeFixProvider()
-		{
-			return base.GetCSharpCodeFixProvider();
-		}
-
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
 			return new MethodLengthAnalayzer();
@@ -23,7 +17,62 @@ namespace DebtAnalyzer.Test
 		[TestMethod]
 		public void TestDiagnostic()
 		{
-			var test = @"
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalayzer",
+				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+						new DiagnosticResultLocation("Test0.cs", 14, 13)
+					}
+			};
+
+			VerifyCSharpDiagnostic(test, expected);
+		}
+
+		[TestMethod]
+		public void TestDiagnosticAsError()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalayzer",
+				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
+				Severity = DiagnosticSeverity.Error,
+				Locations =
+					new[] {
+						new DiagnosticResultLocation("Test0.cs", 14, 13)
+					}
+			};
+
+			VerifyCSharpDiagnostic(new [] { test, DebtAsError} , expected);
+		}
+
+		static string DebtAsError => @"
+using System;
+using System.Linq;
+using Microsoft.CodeAnalysis;
+using DebtAnalyzer;
+
+[assembly: DebtAsError(true)]
+namespace DebtAnalyzer
+{
+
+	[AttributeUsage(AttributeTargets.Assembly)]
+	public class DebtAsError : Attribute
+	{
+		public DebtAsError(bool asError)
+		{
+			AsError = asError;
+		}
+
+		public bool AsError { get; }
+	}
+}";
+
+	static string LongMethod => @"
  using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -62,19 +111,5 @@ namespace DebtAnalyzer.Test
             }
         }
     }";
-			var expected = new DiagnosticResult
-			{
-				Id = "MethodLengthAnalayzer",
-				Message = String.Format("Method MyLongMethod is 23 lines long while it should be longer than 20 lines."),
-				Severity = DiagnosticSeverity.Warning,
-				Locations =
-					new[] {
-						new DiagnosticResultLocation("Test0.cs", 14, 13)
-					}
-			};
-
-			VerifyCSharpDiagnostic(test, expected);
-		}
-
 	}
 }

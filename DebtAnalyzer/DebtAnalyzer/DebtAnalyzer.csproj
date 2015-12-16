@@ -33,6 +33,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="CasingAnalyzer.cs" />
+    <Compile Include="DebtAsError.cs" />
+    <Compile Include="DebtAsErrorUtil.cs" />
     <Compile Include="MaxParameters.cs" />
     <Compile Include="MethodLengthAnalayzer.cs" />
     <Compile Include="TechnicalDebtAnnotationProvider.cs" />

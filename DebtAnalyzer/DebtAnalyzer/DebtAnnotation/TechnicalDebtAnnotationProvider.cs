@@ -30,9 +30,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			var diagnostic = context.Diagnostics.First();
 			var methodSyntax = (MethodDeclarationSyntax) syntaxRoot.FindNode(context.Span);
 
-			context.RegisterCodeFix(
-				CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title),
-				diagnostic);
+			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title), diagnostic);
 		}
 
 		async Task<Solution> AddDebtAnnotation(Document document, MethodDeclarationSyntax methodDecl, CancellationToken cancellationToken)
@@ -41,29 +39,35 @@ namespace DebtAnalyzer.DebtAnnotation
 
 			var attributeType = typeof (DebtMethod);
 
-			var parameterCount = methodDecl.ParameterList.Parameters.Count;
-			var attributeArgument = SyntaxFactory.AttributeArgument(
-				SyntaxFactory.LiteralExpression(
-					SyntaxKind.NumericLiteralExpression,
-					SyntaxFactory.Literal(
-						SyntaxFactory.TriviaList(),
-						parameterCount.ToString(),
-						parameterCount,
-						SyntaxFactory.TriviaList())))
-				.WithNameEquals(
-					SyntaxFactory.NameEquals(
-						SyntaxFactory.IdentifierName(
-							@"ParameterCount"))
-						.WithEqualsToken(
-							SyntaxFactory.Token(
-								SyntaxKind.EqualsToken)));
+			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodDecl);
+			var lineCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
+			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodDecl.ParameterList.Parameters.Count);
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
-				SyntaxFactory.SingletonSeparatedList(attributeArgument)));
+				SyntaxFactory.SeparatedList(new [] { lineCountArgument, parameterCountArgument })));
 			var newMethod = methodDecl.AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
 			var newRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
 
 			var newDocument = document.WithSyntaxRoot(newRoot);
 			return newDocument.Project.Solution;
+		}
+
+		static AttributeArgumentSyntax GetNamedAttributeArgument(string parameterName, int parameterValue)
+		{
+			return SyntaxFactory.AttributeArgument(
+				SyntaxFactory.LiteralExpression(
+					SyntaxKind.NumericLiteralExpression,
+					SyntaxFactory.Literal(
+						SyntaxFactory.TriviaList(),
+						parameterValue.ToString(),
+						parameterValue,
+						SyntaxFactory.TriviaList())))
+				.WithNameEquals(
+					SyntaxFactory.NameEquals(
+						SyntaxFactory.IdentifierName(
+							parameterName))
+						.WithEqualsToken(
+							SyntaxFactory.Token(
+								SyntaxKind.EqualsToken)));
 		}
 	}
 }

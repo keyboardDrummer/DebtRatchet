@@ -28,12 +28,7 @@ namespace DebtAnalyzer
 		{
 			var method = (MethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
-			SyntaxTree tree = method.SyntaxTree;
-			var lineSpan = tree.GetLineSpan(method.Span);
-			var startLine = lineSpan.StartLinePosition.Line;
-			var endLine = lineSpan.EndLinePosition.Line;
-
-			var methodLength = endLine - startLine;
+			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol);
 			if (methodLength > GetPreviousMethodLength(methodSymbol) && methodLength > maxLineCount)
 			{
@@ -44,6 +39,17 @@ namespace DebtAnalyzer
 
 				context.ReportDiagnostic(diagnostic);
 			}
+		}
+
+		public static int GetMethodLength(MethodDeclarationSyntax method)
+		{
+			SyntaxTree tree = method.SyntaxTree;
+			var lineSpan = tree.GetLineSpan(method.Span);
+			var startLine = lineSpan.StartLinePosition.Line;
+			var endLine = lineSpan.EndLinePosition.Line;
+
+			var methodLength = endLine - startLine;
+			return methodLength;
 		}
 
 		const string LineCountName = nameof(DebtMethod.LineCount);

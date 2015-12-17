@@ -103,7 +103,7 @@ namespace DebtAnalyzer
     {
         class TypeName
         {
-        [DebtMethod(ParameterCount = 6)]
+        [DebtMethod(LineCount = 3, ParameterCount = 6)]
         void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
             {
 

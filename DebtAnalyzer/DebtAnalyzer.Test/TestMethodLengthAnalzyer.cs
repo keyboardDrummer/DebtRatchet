@@ -15,6 +15,24 @@ namespace DebtAnalyzer.Test
 		}
 
 		[TestMethod]
+		public void TestDiagnosticWithCustomSettings()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalyzer",
+				Message = "Method MyLongMethod is 23 lines long while it should be longer than 5 lines.",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[] {
+						new DiagnosticResultLocation("Test0.cs", 14, 13)
+					}
+			};
+
+			VerifyCSharpDiagnostic(new [] { test, MaximumMethodLengthFive}, expected);
+		}
+
+		[TestMethod]
 		public void TestDiagnostic()
 		{
 			var test = LongMethod;
@@ -72,7 +90,13 @@ namespace DebtAnalyzer
 	}
 }";
 
-	static string LongMethod => @"
+	[TestMethod]
+	public void TestDiagnosticWithDebtAnnotation()
+	{
+		VerifyCSharpDiagnostic(new [] { DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation });
+	}
+
+	static string LongMethodWithAnnotation => @"
  using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -83,7 +107,73 @@ namespace DebtAnalyzer
 
     namespace ConsoleApplication1
     {
-        class TypeName
+        class LongMethodClass
+        {
+			[DebtMethod(LineCount = 30)]
+            void MyLongMethod()
+            {
+				int a1;
+				int a2;
+				int a3;
+				int a4;
+				int a5;
+				int a6;
+				int a7;
+				int a8;
+				int a9;
+				int a10;
+				int a11;
+				int a12;
+				int a13;
+				int a14;
+				int a15;
+				int a16;
+				int a17;
+				int a18;
+				int a19;
+				int a20;
+				int a21;
+            }
+        }
+    }";
+
+		static string MaximumMethodLengthFive => @"
+ using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+    using DebtAnalyzer;
+
+	[assembly: MaximumMethodLength(5)]
+    namespace DebtAnalyzer
+    {
+
+		[AttributeUsage(AttributeTargets.Assembly)]
+		class MaximumMethodLength : Attribute
+		{
+			public MaximumMethodLength(int length)
+			{
+				Length = length;
+			}
+
+			public int Length { get; }
+		}
+    }";
+
+		static string LongMethod => @"
+ using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using System.Diagnostics;
+    using DebtAnalyzer;
+
+    namespace ConsoleApplication1
+    {
+        class LongMethodClass
         {
             void MyLongMethod()
             {

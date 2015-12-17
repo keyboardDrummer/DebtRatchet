@@ -32,20 +32,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CasingAnalyzer.cs" />
-    <Compile Include="DebtAsError.cs" />
-    <Compile Include="DebtAsErrorUtil.cs" />
-    <Compile Include="MaxParameters.cs" />
-    <Compile Include="MethodLengthAnalyzer.cs" />
-    <Compile Include="TechnicalDebtAnnotationProvider.cs" />
-    <Compile Include="MethodParameterCountAnalyzer.cs" />
-    <Compile Include="DebtMethod.cs" />
+    <Compile Include="Common\DebtAsError.cs" />
+    <Compile Include="Common\DebtAsErrorUtil.cs" />
+    <Compile Include="MethodLength\MaximumMethodLength.cs" />
+    <Compile Include="ParameterCount\MaxParameters.cs" />
+    <Compile Include="MethodLength\MethodLengthAnalyzer.cs" />
+    <Compile Include="DebtAnnotation\TechnicalDebtAnnotationProvider.cs" />
+    <Compile Include="ParameterCount\MethodParameterCountAnalyzer.cs" />
+    <Compile Include="DebtAnnotation\DebtMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
@@ -118,6 +119,7 @@
       <Private>False</Private>
     </Reference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\v4.6\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">
     <GetAssemblyIdentity AssemblyFiles="$(OutDir)\$(AssemblyName).dll">

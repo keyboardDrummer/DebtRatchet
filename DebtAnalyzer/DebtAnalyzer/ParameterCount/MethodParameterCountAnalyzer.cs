@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
@@ -39,13 +40,12 @@ namespace DebtAnalyzer
 			}
 		}
 
+		const string ParameterCountName = nameof(DebtMethod.ParameterCount);
 		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
 		{
-			var debtAttribute = methodSymbol.GetAttributes()
-				.Where(data => data.AttributeClass.Name == typeof (DebtMethod).Name && data.ConstructorArguments.Length > 0)
-				.Select(data => new DebtMethod((int) data.ConstructorArguments[0].Value)).FirstOrDefault() ?? new DebtMethod(0);
-
-			return debtAttribute.ParameterCount;
+			return methodSymbol.GetAttributes()
+				.Where(data => data.AttributeClass.Name == typeof (DebtMethod).Name)
+				.Select(data => data.NamedArguments.FirstOrDefault(kv => kv.Key == ParameterCountName).Value.Value as int?).FirstOrDefault() ?? 0;
 		}
 
 		static int GetMaxParameterCount(IMethodSymbol methodSymbol)

@@ -31,11 +31,11 @@ namespace DebtAnalyzer.Test
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
 					new[] {
-							new DiagnosticResultLocation("Test0.cs", 15, 18)
+							new DiagnosticResultLocation("Test0.cs", 14, 18)
 						}
 			};
 
-			VerifyCSharpDiagnostic(new[] { test, Annotation }, expected);
+			VerifyCSharpDiagnostic(new[] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, MaxParametersAnnotation }, expected);
 		}
 
 		[TestMethod]
@@ -45,22 +45,22 @@ namespace DebtAnalyzer.Test
             var expected = new DiagnosticResult
             {
                 Id = "DebtAnalyzer",
-                Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
+                Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 5."),
                 Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 15, 18)
+                            new DiagnosticResultLocation("Test0.cs", 14, 18)
                         }
             };
 
-            VerifyCSharpDiagnostic(new [] { test, Annotation, TestMethodLengthAnalzyer.DebtAsError }, expected);
+            VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, TestMethodLengthAnalzyer.DebtAsError }, expected);
         }
 
 
 		[TestMethod]
 		public void TestDiagnosticAnnotation()
 		{
-			VerifyCSharpDiagnostic(new[] { Annotation, FixedProgram });
+			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, FixedProgram });
 		}
 
 		[TestMethod]
@@ -68,9 +68,13 @@ namespace DebtAnalyzer.Test
 	    {
 			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
 	    }
+		
+		public static string MaxParametersAnnotation => @"
 
-		public static string Annotation => @"using System;
+using System;
+using DebtAnalyzer;
 
+[assembly: MaxParameters(4)]
 namespace DebtAnalyzer
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
@@ -83,17 +87,6 @@ namespace DebtAnalyzer
 
 		public int ParameterCount { get; }
 	}
-
-    [AttributeUsage(AttributeTargets.Method)]
-    public class DebtMethod : Attribute
-    {
-        public DebtMethod(int parameterCount)
-        {
-            ParameterCount = parameterCount;
-        }
-
-        public int ParameterCount { get; }    
-    }
 }";
 
 		static string FixedProgram => @"
@@ -105,12 +98,11 @@ namespace DebtAnalyzer
     using System.Diagnostics;
     using DebtAnalyzer;
 
-    [assembly: MaxParameters(4)]
     namespace ConsoleApplication1
     {
         class TypeName
         {
-        [DebtMethod(6)]
+        [DebtMethod(ParameterCount = 6)]
         void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
             {
 
@@ -127,7 +119,6 @@ namespace DebtAnalyzer
     using System.Diagnostics;
     using DebtAnalyzer;
 
-    [assembly: MaxParameters(4)]
     namespace ConsoleApplication1
     {
         class TypeName
@@ -139,7 +130,7 @@ namespace DebtAnalyzer
         }
     }";
 
-	    protected override CodeFixProvider GetCSharpCodeFixProvider()
+		protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new TechnicalDebtAnnotationProvider();
         }

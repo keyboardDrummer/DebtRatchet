@@ -9,12 +9,12 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.DebtAnnotation
 {
 	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(TechnicalDebtAnnotationProvider)), Shared]
 	public class TechnicalDebtAnnotationProvider : CodeFixProvider
 	{
-		const string title = "Update technical debt annotation";
+		const string Title = "Update technical debt annotation";
 
 		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodParameterCountAnalyzer.DiagnosticId);
 
@@ -30,9 +30,8 @@ namespace DebtAnalyzer
 			var diagnostic = context.Diagnostics.First();
 			var methodSyntax = (MethodDeclarationSyntax) syntaxRoot.FindNode(context.Span);
 
-			// Register a code action that will invoke the fix.
 			context.RegisterCodeFix(
-				CodeAction.Create(title, c => AddDebtAnnotation(context.Document, methodSyntax, c), title),
+				CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title),
 				diagnostic);
 		}
 
@@ -59,8 +58,7 @@ namespace DebtAnalyzer
 							SyntaxFactory.Token(
 								SyntaxKind.EqualsToken)));
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
-				SyntaxFactory.SingletonSeparatedList(
-					attributeArgument)));
+				SyntaxFactory.SingletonSeparatedList(attributeArgument)));
 			var newMethod = methodDecl.AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
 			var newRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
 

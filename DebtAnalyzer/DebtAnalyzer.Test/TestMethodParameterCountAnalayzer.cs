@@ -2,6 +2,7 @@
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System;
+using DebtAnalyzer.DebtAnnotation;
 using TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

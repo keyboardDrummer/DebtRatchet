@@ -28,7 +28,7 @@ namespace DebtAnalyzer.Test
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 23 lines long while it should be longer than 5 lines.",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 5 lines.",
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
 					new[] {
@@ -46,7 +46,7 @@ namespace DebtAnalyzer.Test
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
 					new[] {
@@ -64,7 +64,7 @@ namespace DebtAnalyzer.Test
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 23 lines long while it should be longer than 20 lines.",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
 				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[] {
@@ -153,14 +153,14 @@ namespace DebtAnalyzer
     using System.Diagnostics;
     using DebtAnalyzer;
 
-	[assembly: MaximumMethodLength(5)]
+	[assembly: MaxMethodLength(5)]
     namespace DebtAnalyzer
     {
 
 		[AttributeUsage(AttributeTargets.Assembly)]
-		class MaximumMethodLength : Attribute
+		class MaxMethodLength : Attribute
 		{
-			public MaximumMethodLength(int length)
+			public MaxMethodLength(int length)
 			{
 				Length = length;
 			}
@@ -187,7 +187,7 @@ namespace DebtAnalyzer
     {
         class LongMethodClass
         {
-        [DebtMethod(LineCount = 23, ParameterCount = 0)]
+        [DebtMethod(LineCount = 22, ParameterCount = 0)]
         void MyLongMethod()
             {
 				int a1;
@@ -211,6 +211,7 @@ namespace DebtAnalyzer
 				int a19;
 				int a20;
 				int a21;
+				int a22;
             }
         }
     }";
@@ -250,6 +251,7 @@ namespace DebtAnalyzer
 				int a19;
 				int a20;
 				int a21;
+				int a22;
             }
         }
     }";

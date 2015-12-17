@@ -34,7 +34,7 @@ namespace DebtAnalyzer
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var diagnosticDescriptor = new DiagnosticDescriptor(DiagnosticId, "Method is too long.",
-					"Method {0} is {1} lines long while it should be longer than {2} lines.", "Debt", severity, true);
+					"Method {0} is {1} lines long while it should not be longer than {2} lines.", "Debt", severity, true);
 				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), method.Identifier.Text, methodLength, maxLineCount);
 
 				context.ReportDiagnostic(diagnostic);
@@ -44,12 +44,11 @@ namespace DebtAnalyzer
 		public static int GetMethodLength(MethodDeclarationSyntax method)
 		{
 			SyntaxTree tree = method.SyntaxTree;
-			var lineSpan = tree.GetLineSpan(method.Span);
+			var lineSpan = tree.GetLineSpan(method.Body.Statements.Span);
 			var startLine = lineSpan.StartLinePosition.Line;
 			var endLine = lineSpan.EndLinePosition.Line;
 
-			var methodLength = endLine - startLine;
-			return methodLength;
+			return endLine - startLine + 1;
 		}
 
 		const string LineCountName = nameof(DebtMethod.LineCount);
@@ -64,7 +63,7 @@ namespace DebtAnalyzer
 		{
 			var assembly = methodSymbol.ContainingAssembly;
 
-			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(MaximumMethodLength).Name && data.ConstructorArguments.Length == 1).
+			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(MaxMethodLength).Name && data.ConstructorArguments.Length == 1).
 				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? DefaultMaximumMethodLength;
 		}
 

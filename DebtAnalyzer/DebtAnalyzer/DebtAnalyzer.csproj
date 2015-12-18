@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Common\DebtAsError.cs" />
+    <Compile Include="Common\DebtSeverity.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />
     <Compile Include="MethodLength\MaxMethodLength.cs" />
     <Compile Include="ParameterCount\MaxParameters.cs" />

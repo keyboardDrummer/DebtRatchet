@@ -29,7 +29,7 @@ namespace DebtAnalyzer.Test
 			{
 				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 5 lines.",
-				Severity = DiagnosticSeverity.Warning,
+				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
 						new DiagnosticResultLocation("Test0.cs", 14, 13)
@@ -47,7 +47,7 @@ namespace DebtAnalyzer.Test
 			{
 				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
-				Severity = DiagnosticSeverity.Warning,
+				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
 						new DiagnosticResultLocation("Test0.cs", 14, 13)
@@ -72,30 +72,8 @@ namespace DebtAnalyzer.Test
 					}
 			};
 
-			VerifyCSharpDiagnostic(new [] { test, DebtAsError} , expected);
+			VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtAsError} , expected);
 		}
-
-		public static string DebtAsError => @"
-using System;
-using System.Linq;
-using Microsoft.CodeAnalysis;
-using DebtAnalyzer;
-
-[assembly: DebtAsError(true)]
-namespace DebtAnalyzer
-{
-
-	[AttributeUsage(AttributeTargets.Assembly)]
-	public class DebtAsError : Attribute
-	{
-		public DebtAsError(bool asError)
-		{
-			AsError = asError;
-		}
-
-		public bool AsError { get; }
-	}
-}";
 
 	[TestMethod]
 	public void TestDiagnosticWithDebtAnnotation()
@@ -175,54 +153,55 @@ namespace DebtAnalyzer
 	}
 
 		static string LongMethodFixed => @"
- using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-    using DebtAnalyzer;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
 
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    class LongMethodClass
     {
-        class LongMethodClass
-        {
         [DebtMethod(LineCount = 22, ParameterCount = 0)]
         void MyLongMethod()
-            {
-				int a1;
-				int a2;
-				int a3;
-				int a4;
-				int a5;
-				int a6;
-				int a7;
-				int a8;
-				int a9;
-				int a10;
-				int a11;
-				int a12;
-				int a13;
-				int a14;
-				int a15;
-				int a16;
-				int a17;
-				int a18;
-				int a19;
-				int a20;
-				int a21;
-				int a22;
-            }
+        {
+			int a1;
+			int a2;
+			int a3;
+			int a4;
+			int a5;
+			int a6;
+			int a7;
+			int a8;
+			int a9;
+			int a10;
+			int a11;
+			int a12;
+			int a13;
+			int a14;
+			int a15;
+			int a16;
+			int a17;
+			int a18;
+			int a19;
+			int a20;
+			int a21;
+			int a22;
         }
-    }";
-		static string LongMethod => @"
- using System;
+    }
+}
+";
+		static string LongMethodWithDebtAnnotation => @"
+	using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
     using System.Diagnostics;
-    using DebtAnalyzer;
+	using DebtAnalyzer;
 
     namespace ConsoleApplication1
     {
@@ -255,5 +234,46 @@ namespace DebtAnalyzer
             }
         }
     }";
+
+		static string LongMethod => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
+namespace ConsoleApplication1
+{
+    class LongMethodClass
+    {
+        void MyLongMethod()
+        {
+			int a1;
+			int a2;
+			int a3;
+			int a4;
+			int a5;
+			int a6;
+			int a7;
+			int a8;
+			int a9;
+			int a10;
+			int a11;
+			int a12;
+			int a13;
+			int a14;
+			int a15;
+			int a16;
+			int a17;
+			int a18;
+			int a19;
+			int a20;
+			int a21;
+			int a22;
+        }
+    }
+}
+";
 	}
 }

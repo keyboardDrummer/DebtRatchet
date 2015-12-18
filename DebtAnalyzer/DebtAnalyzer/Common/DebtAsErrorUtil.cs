@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 
@@ -7,16 +8,22 @@ namespace DebtAnalyzer
 	{
 		public static DiagnosticSeverity GetDiagnosticSeverity(ISymbol symbol)
 		{
-			return GetDebtAsError(symbol) ? DiagnosticSeverity.Error : DiagnosticSeverity.Warning;
+			switch (GetDebtAsError(symbol))
+			{
+				case Severity.Info: return DiagnosticSeverity.Info;
+				case Severity.Warning: return DiagnosticSeverity.Warning;
+				case Severity.Error: return DiagnosticSeverity.Error;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 
-		public static bool GetDebtAsError(ISymbol symbol)
+		public static Severity GetDebtAsError(ISymbol symbol)
 		{
 			var assembly = symbol.ContainingAssembly;
-			var maxParameters = assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(DebtAsError).Name && data.ConstructorArguments.Length > 0).
-				Select(data => new DebtAsError((bool)data.ConstructorArguments[0].Value)).FirstOrDefault() ?? new DebtAsError(false);
-
-			return maxParameters.AsError;
+			int? intEnum = assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof (DebtSeverity).Name && data.ConstructorArguments.Length > 0).
+				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault();
+			return ((Severity?)intEnum) ?? Severity.Info;
 		}
 	}
 }

@@ -29,7 +29,7 @@ namespace DebtAnalyzer.Test
 			{
 				Id = "DebtAnalyzer",
 				Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
-				Severity = DiagnosticSeverity.Warning,
+				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
 							new DiagnosticResultLocation("Test0.cs", 14, 18)
@@ -54,7 +54,7 @@ namespace DebtAnalyzer.Test
                         }
             };
 
-            VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, TestMethodLengthAnalzyer.DebtAsError }, expected);
+            VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, DebtAnalyzerTestUtil.DebtAsError }, expected);
         }
 
 

@@ -16,7 +16,8 @@ namespace DebtAnalyzer.DebtAnnotation
 	{
 		const string Title = "Update technical debt annotation";
 
-		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(MethodParameterCountAnalyzer.DiagnosticId);
+		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
+			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
 
 		public override sealed FixAllProvider GetFixAllProvider()
 		{
@@ -35,19 +36,22 @@ namespace DebtAnalyzer.DebtAnnotation
 
 		async Task<Solution> AddDebtAnnotation(Document document, MethodDeclarationSyntax methodDecl, CancellationToken cancellationToken)
 		{
-			var syntaxRoot = await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
 			var attributeType = typeof (DebtMethod);
-
 			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodDecl);
 			var lineCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
 			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodDecl.ParameterList.Parameters.Count);
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
 				SyntaxFactory.SeparatedList(new [] { lineCountArgument, parameterCountArgument })));
 			var newMethod = methodDecl.AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
-			var newRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
+			syntaxRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
 
-			var newDocument = document.WithSyntaxRoot(newRoot);
+			syntaxRoot = syntaxRoot.AddUsings(SyntaxFactory.UsingDirective(
+				SyntaxFactory.IdentifierName("DebtAnalyzer")).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
+					.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)));
+
+			var newDocument = document.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project.Solution;
 		}
 

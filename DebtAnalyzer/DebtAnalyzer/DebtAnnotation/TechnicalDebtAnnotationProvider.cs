@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
+using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -47,10 +48,16 @@ namespace DebtAnalyzer.DebtAnnotation
 			var newMethod = methodDecl.AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
 			syntaxRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
 
-			syntaxRoot = syntaxRoot.AddUsings(SyntaxFactory.UsingDirective(
-				SyntaxFactory.IdentifierName("DebtAnalyzer")).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
-					.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken)));
+			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");
+			var usingDirectiveSyntax = SyntaxFactory.UsingDirective(
+				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
+				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
 
+			if (syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText)) //TODO really hacky solution
+			{
+				syntaxRoot = syntaxRoot.AddUsings(usingDirectiveSyntax);
+			}
+			
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project.Solution;
 		}

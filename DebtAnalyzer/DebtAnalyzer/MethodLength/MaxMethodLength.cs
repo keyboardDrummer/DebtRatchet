@@ -3,7 +3,7 @@ using System;
 namespace DebtAnalyzer
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
-	class MaxMethodLength : Attribute
+	public class MaxMethodLength : Attribute
 	{
 		public MaxMethodLength(int length)
 		{

@@ -19,6 +19,7 @@ namespace DebtAnalyzer
 		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(new DiagnosticDescriptor(DiagnosticId, "Method is too long.", 
 			"Method {0} is {1} lines long while it should be longer than {2} lines.", "Debt", DiagnosticSeverity.Warning, true));
 
+
 		public override void Initialize(AnalysisContext context)
 		{
 			context.RegisterSyntaxNodeAction(AnalyzeSyntax, SyntaxKind.MethodDeclaration);

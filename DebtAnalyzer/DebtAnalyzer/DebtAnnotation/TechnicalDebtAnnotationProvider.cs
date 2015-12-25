@@ -45,7 +45,9 @@ namespace DebtAnalyzer.DebtAnnotation
 			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodDecl.ParameterList.Parameters.Count);
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
 				SyntaxFactory.SeparatedList(new [] { lineCountArgument, parameterCountArgument })));
-			var newMethod = methodDecl.AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)));
+			var newMethod = methodDecl.WithoutTrivia().
+				AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
+				WithTriviaFrom(methodDecl);
 			syntaxRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
 
 			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");

@@ -10,10 +10,16 @@ namespace DebtAnalyzer.Test
 {
 	[TestClass]
     public class TestMethodParameterCountAnalayzer : CodeFixVerifier
-    {
+	{
 
-        //No diagnostics expected to show up
-        [TestMethod]
+		[TestMethod]
+		public void TestFix()
+		{
+			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
+		}
+
+		//No diagnostics expected to show up
+		[TestMethod]
         public void TestEmptyProgramHasNoDiagnostics()
         {
             var test = @"";
@@ -27,12 +33,12 @@ namespace DebtAnalyzer.Test
 			var test = TestProgramInput;
 			var expected = new DiagnosticResult
 			{
-				Id = "DebtAnalyzer",
+				Id = "MaxParameterCount",
 				Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
-							new DiagnosticResultLocation("Test0.cs", 14, 18)
+							new DiagnosticResultLocation("Test0.cs", 17, 14)
 						}
 			};
 
@@ -45,12 +51,12 @@ namespace DebtAnalyzer.Test
             var test = TestProgramInput;
             var expected = new DiagnosticResult
             {
-                Id = "DebtAnalyzer",
+                Id = "MaxParameterCount",
                 Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 5."),
                 Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 14, 18)
+                            new DiagnosticResultLocation("Test0.cs", 17, 14)
                         }
             };
 
@@ -63,12 +69,6 @@ namespace DebtAnalyzer.Test
 		{
 			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, FixedProgram });
 		}
-
-		[TestMethod]
-		public void TestFix()
-	    {
-			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
-	    }
 		
 		public static string MaxParametersAnnotation => @"
 
@@ -90,46 +90,54 @@ namespace DebtAnalyzer
 	}
 }";
 
-		static string FixedProgram => @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-    using DebtAnalyzer;
+		public static string FixedProgram => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
 
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    class TypeName
     {
-        class TypeName
-        {
+        /// <summary>
+        /// 
+        /// </summary>
         [DebtMethod(LineCount = 1, ParameterCount = 6)]
         void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
-            {
+        {
 
-            }
         }
-    }";
+    }
+}
+";
 
-	    static string TestProgramInput => @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-    using DebtAnalyzer;
+		public static string TestProgramInput => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
 
-    namespace ConsoleApplication1
-    {
-        class TypeName
-        {   
-            void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
-            {
+namespace ConsoleApplication1
+{
+    class TypeName
+    {   
+        /// <summary>
+        /// 
+        /// </summary>
+        void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
+        {
 
-            }
         }
-    }";
+    }
+}
+";
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()
         {

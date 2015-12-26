@@ -30,38 +30,63 @@ namespace DebtAnalyzer.DebtAnnotation
 			var syntaxRoot = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 
 			var diagnostic = context.Diagnostics.First();
-			var methodSyntax = (MethodDeclarationSyntax) syntaxRoot.FindNode(context.Span);
+			var methodSyntax = (BaseMethodDeclarationSyntax)syntaxRoot.FindNode(context.Span);
 
 			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title), diagnostic);
 		}
 
-		async Task<Solution> AddDebtAnnotation(Document document, MethodDeclarationSyntax methodDecl, CancellationToken cancellationToken)
+		async Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-			var attributeType = typeof (DebtMethod);
-			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodDecl);
-			var lineCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
-			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodDecl.ParameterList.Parameters.Count);
-			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
-				SyntaxFactory.SeparatedList(new [] { lineCountArgument, parameterCountArgument })));
-			var newMethod = methodDecl.WithoutTrivia().
-				AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
-				WithTriviaFrom(methodDecl);
-			syntaxRoot = syntaxRoot.ReplaceNode(methodDecl, newMethod);
+			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(methodBaseDecl));
+			syntaxRoot = AddUsing(syntaxRoot);
 
+			var newDocument = document.WithSyntaxRoot(syntaxRoot);
+			return newDocument.Project.Solution;
+		}
+
+		static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
+		{
 			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");
 			var usingDirectiveSyntax = SyntaxFactory.UsingDirective(
 				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
 				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
 
+			CompilationUnitSyntax withUsing;
 			if (syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText)) //TODO really hacky solution
 			{
-				syntaxRoot = syntaxRoot.AddUsings(usingDirectiveSyntax);
+				withUsing = syntaxRoot.AddUsings(usingDirectiveSyntax);
 			}
-			
-			var newDocument = document.WithSyntaxRoot(syntaxRoot);
-			return newDocument.Project.Solution;
+			else
+				withUsing = syntaxRoot;
+			return withUsing;
+		}
+
+		static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
+		{
+			var attributeType = typeof (DebtMethod);
+			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodBaseDecl);
+			var lineCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
+			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodBaseDecl.ParameterList.Parameters.Count);
+			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
+				SyntaxFactory.SeparatedList(new[] {lineCountArgument, parameterCountArgument})));
+
+			BaseMethodDeclarationSyntax newMethod;
+			var methodDecl = methodBaseDecl as MethodDeclarationSyntax;
+			if (methodDecl != null)
+			{
+				newMethod = methodDecl.WithoutTrivia().
+					AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
+					WithTriviaFrom(methodBaseDecl);
+			}
+			else
+			{
+				newMethod = ((ConstructorDeclarationSyntax) methodBaseDecl).WithoutTrivia().
+					AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
+					WithTriviaFrom(methodBaseDecl);
+			}
+			return newMethod;
 		}
 
 		static AttributeArgumentSyntax GetNamedAttributeArgument(string parameterName, int parameterValue)

@@ -42,7 +42,7 @@ namespace DebtAnalyzer
 			}
 		}
 
-		public static int GetMethodLength(MethodDeclarationSyntax method)
+		public static int GetMethodLength(BaseMethodDeclarationSyntax method)
 		{
 			SyntaxTree tree = method.SyntaxTree;
 			if (method.Body == null)

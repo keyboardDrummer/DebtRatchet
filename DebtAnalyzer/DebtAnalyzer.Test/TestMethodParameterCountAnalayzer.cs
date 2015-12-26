@@ -139,6 +139,50 @@ namespace ConsoleApplication1
 }
 ";
 
+		[TestMethod]
+		public void TestConstructorFix()
+		{
+			VerifyCSharpFix(WithConstructor, FixedWithConstructor, allowNewCompilerDiagnostics: true);
+		}
+
+		public static string FixedWithConstructor => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+        [DebtMethod(LineCount = 1, ParameterCount = 6)]
+        TypeName(int a, int b, int c, int d, int e, int g) {
+        }
+    }
+}
+";
+
+		public static string WithConstructor => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {   
+        TypeName(int a, int b, int c, int d, int e, int g) {
+        }
+    }
+}
+";
 		protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
             return new TechnicalDebtAnnotationProvider();

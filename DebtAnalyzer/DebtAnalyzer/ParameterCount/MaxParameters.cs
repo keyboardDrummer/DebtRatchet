@@ -2,9 +2,8 @@ using System;
 
 namespace DebtAnalyzer
 {
-
 	[AttributeUsage(AttributeTargets.Assembly)]
-	class MaxParameters : Attribute
+	public class MaxParameters : Attribute
 	{
 		public MaxParameters(int parameterCount)
 		{

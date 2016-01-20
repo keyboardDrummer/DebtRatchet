@@ -34,6 +34,8 @@
   <ItemGroup>
     <Compile Include="Common\DebtSeverity.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />
+    <Compile Include="DebtAnnotation\DebtAnalyzer.cs" />
+    <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="MethodLength\MaxMethodLength.cs" />
     <Compile Include="ParameterCount\MaxParameters.cs" />
     <Compile Include="MethodLength\MethodLengthAnalyzer.cs" />

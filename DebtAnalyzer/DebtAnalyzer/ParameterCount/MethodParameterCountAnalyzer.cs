@@ -7,45 +7,40 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace DebtAnalyzer
 {
-	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class MethodParameterCountAnalyzer : DiagnosticAnalyzer
+	public class MethodParameterCountAnalyzer
 	{
 		public const string DiagnosticId = "MaxParameterCount";
 
-		private static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
-		private static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
+		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
+		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
 		public const int MaximumParameterCount = 5;
 
-
-		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Debt", DiagnosticSeverity.Warning, isEnabledByDefault: true));
-
-		public override void Initialize(AnalysisContext context)
-		{
-			context.RegisterSymbolAction(AnalyzeSymbol, SymbolKind.Method);
-		}
-
-		private static void AnalyzeSymbol(SymbolAnalysisContext context)
+		public void AnalyzeSymbol(SymbolAnalysisContext context, Dictionary<string, DebtMethod> names)
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
 			var maxParameterCount = GetMaxParameterCount(methodSymbol);
-			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
+			var previousParameterCount = GetPreviousParameterCount(methodSymbol, names);
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
-				var descriptor = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, "Debt", severity, true);
+				var descriptor = CreateDiagnosticDescriptor(severity);
 				var diagnostic = Diagnostic.Create(descriptor, methodSymbol.Locations[0], methodSymbol.Name, parameterCount, maxParameterCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}
 		}
 
-		const string ParameterCountName = nameof(DebtMethod.ParameterCount);
-		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
+		public DiagnosticDescriptor CreateDiagnosticDescriptor(DiagnosticSeverity severity)
 		{
-			return methodSymbol.GetAttributes()
-				.Where(data => data.AttributeClass.Name == typeof (DebtMethod).Name)
-				.Select(data => data.NamedArguments.FirstOrDefault(kv => kv.Key == ParameterCountName).Value.Value as int?).FirstOrDefault() ?? 0;
+			return new DiagnosticDescriptor(DiagnosticId, title, messageFormat, "Debt", severity, true);
+		}
+
+		static int GetPreviousParameterCount(IMethodSymbol methodSymbol, Dictionary<string, DebtMethod> names)
+		{
+			var fromDirectAttribute = DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
+			var fullName = DebtAnalyzer.GetFullName(methodSymbol);
+			return (fromDirectAttribute ?? names.Get(fullName, () => null))?.ParameterCount ?? 0;
 		}
 
 		static int GetMaxParameterCount(IMethodSymbol methodSymbol)

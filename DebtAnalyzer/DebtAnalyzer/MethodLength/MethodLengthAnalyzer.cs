@@ -1,4 +1,4 @@
-using System.Collections.Immutable;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -7,39 +7,32 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace DebtAnalyzer
 {
-	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class MethodLengthAnalyzer : DiagnosticAnalyzer
+	public class MethodLengthAnalyzer
 	{
-
 		public const string DiagnosticId = "MethodLengthAnalyzer";
 
 		public const int DefaultMaximumMethodLength = 20;
 
-
-		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(new DiagnosticDescriptor(DiagnosticId, "Method is too long.", 
-			"Method {0} is {1} lines long while it should be longer than {2} lines.", "Debt", DiagnosticSeverity.Warning, true));
-
-
-		public override void Initialize(AnalysisContext context)
-		{
-			context.RegisterSyntaxNodeAction(AnalyzeSyntax, SyntaxKind.MethodDeclaration);
-		}
-
-		void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
+		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context, Dictionary<string, DebtMethod> names)
 		{
 			var method = (MethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol);
-			if (methodLength > GetPreviousMethodLength(methodSymbol) && methodLength > maxLineCount)
+			if (methodLength > GetPreviousMethodLength(names, methodSymbol) && methodLength > maxLineCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
-				var diagnosticDescriptor = new DiagnosticDescriptor(DiagnosticId, "Method is too long.",
-					"Method {0} is {1} lines long while it should not be longer than {2} lines.", "Debt", severity, true);
+				var diagnosticDescriptor = CreateDiagnosticDescriptor(severity);
 				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), method.Identifier.Text, methodLength, maxLineCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}
+		}
+
+		public DiagnosticDescriptor CreateDiagnosticDescriptor(DiagnosticSeverity severity)
+		{
+			return new DiagnosticDescriptor(DiagnosticId, "Method is too long.",
+				"Method {0} is {1} lines long while it should not be longer than {2} lines.", "Debt", severity, true);
 		}
 
 		public static int GetMethodLength(BaseMethodDeclarationSyntax method)
@@ -55,12 +48,11 @@ namespace DebtAnalyzer
 			return endLine - startLine + 1;
 		}
 
-		const string LineCountName = nameof(DebtMethod.LineCount);
-		static int GetPreviousMethodLength(IMethodSymbol methodSymbol)
+		static int GetPreviousMethodLength(IReadOnlyDictionary<string, DebtMethod> assemblyAnnotations, IMethodSymbol methodSymbol)
 		{
-			return methodSymbol.GetAttributes()
-				.Where(data => data.AttributeClass.Name == typeof(DebtMethod).Name)
-				.Select(data => data.NamedArguments.FirstOrDefault(kv => kv.Key == LineCountName).Value.Value as int?).FirstOrDefault() ?? 0;
+			var fromDirectAttribute = DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
+			var fullName = DebtAnalyzer.GetFullName(methodSymbol);
+			return (fromDirectAttribute ?? assemblyAnnotations.Get(fullName, () => null))?.LineCount ?? 0;
 		}
 
 		static int GetMaxLineCount(IMethodSymbol methodSymbol)
@@ -70,6 +62,5 @@ namespace DebtAnalyzer
 			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(MaxMethodLength).Name && data.ConstructorArguments.Length == 1).
 				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? DefaultMaximumMethodLength;
 		}
-
 	}
 }

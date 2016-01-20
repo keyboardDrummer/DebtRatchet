@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
-using Microsoft.CodeAnalysis.CodeRefactorings;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -35,7 +34,29 @@ namespace DebtAnalyzer.DebtAnnotation
 			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title), diagnostic);
 		}
 
-		async Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		{
+			return AddInlineDebtAnnotation(document, methodBaseDecl, cancellationToken);
+		}
+
+		static async Task<Solution> AddExternalDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		{
+			var name = "TechDebtAnnotations.cs";
+			var debtDocument = document.Project.Documents.FirstOrDefault(projectDocument => projectDocument.Name == name);
+			if (debtDocument == null)
+			{
+				debtDocument = document.Project.AddDocument(name, "");
+			}
+			var syntaxRoot = (CompilationUnitSyntax)await debtDocument.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
+
+			syntaxRoot = AddUsing(syntaxRoot);
+			syntaxRoot.AddAttributeLists(GetAttributeListSyntax(methodBaseDecl));
+
+			var newDocument = document.WithSyntaxRoot(syntaxRoot);
+			return newDocument.Project.Solution;
+		}
+
+		static async Task<Solution> AddInlineDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
@@ -53,17 +74,29 @@ namespace DebtAnalyzer.DebtAnnotation
 				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
 				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
 
-			CompilationUnitSyntax withUsing;
-			if (syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText)) //TODO really hacky solution
-			{
-				withUsing = syntaxRoot.AddUsings(usingDirectiveSyntax);
-			}
-			else
-				withUsing = syntaxRoot;
+			var withUsing = syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText) 
+				? syntaxRoot.AddUsings(usingDirectiveSyntax) 
+				: syntaxRoot;
 			return withUsing;
 		}
 
 		static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
+		{
+			var attributeListSyntax = GetAttributeListSyntax(methodBaseDecl);
+
+			var methodDecl = methodBaseDecl as MethodDeclarationSyntax;
+			if (methodDecl != null)
+			{
+				return methodDecl.WithoutTrivia().
+					AddAttributeLists(attributeListSyntax).
+					WithTriviaFrom(methodBaseDecl);
+			}
+			return ((ConstructorDeclarationSyntax) methodBaseDecl).WithoutTrivia().
+				AddAttributeLists(attributeListSyntax).
+				WithTriviaFrom(methodBaseDecl);
+		}
+
+		public static AttributeListSyntax GetAttributeListSyntax(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeType = typeof (DebtMethod);
 			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodBaseDecl);
@@ -72,21 +105,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(
 				SyntaxFactory.SeparatedList(new[] {lineCountArgument, parameterCountArgument})));
 
-			BaseMethodDeclarationSyntax newMethod;
-			var methodDecl = methodBaseDecl as MethodDeclarationSyntax;
-			if (methodDecl != null)
-			{
-				newMethod = methodDecl.WithoutTrivia().
-					AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
-					WithTriviaFrom(methodBaseDecl);
-			}
-			else
-			{
-				newMethod = ((ConstructorDeclarationSyntax) methodBaseDecl).WithoutTrivia().
-					AddAttributeLists(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute))).
-					WithTriviaFrom(methodBaseDecl);
-			}
-			return newMethod;
+			return SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute));
 		}
 
 		static AttributeArgumentSyntax GetNamedAttributeArgument(string parameterName, int parameterValue)

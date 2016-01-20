@@ -12,9 +12,9 @@ namespace DebtAnalyzer
     {
 		public int ParameterCount { get; set; }    
 		public int LineCount { get; set; }
+		public string Target { get; set; }
     }
 }";
-
 
 		public static string DebtAsError => @"
 using System;

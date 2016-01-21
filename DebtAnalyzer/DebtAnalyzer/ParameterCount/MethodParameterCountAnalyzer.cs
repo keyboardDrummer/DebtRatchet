@@ -46,10 +46,9 @@ namespace DebtAnalyzer
 		static int GetMaxParameterCount(IMethodSymbol methodSymbol)
 		{
 			var assembly = methodSymbol.ContainingAssembly;
-			var maxParameters = assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof (MaxParameters).Name && data.ConstructorArguments.Length > 0).
-				Select(data => new MaxParameters((int) data.ConstructorArguments[0].Value)).FirstOrDefault() ?? new MaxParameters(MaximumParameterCount);
 
-			return maxParameters.ParameterCount;
+			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof (MaxParameters).Name && data.ConstructorArguments.Length > 0).
+				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? MaximumParameterCount;
 		}
 	}
 }

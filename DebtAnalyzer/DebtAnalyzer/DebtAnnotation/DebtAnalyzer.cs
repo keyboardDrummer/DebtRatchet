@@ -18,7 +18,8 @@ namespace DebtAnalyzer
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				var attributeDatas = startContext.Compilation.Assembly.GetAttributes();
-				var names = GetDebtMethods(attributeDatas).Where(debtMethod => debtMethod.Target != null).ToDictionary(debtMethod => debtMethod.Target, x => x);
+				var names = GetDebtMethods(attributeDatas).Where(debtMethod => debtMethod.Target != null).GroupBy(debtMethod => debtMethod.Target).
+					ToDictionary(targetGroup => targetGroup.First().Target, x => x.First());
 				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext, names), SyntaxKind.MethodDeclaration);
 				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext, names), SymbolKind.Method);
 			});

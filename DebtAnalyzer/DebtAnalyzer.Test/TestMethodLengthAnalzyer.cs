@@ -159,6 +159,12 @@ using DebtAnalyzer
     }";
 
 	[TestMethod]
+	public void TestExternalFixNoDoubleUsing()
+	{
+		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+	}
+
+		[TestMethod]
 	public void TestFixNoDoubleUsing()
 	{
 		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);

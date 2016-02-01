@@ -2,7 +2,7 @@ using System;
 
 namespace DebtAnalyzer
 {
-	[AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
+	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Assembly, AllowMultiple = true)]
     public class DebtMethod : Attribute
     {
 		public int ParameterCount { get; set; }    

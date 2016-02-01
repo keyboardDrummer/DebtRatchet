@@ -16,27 +16,27 @@ namespace DebtAnalyzer.DebtAnnotation
 	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(TechnicalDebtAnnotationProvider)), Shared]
 	public class TechnicalDebtAnnotationProvider : CodeFixProvider
 	{
-		const string Title = "Update technical debt annotation";
+		public const string Title = "Update technical debt annotation";
 
 		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
 			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
 
 		public override sealed FixAllProvider GetFixAllProvider()
 		{
-			return WellKnownFixAllProviders.BatchFixer;
+			return new MyFixAllProvider();
 		}
 
 		public override sealed async Task RegisterCodeFixesAsync(CodeFixContext context)
 		{
 			var syntaxRoot = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
-
+			
 			var diagnostic = context.Diagnostics.First();
 			var methodSyntax = (BaseMethodDeclarationSyntax)syntaxRoot.FindNode(context.Span);
 
-			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), Title), diagnostic);
+			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), methodSyntax.SpanStart + ""), diagnostic);
 		}
 
-		async Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		public static async Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var sem = await document.GetSemanticModelAsync(cancellationToken);
 			var methodSymbol = sem.GetDeclaredSymbol(methodBaseDecl);

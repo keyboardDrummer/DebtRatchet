@@ -89,7 +89,7 @@ namespace DebtAnalyzer.Test
 
 		static string AssemblyDebtAnnotation => @"
 using DebtAnalyzer
-[assembly:DebtMethod(LineCount = 30, Target = ""ConsoleApplication1.LongMethodClass.MyLongMethod"")]
+[assembly:DebtMethod(LineCount = 30, Target = ""ConsoleApplication1.LongMethodClass.MyLongMethod()"")]
 ";
 
 	static string LongMethodWithAnnotation => @"

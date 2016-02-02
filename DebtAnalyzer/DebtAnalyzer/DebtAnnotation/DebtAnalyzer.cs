@@ -35,7 +35,8 @@ namespace DebtAnalyzer
 		
 		public static string GetFullName(IMethodSymbol methodSymbol)
 		{
-			return methodSymbol.ContainingNamespace.Name + "." + methodSymbol.ContainingType.Name + "." + methodSymbol.Name;
+			string parametersString = $"{string.Join(",", methodSymbol.Parameters.Select(parameter => parameter.Type.ContainingNamespace + "." + parameter.Type.Name))}";
+			return $"{methodSymbol.ContainingNamespace.Name}.{methodSymbol.ContainingType.Name}.{methodSymbol.Name}({parametersString})";
 		}
 
 		static DebtMethod ToDebtMethod(AttributeData data)

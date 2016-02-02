@@ -26,7 +26,7 @@ namespace DebtAnalyzer.Test
 
 		static string AssemblyDebtAnnotation => @"
 using DebtAnalyzer
-[assembly:DebtMethod(ParameterCount = 6, Target = ""ConsoleApplication1.TypeName.MyBadMethod2443"")]
+[assembly:DebtMethod(ParameterCount = 6, Target = ""ConsoleApplication1.TypeName.MyBadMethod2443(System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32)"")]
 ";
 
 		//No diagnostics expected to show up

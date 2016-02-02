@@ -19,7 +19,8 @@ namespace DebtAnalyzer
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol);
-			if (methodLength > GetPreviousMethodLength(names, methodSymbol) && methodLength > maxLineCount)
+			var previousMethodLength = GetPreviousMethodLength(names, methodSymbol);
+			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var diagnosticDescriptor = CreateDiagnosticDescriptor(severity);

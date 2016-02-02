@@ -164,13 +164,13 @@ using DebtAnalyzer
 		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 	}
 
-		[TestMethod]
+	[TestMethod]
 	public void TestFixNoDoubleUsing()
 	{
 		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 	}
 
-		[TestMethod]public void TestFix()
+	[TestMethod]public void TestFix()
 	{
 		VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
 	}

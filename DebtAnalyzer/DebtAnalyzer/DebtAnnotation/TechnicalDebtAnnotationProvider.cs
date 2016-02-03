@@ -33,10 +33,14 @@ namespace DebtAnalyzer.DebtAnnotation
 			var diagnostic = context.Diagnostics.First();
 			var methodSyntax = (BaseMethodDeclarationSyntax)syntaxRoot.FindNode(context.Span);
 
-			context.RegisterCodeFix(CodeAction.Create(Title, c => AddDebtAnnotation(context.Document, methodSyntax, c), methodSyntax.SpanStart + ""), diagnostic);
+			context.RegisterCodeFix(CodeAction.Create(Title, async c =>
+			{
+				var project = await AddDebtAnnotation(context.Document, methodSyntax, c);
+				return project.Solution;
+			}, methodSyntax.SpanStart + ""), diagnostic);
 		}
 
-		public static async Task<Solution> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		public static async Task<Project> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var sem = await document.GetSemanticModelAsync(cancellationToken);
 			var methodSymbol = sem.GetDeclaredSymbol(methodBaseDecl);
@@ -53,7 +57,7 @@ namespace DebtAnalyzer.DebtAnnotation
 				Select(data => data.ConstructorArguments[0].Value as bool?).FirstOrDefault() ?? false;
 		}
 
-		static async Task<Solution> AddExternalDebtAnnotation(Document document, IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		static async Task<Project> AddExternalDebtAnnotation(Document document, IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var name = "TechDebtAnnotations.cs";
 			var debtDocument = document.Project.Documents.FirstOrDefault(projectDocument => projectDocument.Name == name);
@@ -67,10 +71,10 @@ namespace DebtAnalyzer.DebtAnnotation
 			syntaxRoot = syntaxRoot.AddAttributeLists(GetAttributeListSyntax(symbol, methodBaseDecl));
 
 			var newDocument = debtDocument.WithSyntaxRoot(syntaxRoot);
-			return newDocument.Project.Solution;
+			return newDocument.Project;
 		}
 
-		static async Task<Solution> AddInlineDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
+		static async Task<Project> AddInlineDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
@@ -78,7 +82,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			syntaxRoot = AddUsing(syntaxRoot);
 
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);
-			return newDocument.Project.Solution;
+			return newDocument.Project;
 		}
 
 		static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)

@@ -6,6 +6,8 @@ namespace DebtAnalyzer
 {
 	public static class DebtAsErrorUtil
 	{
+		const Severity DefaultSeverity = Severity.Info;
+
 		public static DiagnosticSeverity GetDiagnosticSeverity(ISymbol symbol)
 		{
 			switch (GetDebtAsError(symbol))
@@ -23,7 +25,7 @@ namespace DebtAnalyzer
 			var assembly = symbol.ContainingAssembly;
 			int? intEnum = assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof (DebtSeverity).Name && data.ConstructorArguments.Length > 0).
 				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault();
-			return ((Severity?)intEnum) ?? Severity.Info;
+			return ((Severity?)intEnum) ?? DefaultSeverity;
 		}
 	}
 }

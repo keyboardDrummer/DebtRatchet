@@ -13,24 +13,51 @@ namespace DebtAnalyzer.DebtAnnotation
 {
 	public class MyFixAllProvider : FixAllProvider
 	{
-		public override async Task<CodeAction> GetFixAsync(FixAllContext fixAllContext)
+		public override Task<CodeAction> GetFixAsync(FixAllContext fixAllContext)
 		{
-			var allDiagnostics = await fixAllContext.GetAllDiagnosticsAsync(fixAllContext.Project);
-			var solution = fixAllContext.Solution;
-			var documentIds = allDiagnostics.ToDictionary(x => x, x => solution.GetDocument(x.Location.SourceTree).Id);
-			return CodeAction.Create(TechnicalDebtAnnotationProvider.Title, token => Method(solution, allDiagnostics, documentIds, token));
+			return Task.FromResult(CodeAction.Create(TechnicalDebtAnnotationProvider.Title, token => FixAll(fixAllContext, token)));
 		}
 
-		static async Task<Solution> Method(Solution solution, ImmutableArray<Diagnostic> allDiagnostics, Dictionary<Diagnostic, DocumentId> documentIds, CancellationToken token)
+		static async Task<Solution> FixAll(FixAllContext fixAllContext, CancellationToken token)
 		{
-			foreach (var diagnostic in allDiagnostics)
+			var relevantProjects = GetRelevantProjects(fixAllContext);
+			var solution = fixAllContext.Solution;
+
+			foreach (var projectId in relevantProjects)
 			{
-				var document = solution.GetDocument(documentIds[diagnostic]);
-				var root = await document.GetSyntaxRootAsync(token);
-				var methodSyntax = (BaseMethodDeclarationSyntax) root.FindNode(diagnostic.Location.SourceSpan);
-				solution = await TechnicalDebtAnnotationProvider.AddDebtAnnotation(document, methodSyntax, token);
+				var project = solution.GetProject(projectId);
+				var allDiagnostics = await fixAllContext.GetAllDiagnosticsAsync(project);
+				var documentIds = allDiagnostics.ToDictionary(x => x, x => project.GetDocument(x.Location.SourceTree).Id);
+				Project result = project;
+				foreach (var diagnostic in allDiagnostics)
+				{
+					token.ThrowIfCancellationRequested();
+					var document = result.GetDocument(documentIds[diagnostic]);
+					var root = await document.GetSyntaxRootAsync(token);
+					var methodSyntax = (BaseMethodDeclarationSyntax)root.FindNode(diagnostic.Location.SourceSpan);
+					result = await TechnicalDebtAnnotationProvider.AddDebtAnnotation(document, methodSyntax, token);
+				}
+				solution = result.Solution;
 			}
 			return solution;
+		}
+
+		public override IEnumerable<FixAllScope> GetSupportedFixAllScopes()
+		{
+			return new [] {FixAllScope.Project, FixAllScope.Solution } ;
+		}
+
+		static IEnumerable<ProjectId> GetRelevantProjects(FixAllContext fixAllContext)
+		{
+			switch (fixAllContext.Scope)
+			{
+				case FixAllScope.Project:
+					return new [] { fixAllContext.Project.Id };
+				case FixAllScope.Solution:
+					return fixAllContext.Solution.ProjectIds;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}
 	}
 }

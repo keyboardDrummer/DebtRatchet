@@ -17,6 +17,7 @@ namespace DebtAnalyzer.DebtAnnotation
 	public class TechnicalDebtAnnotationProvider : CodeFixProvider
 	{
 		public const string Title = "Update technical debt annotation";
+		const bool DefaultUseExternalAttribute = false;
 
 		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
 			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
@@ -54,7 +55,7 @@ namespace DebtAnalyzer.DebtAnnotation
 		static bool GetUseExternalAttributes(IAssemblySymbol assembly)
 		{
 			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(GenerateExternalAttribute).Name && data.ConstructorArguments.Length > 0).
-				Select(data => data.ConstructorArguments[0].Value as bool?).FirstOrDefault() ?? false;
+				Select(data => data.ConstructorArguments[0].Value as bool?).FirstOrDefault() ?? DefaultUseExternalAttribute;
 		}
 
 		static async Task<Project> AddExternalDebtAnnotation(Document document, IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)

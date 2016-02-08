@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 using DebtAnalyzer.DebtAnnotation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
 
@@ -37,6 +40,21 @@ namespace DebtAnalyzer.Test
 			};
 
 			VerifyCSharpDiagnostic(new [] { test, MaximumMethodLengthFive}, expected);
+		}
+
+		[TestMethod]
+		public void WhenLoadingSolutionThenHasProjects3()
+		{
+			Bla().Wait();
+		}
+
+		static async Task Bla()
+		{
+			var path = @"C:\Users\remyw\Documents\visual studio 2015\Projects\WindowsFormsApplication1\WindowsFormsApplication1.sln";
+			var workspace = MSBuildWorkspace.Create();
+			var solution = await workspace.OpenSolutionAsync(path);
+
+			Assert.IsTrue(solution.Projects.Any());
 		}
 
 		[TestMethod]

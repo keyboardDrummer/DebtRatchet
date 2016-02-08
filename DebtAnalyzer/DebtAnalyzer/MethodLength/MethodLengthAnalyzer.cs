@@ -18,7 +18,7 @@ namespace DebtAnalyzer
 			var method = (MethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
-			var maxLineCount = GetMaxLineCount(methodSymbol);
+			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
 			var previousMethodLength = GetPreviousMethodLength(names, methodSymbol);
 			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{
@@ -56,10 +56,8 @@ namespace DebtAnalyzer
 			return (fromDirectAttribute ?? assemblyAnnotations.Get(fullName, () => null))?.LineCount ?? 0;
 		}
 
-		static int GetMaxLineCount(IMethodSymbol methodSymbol)
+		public static int GetMaxLineCount(IAssemblySymbol assembly)
 		{
-			var assembly = methodSymbol.ContainingAssembly;
-
 			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(MaxMethodLength).Name && data.ConstructorArguments.Length == 1).
 				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? DefaultMaximumMethodLength;
 		}

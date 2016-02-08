@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtAnalyzer", "DebtAnalyzer\DebtAnalyzer\DebtAnalyzer.csproj", "{679A037B-4B94-4152-9636-3A621B546A75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtAnalyzer.Test", "DebtAnalyzer\DebtAnalyzer.Test\DebtAnalyzer.Test.csproj", "{8B20B7FB-4E06-44DC-8C46-99A7C28307EC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtAnalyzer.Vsix", "DebtAnalyzer\DebtAnalyzer.Vsix\DebtAnalyzer.Vsix.csproj", "{EC9300E1-5EDB-4710-B268-87FF3C705D24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticsProvider", "StatisticsProvider\StatisticsProvider.csproj", "{115616FD-C2BB-4FE8-BD9D-37065E51518A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{EC9300E1-5EDB-4710-B268-87FF3C705D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC9300E1-5EDB-4710-B268-87FF3C705D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC9300E1-5EDB-4710-B268-87FF3C705D24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{115616FD-C2BB-4FE8-BD9D-37065E51518A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{115616FD-C2BB-4FE8-BD9D-37065E51518A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{115616FD-C2BB-4FE8-BD9D-37065E51518A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{115616FD-C2BB-4FE8-BD9D-37065E51518A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

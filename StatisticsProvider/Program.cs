@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -14,6 +13,7 @@ namespace StatisticsProvider
 		static void Main(string[] args)
 		{
 			Run(args).Wait();
+			Console.Read();
 		}
 
 		static async Task Run(string[] args)
@@ -37,7 +37,7 @@ namespace StatisticsProvider
 			foreach (var project in projectStatistics.Keys)
 			{
 				Console.WriteLine($"Project statistics for {project.Name}:\n" + 
-					$"Max method length: {projectStatistics[project].FatLineCount}\n" + 
+					$"Max method length: {projectStatistics[project].MethodStatistics.FatLineCount}\n" + 
 					projectStatistics[project].Print());
 			}
 		}

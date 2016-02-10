@@ -103,7 +103,9 @@
     <Compile Include="LinesCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MethodStatistics.cs" />
     <Compile Include="Statistics.cs" />
+    <Compile Include="TypeStatistics.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

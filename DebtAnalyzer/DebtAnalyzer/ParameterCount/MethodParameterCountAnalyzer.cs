@@ -13,12 +13,12 @@ namespace DebtAnalyzer
 
 		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
-		public const int MaximumParameterCount = 5;
+		public const int DefaultMaximumParameterCount = 5;
 
 		public void AnalyzeSymbol(SymbolAnalysisContext context, Dictionary<string, DebtMethod> names)
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
-			var maxParameterCount = GetMaxParameterCount(methodSymbol);
+			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
 			var previousParameterCount = GetPreviousParameterCount(methodSymbol, names);
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)
@@ -43,12 +43,10 @@ namespace DebtAnalyzer
 			return (fromDirectAttribute ?? names.Get(fullName, () => null))?.ParameterCount ?? 0;
 		}
 
-		static int GetMaxParameterCount(IMethodSymbol methodSymbol)
+		public static int GetMaxParameterCount(IAssemblySymbol assembly)
 		{
-			var assembly = methodSymbol.ContainingAssembly;
-
 			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof (MaxParameters).Name && data.ConstructorArguments.Length > 0).
-				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? MaximumParameterCount;
+				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? DefaultMaximumParameterCount;
 		}
 	}
 }

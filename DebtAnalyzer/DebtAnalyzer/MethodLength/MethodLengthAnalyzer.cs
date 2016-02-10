@@ -43,6 +43,11 @@ namespace DebtAnalyzer
 				return 0; //TODO add testcase for abstract method.
 
 			var lineSpan = tree.GetLineSpan(method.Body.Statements.Span);
+			return GetLineSpanLineCount(lineSpan);
+		}
+
+		public static int GetLineSpanLineCount(FileLinePositionSpan lineSpan)
+		{
 			var startLine = lineSpan.StartLinePosition.Line;
 			var endLine = lineSpan.EndLinePosition.Line;
 

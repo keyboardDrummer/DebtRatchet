@@ -40,7 +40,6 @@ namespace StatisticsProvider
 					$"Max method length: {projectStatistics[project].FatLineCount}\n" + 
 					projectStatistics[project].Print());
 			}
-			Console.Read();
 		}
 
 		private static async Task<Solution> GetSolution(string path)

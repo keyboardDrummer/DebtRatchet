@@ -18,6 +18,7 @@ namespace DebtAnalyzer.DebtAnnotation
 	{
 		public const string Title = "Update technical debt annotation";
 		const bool DefaultUseExternalAttribute = false;
+		const string ExternalAnnotationsFileName = "TechDebtAnnotations.cs";
 
 		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
 			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
@@ -60,11 +61,10 @@ namespace DebtAnalyzer.DebtAnnotation
 
 		static async Task<Project> AddExternalDebtAnnotation(Document document, IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
-			var name = "TechDebtAnnotations.cs";
-			var debtDocument = document.Project.Documents.FirstOrDefault(projectDocument => projectDocument.Name == name);
+			var debtDocument = document.Project.Documents.FirstOrDefault(projectDocument => projectDocument.Name == ExternalAnnotationsFileName);
 			if (debtDocument == null)
 			{
-				debtDocument = document.Project.AddDocument(name, "");
+				debtDocument = document.Project.AddDocument(ExternalAnnotationsFileName, "");
 			}
 			var syntaxRoot = (CompilationUnitSyntax)await debtDocument.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
@@ -74,12 +74,17 @@ namespace DebtAnalyzer.DebtAnnotation
 			var newDocument = debtDocument.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project;
 		}
+		static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
+		{
+			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));
+		}
 
 		static async Task<Project> AddInlineDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(methodBaseDecl));
+			var withoutDebtAnnotations = RemoveExistingDebtAnnotations(methodBaseDecl);
+			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(withoutDebtAnnotations));
 			syntaxRoot = AddUsing(syntaxRoot);
 
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);

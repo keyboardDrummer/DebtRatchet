@@ -1,11 +1,7 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using DebtAnalyzer.DebtAnnotation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.CodeAnalysis.MSBuild;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
 
@@ -40,21 +36,6 @@ namespace DebtAnalyzer.Test
 			};
 
 			VerifyCSharpDiagnostic(new [] { test, MaximumMethodLengthFive}, expected);
-		}
-
-		[TestMethod]
-		public void WhenLoadingSolutionThenHasProjects3()
-		{
-			Bla().Wait();
-		}
-
-		static async Task Bla()
-		{
-			var path = @"C:\Users\remyw\Documents\visual studio 2015\Projects\WindowsFormsApplication1\WindowsFormsApplication1.sln";
-			var workspace = MSBuildWorkspace.Create();
-			var solution = await workspace.OpenSolutionAsync(path);
-
-			Assert.IsTrue(solution.Projects.Any());
 		}
 
 		[TestMethod]
@@ -176,22 +157,29 @@ using DebtAnalyzer
 		}
     }";
 
-	[TestMethod]
-	public void TestExternalFixNoDoubleUsing()
-	{
-		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
-	}
+		[TestMethod]
+		public void TestExternalFixNoDoubleUsing()
+		{
+			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
 
-	[TestMethod]
-	public void TestFixNoDoubleUsing()
-	{
-		VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
-	}
+		[TestMethod]
+		public void TestFixNoDoubleUsing()
+		{
+			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
 
-	[TestMethod]public void TestFix()
-	{
-		VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
-	}
+		[TestMethod]
+		public void TestFix()
+		{
+			VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
+
+		[TestMethod]
+		public void TestOverwriteFix()
+		{
+			VerifyCSharpFix(LongMethodWithOutdatedAnnotation, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
 
 		static string LongMethodFixed => @"
 using System;
@@ -277,7 +265,49 @@ namespace ConsoleApplication1
 }
 ";
 
-		static string LongMethod => @"
+		static string LongMethodWithOutdatedAnnotation => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+
+namespace ConsoleApplication1
+{
+    class LongMethodClass
+    {
+        [DebtMethod(LineCount = 5, ParameterCount = 0)]
+        void MyLongMethod()
+        {
+			int a1;
+			int a2;
+			int a3;
+			int a4;
+			int a5;
+			int a6;
+			int a7;
+			int a8;
+			int a9;
+			int a10;
+			int a11;
+			int a12;
+			int a13;
+			int a14;
+			int a15;
+			int a16;
+			int a17;
+			int a18;
+			int a19;
+			int a20;
+			int a21;
+			int a22;
+        }
+    }
+}
+";
+	
+	static string LongMethod => @"
 using System;
 using System.Collections.Generic;
 using System.Linq;

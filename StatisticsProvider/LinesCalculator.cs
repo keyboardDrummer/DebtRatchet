@@ -42,7 +42,10 @@ namespace StatisticsProvider
 		{
 			this.assembly = assembly;
 			MaxLineCount = MethodLengthAnalyzer.GetMaxLineCount(assembly);
+			MethodStatistics.FatLineCount = MaxLineCount;
+
 			MaxParameterCount = MethodParameterCountAnalyzer.GetMaxParameterCount(assembly);
+			MethodStatistics.MaxParameterCount = MaxParameterCount;
 		}
 
 		public override void VisitClassDeclaration(ClassDeclarationSyntax node)

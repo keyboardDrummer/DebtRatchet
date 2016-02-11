@@ -8,12 +8,13 @@ namespace StatisticsProvider
 		public int FatMethodCount { get; set; }
 		public int MethodsWithTooManyParameters { get; set;  }
 		public int TotalParameters { get; set; }
+		public int? FatLineCount { get; set; }
+		public int? MaxParameterCount { get; set; }
 
-		public int FatLineCount { get; set; }
-
-		public MethodStatistics(int fatLineCount, int totalLines, int linesInFatMethods, int methodCount, int fatMethodCount, 
+		public MethodStatistics(int? fatLineCount, int? maxParameterCount, int totalLines, int linesInFatMethods, int methodCount, int fatMethodCount, 
 			int methodsWithTooManyParameters, int totalParameters)
 		{
+			MaxParameterCount = maxParameterCount;
 			FatLineCount = fatLineCount;
 			TotalLines = totalLines;
 			LinesInFatMethods = linesInFatMethods;
@@ -29,21 +30,32 @@ namespace StatisticsProvider
 
 		public MethodStatistics Concat(MethodStatistics other)
 		{
-			return new MethodStatistics(FatLineCount, TotalLines + other.TotalLines, LinesInFatMethods + other.LinesInFatMethods,
+			return new MethodStatistics(Combine(FatLineCount, other.FatLineCount), Combine(MaxParameterCount, other.MaxParameterCount), 
+				TotalLines + other.TotalLines, LinesInFatMethods + other.LinesInFatMethods,
 				MethodCount + other.MethodCount, FatMethodCount + other.FatMethodCount, 
 				MethodsWithTooManyParameters + other.MethodsWithTooManyParameters,
 				TotalParameters + other.TotalParameters);
 		}
 
+		public static int? Combine(int? first, int? second)
+		{
+			if (first.HasValue && second.HasValue && first.Value == second.Value)
+				return first;
+
+			return null;
+		}
+
 		public string Print()
 		{
-			return $"methodCount = {MethodCount}\n" +
-				   $"fatMethodCount = {FatMethodCount} ({(FatMethodCount / (double)MethodCount).ToString("P")})\n" +
-				   $"totalLinesInMethods = {TotalLines}\n" +
-				   $"averageLinesPerMethod = {(TotalLines / (double)MethodCount).ToString("N")}\n" +
-				   $"linesInFatMethods = {LinesInFatMethods} ({(LinesInFatMethods / (double)TotalLines).ToString("P")})\n" +
-				   $"averageMethodParameterCount = {(TotalParameters / (double)MethodCount).ToString("N")}\n" +
-				   $"methodsWithTooManyParameters = {MethodsWithTooManyParameters} ({(MethodsWithTooManyParameters / (double)MethodCount).ToString("P")})\n" +
+			return $"Methods with more than {FatLineCount} lines are fat." +
+				   $"A method with more than {MaxParameterCount} parameters has too many." +
+				   $"# of methods = {MethodCount}\n" +
+				   $"# of fat methods = {FatMethodCount} ({(FatMethodCount / (double)MethodCount).ToString("P")})\n" +
+				   $"$ lines in methods = {TotalLines}\n" +
+				   $"Average # of lines in methods = {(TotalLines / (double)MethodCount).ToString("N")}\n" +
+				   $"# of lines in fat methods = {LinesInFatMethods} ({(LinesInFatMethods / (double)TotalLines).ToString("P")})\n" +
+				   $"Average # of parameters per method = {(TotalParameters / (double)MethodCount).ToString("N")}\n" +
+				   $"# of methods with too many parameters = {MethodsWithTooManyParameters} ({(MethodsWithTooManyParameters / (double)MethodCount).ToString("P")})\n" +
 				   "";
 		}
 	}

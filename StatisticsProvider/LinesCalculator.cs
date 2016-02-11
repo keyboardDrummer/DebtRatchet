@@ -15,6 +15,17 @@ namespace StatisticsProvider
 			FieldsFound++;
 			base.VisitFieldDeclaration(node);
 		}
+
+		public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
+		{
+			if (node.AccessorList == null || !node.AccessorList.Accessors.Any())
+				return;
+
+			if (node.AccessorList.Accessors.First().Body == null)
+				FieldsFound++;
+
+			base.VisitPropertyDeclaration(node);
+		}
 	}
 
 	class LinesCalculator : CSharpSyntaxWalker

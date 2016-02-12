@@ -35,17 +35,15 @@ namespace StatisticsProvider
 		MethodStatistics MethodStatistics => statistics.MethodStatistics;
 		TypeStatistics TypeStatistics => statistics.TypeStatistics;
 
-		public int MaxLineCount { get; }
-		public int MaxParameterCount { get; }
-
 		public LinesCalculator(IAssemblySymbol assembly) : base(SyntaxWalkerDepth.Node)
 		{
 			this.assembly = assembly;
-			MaxLineCount = MethodLengthAnalyzer.GetMaxLineCount(assembly);
-			MethodStatistics.FatLineCount = MaxLineCount;
+			MethodStatistics.FatLineCount = MethodLengthAnalyzer.GetMaxLineCount(assembly);
 
-			MaxParameterCount = MethodParameterCountAnalyzer.GetMaxParameterCount(assembly);
-			MethodStatistics.MaxParameterCount = MaxParameterCount;
+			MethodStatistics.MaxParameterCount = MethodParameterCountAnalyzer.GetMaxParameterCount(assembly);
+
+			TypeStatistics.FatClassBoundary = 500;
+			TypeStatistics.TooManyFieldsBoundary = 10;
 		}
 
 		public override void VisitClassDeclaration(ClassDeclarationSyntax node)
@@ -55,7 +53,7 @@ namespace StatisticsProvider
 			TypeStatistics.TotalLines += classLineCount;
 			TypeStatistics.TotalClasses++;
 
-			if (classLineCount > 500)
+			if (classLineCount > TypeStatistics.FatClassBoundary)
 			{
 				TypeStatistics.LinesInFatClasses += classLineCount;
 				TypeStatistics.FatClasses++;
@@ -66,7 +64,7 @@ namespace StatisticsProvider
 			var fieldCount = fieldVisitor.FieldsFound;
 
 			TypeStatistics.TotalFields += fieldCount;
-			if (fieldCount > 10)
+			if (fieldCount > TypeStatistics.TooManyFieldsBoundary)
 			{
 				TypeStatistics.ClassesWithTooManyFields++;
 			}
@@ -76,14 +74,14 @@ namespace StatisticsProvider
 		public override void VisitMethodDeclaration(MethodDeclarationSyntax node)
 		{
 			var length = MethodLengthAnalyzer.GetMethodLength(node);
-			if (length > MaxLineCount)
+			if (length > MethodStatistics.FatLineCount)
 			{
 				MethodStatistics.LinesInFatMethods += length;
 				MethodStatistics.FatMethodCount++;
 			}
 
 			var parameterCount = node.ParameterList.Parameters.Count;
-			if (parameterCount > MaxParameterCount)
+			if (parameterCount > MethodStatistics.MaxParameterCount)
 			{
 				MethodStatistics.MethodsWithTooManyParameters++;
 			}

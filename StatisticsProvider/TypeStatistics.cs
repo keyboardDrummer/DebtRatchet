@@ -2,6 +2,8 @@ namespace StatisticsProvider
 {
 	class TypeStatistics
 	{
+		public int? FatClassBoundary { get; set; }
+		public int? TooManyFieldsBoundary { get; set; }
 		public int TotalLines { get; set; }
 		public int TotalClasses { get; set; }
 		public int TotalFields { get; set; }
@@ -9,8 +11,10 @@ namespace StatisticsProvider
 		public int LinesInFatClasses { get; set; }
 		public int ClassesWithTooManyFields { get; set; }
 
-		public TypeStatistics(int totalLines, int totalClasses, int totalFields, int fatClasses, int linesInFatClasses, int classesWithTooManyFields)
+		public TypeStatistics(int? fatClassBoundary, int? tooManyFieldsBoundary, int totalLines, int totalClasses, int totalFields, int fatClasses, int linesInFatClasses, int classesWithTooManyFields)
 		{
+			FatClassBoundary = fatClassBoundary;
+			TooManyFieldsBoundary = tooManyFieldsBoundary;
 			TotalLines = totalLines;
 			TotalClasses = totalClasses;
 			TotalFields = totalFields;
@@ -25,7 +29,9 @@ namespace StatisticsProvider
 
 		public TypeStatistics Concat(TypeStatistics other)
 		{
-			return new TypeStatistics(TotalLines + other.TotalLines, 
+			return new TypeStatistics(MethodStatistics.Combine(FatClassBoundary, other.FatClassBoundary),
+				MethodStatistics.Combine(TooManyFieldsBoundary, other.TooManyFieldsBoundary),
+				TotalLines + other.TotalLines, 
 				TotalClasses + other.TotalClasses, 
 				TotalFields + other.TotalFields, 
 				FatClasses + other.FatClasses,

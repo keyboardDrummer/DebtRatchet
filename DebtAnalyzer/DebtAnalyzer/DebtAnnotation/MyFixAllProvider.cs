@@ -59,17 +59,17 @@ namespace DebtAnalyzer.DebtAnnotation
 
 			public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
 			{
-				return VisitMethodBase(node);
+				return VisitMethodBase(node.Identifier, node);
 			}
 
 			public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
 			{
-				return VisitMethodBase(node);
+				return VisitMethodBase(node.Identifier, node);
 			}
 
-			SyntaxNode VisitMethodBase(BaseMethodDeclarationSyntax node)
+			SyntaxNode VisitMethodBase(SyntaxToken identifier, BaseMethodDeclarationSyntax node)
 			{
-				if (spans.Contains(node.GetLocation().GetLineSpan().StartLinePosition.Line))
+				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
 				{
 					var withoutDebtAnnotations = TechnicalDebtAnnotationProvider.RemoveExistingDebtAnnotations(node);
 					return TechnicalDebtAnnotationProvider.GetNewMethod(withoutDebtAnnotations);

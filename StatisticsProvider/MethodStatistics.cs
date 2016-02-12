@@ -47,16 +47,34 @@ namespace StatisticsProvider
 
 		public string Print()
 		{
-			return $"Methods with more than {FatLineCount} lines are fat." +
-				   $"A method with more than {MaxParameterCount} parameters has too many." +
+			return $"Methods with more than {FatLineCount} lines are fat.\n" +
+				   $"Methods with more than {MaxParameterCount} parameters have too many.\n" +
 				   $"# of methods = {MethodCount}\n" +
 				   $"# of fat methods = {FatMethodCount} ({(FatMethodCount / (double)MethodCount).ToString("P")})\n" +
-				   $"$ lines in methods = {TotalLines}\n" +
-				   $"Average # of lines in methods = {(TotalLines / (double)MethodCount).ToString("N")}\n" +
+				   $"# lines in methods = {TotalLines}\n" +
+				   $"Average # of lines per methods = {(TotalLines / (double)MethodCount).ToString("N")}\n" +
 				   $"# of lines in fat methods = {LinesInFatMethods} ({(LinesInFatMethods / (double)TotalLines).ToString("P")})\n" +
 				   $"Average # of parameters per method = {(TotalParameters / (double)MethodCount).ToString("N")}\n" +
 				   $"# of methods with too many parameters = {MethodsWithTooManyParameters} ({(MethodsWithTooManyParameters / (double)MethodCount).ToString("P")})\n" +
 				   "";
+		}
+
+		public void FoundMethod(int length, int parameterCount)
+		{
+			if (length > FatLineCount)
+			{
+				LinesInFatMethods += length;
+				FatMethodCount++;
+			}
+
+			if (parameterCount > MaxParameterCount)
+			{
+				MethodsWithTooManyParameters++;
+			}
+			TotalParameters += parameterCount;
+
+			TotalLines += length;
+			MethodCount++;
 		}
 	}
 }

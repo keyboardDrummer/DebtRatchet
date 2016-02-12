@@ -37,7 +37,6 @@ namespace StatisticsProvider
 			foreach (var project in projectStatistics.Keys)
 			{
 				Console.WriteLine($"Project statistics for {project.Name}:\n" + 
-					$"Max method length: {projectStatistics[project].MethodStatistics.FatLineCount}\n" + 
 					projectStatistics[project].Print());
 			}
 		}

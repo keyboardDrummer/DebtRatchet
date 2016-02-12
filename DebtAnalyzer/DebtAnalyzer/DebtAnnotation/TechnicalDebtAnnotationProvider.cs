@@ -74,6 +74,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			var newDocument = debtDocument.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project;
 		}
+
 		static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));

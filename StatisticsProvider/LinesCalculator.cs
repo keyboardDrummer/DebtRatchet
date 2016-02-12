@@ -1,5 +1,7 @@
 using System;
 using DebtAnalyzer;
+using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

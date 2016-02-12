@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.Attributes
 {
 	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Assembly, AllowMultiple = true)]
     public class DebtMethod : Attribute

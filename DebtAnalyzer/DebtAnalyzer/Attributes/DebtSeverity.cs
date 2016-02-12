@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.Attributes
 {
 	public enum Severity { Info, Warning, Error }
 

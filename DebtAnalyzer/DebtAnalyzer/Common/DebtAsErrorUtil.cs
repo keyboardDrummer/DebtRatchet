@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
+using DebtAnalyzer.Attributes;
 using Microsoft.CodeAnalysis;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.Common
 {
 	public static class DebtAsErrorUtil
 	{

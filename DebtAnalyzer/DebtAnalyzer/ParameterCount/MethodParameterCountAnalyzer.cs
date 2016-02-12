@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+using DebtAnalyzer.Attributes;
+using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.ParameterCount
 {
 	public class MethodParameterCountAnalyzer
 	{
@@ -38,8 +38,8 @@ namespace DebtAnalyzer
 
 		static int GetPreviousParameterCount(IMethodSymbol methodSymbol, Dictionary<string, DebtMethod> names)
 		{
-			var fromDirectAttribute = DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
-			var fullName = DebtAnalyzer.GetFullName(methodSymbol);
+			var fromDirectAttribute = DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
+			var fullName = DebtAnnotation.DebtAnalyzer.GetFullName(methodSymbol);
 			return (fromDirectAttribute ?? names.Get(fullName, () => null))?.ParameterCount ?? 0;
 		}
 

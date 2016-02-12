@@ -201,7 +201,7 @@ namespace ConsoleApplication1
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DebtAnalyzer();
+            return new DebtAnnotation.DebtAnalyzer();
         }
     }
 }

@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.Attributes
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class MaxMethodLength : Attribute

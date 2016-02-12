@@ -12,7 +12,7 @@ namespace DebtAnalyzer.Test
 	{
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
-			return new DebtAnalyzer();
+			return new DebtAnnotation.DebtAnalyzer();
 		}
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()

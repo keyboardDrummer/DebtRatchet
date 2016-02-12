@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.Common
 {
 	public static class DictionaryExtensions
 	{

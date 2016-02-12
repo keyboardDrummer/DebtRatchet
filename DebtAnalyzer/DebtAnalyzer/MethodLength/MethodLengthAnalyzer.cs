@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
+using DebtAnalyzer.Attributes;
+using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DebtAnalyzer
+namespace DebtAnalyzer.MethodLength
 {
 	public class MethodLengthAnalyzer
 	{
@@ -56,8 +58,8 @@ namespace DebtAnalyzer
 
 		static int GetPreviousMethodLength(IReadOnlyDictionary<string, DebtMethod> assemblyAnnotations, IMethodSymbol methodSymbol)
 		{
-			var fromDirectAttribute = DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
-			var fullName = DebtAnalyzer.GetFullName(methodSymbol);
+			var fromDirectAttribute = DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
+			var fullName = DebtAnnotation.DebtAnalyzer.GetFullName(methodSymbol);
 			return (fromDirectAttribute ?? assemblyAnnotations.Get(fullName, () => null))?.LineCount ?? 0;
 		}
 

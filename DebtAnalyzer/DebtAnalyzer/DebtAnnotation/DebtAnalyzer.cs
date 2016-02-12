@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using DebtAnalyzer.Attributes;
 using DebtAnalyzer.MethodLength;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;

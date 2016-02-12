@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer.Attributes
+namespace DebtAnalyzer
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class MaxParameters : Attribute

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using DebtAnalyzer.Attributes;
 using Microsoft.CodeAnalysis;
 
 namespace DebtAnalyzer.Common

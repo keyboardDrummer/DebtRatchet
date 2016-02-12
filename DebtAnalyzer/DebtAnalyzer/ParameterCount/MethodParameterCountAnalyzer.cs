@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using DebtAnalyzer.Attributes;
 using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;

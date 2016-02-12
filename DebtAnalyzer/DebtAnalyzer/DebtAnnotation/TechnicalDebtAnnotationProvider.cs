@@ -77,7 +77,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			return newDocument.Project;
 		}
 
-		static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
+		public static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));
 		}
@@ -94,7 +94,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			return newDocument.Project;
 		}
 
-		static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
+		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
 		{
 			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");
 			var usingDirectiveSyntax = SyntaxFactory.UsingDirective(
@@ -107,7 +107,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			return withUsing;
 		}
 
-		static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
+		public static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeListSyntax = GetAttributeListSyntax(methodBaseDecl);
 

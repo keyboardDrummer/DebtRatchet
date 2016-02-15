@@ -19,8 +19,6 @@ namespace DebtAnalyzer.DebtAnnotation
 	public class TechnicalDebtAnnotationProvider : CodeFixProvider
 	{
 		public const string Title = "Update technical debt annotation";
-		const bool DefaultUseExternalAttribute = false;
-		const string ExternalAnnotationsFileName = "TechDebtAnnotations.cs";
 
 		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
 			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
@@ -46,44 +44,6 @@ namespace DebtAnalyzer.DebtAnnotation
 
 		public static async Task<Project> AddDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
 		{
-			var sem = await document.GetSemanticModelAsync(cancellationToken);
-			var methodSymbol = sem.GetDeclaredSymbol(methodBaseDecl);
-			if (GetUseExternalAttributes(methodSymbol.ContainingAssembly))
-			{
-				return await AddExternalDebtAnnotation(document, methodSymbol, methodBaseDecl, cancellationToken);
-			}
-			return await AddInlineDebtAnnotation(document, methodBaseDecl, cancellationToken);
-		}
-
-		static bool GetUseExternalAttributes(IAssemblySymbol assembly)
-		{
-			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(GenerateExternalAttribute).Name && data.ConstructorArguments.Length > 0).
-				Select(data => data.ConstructorArguments[0].Value as bool?).FirstOrDefault() ?? DefaultUseExternalAttribute;
-		}
-
-		static async Task<Project> AddExternalDebtAnnotation(Document document, IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
-		{
-			var debtDocument = document.Project.Documents.FirstOrDefault(projectDocument => projectDocument.Name == ExternalAnnotationsFileName);
-			if (debtDocument == null)
-			{
-				debtDocument = document.Project.AddDocument(ExternalAnnotationsFileName, "");
-			}
-			var syntaxRoot = (CompilationUnitSyntax)await debtDocument.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
-
-			syntaxRoot = AddUsing(syntaxRoot);
-			syntaxRoot = syntaxRoot.AddAttributeLists(GetAttributeListSyntax(symbol, methodBaseDecl));
-
-			var newDocument = debtDocument.WithSyntaxRoot(syntaxRoot);
-			return newDocument.Project;
-		}
-
-		public static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
-		{
-			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));
-		}
-
-		static async Task<Project> AddInlineDebtAnnotation(Document document, BaseMethodDeclarationSyntax methodBaseDecl, CancellationToken cancellationToken)
-		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
 			var withoutDebtAnnotations = RemoveExistingDebtAnnotations(methodBaseDecl);
@@ -92,6 +52,11 @@ namespace DebtAnalyzer.DebtAnnotation
 
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project;
+		}
+
+		public static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
+		{
+			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));
 		}
 
 		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
@@ -121,18 +86,6 @@ namespace DebtAnalyzer.DebtAnnotation
 			return ((ConstructorDeclarationSyntax) methodBaseDecl).WithoutTrivia().
 				AddAttributeLists(attributeListSyntax).
 				WithTriviaFrom(methodBaseDecl);
-		}
-
-		public static AttributeListSyntax GetAttributeListSyntax(IMethodSymbol symbol, BaseMethodDeclarationSyntax methodBaseDecl)
-		{
-			var lineCountArgument = GetLineCountArgument(methodBaseDecl);
-			var parameterCountArgument = GetParameterCountArgument(methodBaseDecl);
-			var targetArgument = GetNamedAttributeArgument(nameof(DebtMethod.Target), '"' + DebtAnalyzer.GetFullName(symbol) + '"');
-			var attributeArgumentSyntaxs = new List<AttributeArgumentSyntax> { lineCountArgument, parameterCountArgument, targetArgument };
-			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(typeof(DebtMethod).Name), SyntaxFactory.AttributeArgumentList(SyntaxFactory.SeparatedList(attributeArgumentSyntaxs)));
-
-			return SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute)).WithTarget(
-				SyntaxFactory.AttributeTargetSpecifier(SyntaxFactory.Token(SyntaxKind.AssemblyKeyword)));
 		}
 
 		public static AttributeListSyntax GetAttributeListSyntax(BaseMethodDeclarationSyntax methodBaseDecl)

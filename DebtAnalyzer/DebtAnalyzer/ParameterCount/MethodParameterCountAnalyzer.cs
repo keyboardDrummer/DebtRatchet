@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis;
@@ -14,11 +13,11 @@ namespace DebtAnalyzer.ParameterCount
 		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
 		public const int DefaultMaximumParameterCount = 5;
 
-		public void AnalyzeSymbol(SymbolAnalysisContext context, Dictionary<string, DebtMethod> names)
+		public void AnalyzeSymbol(SymbolAnalysisContext context)
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
 			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
-			var previousParameterCount = GetPreviousParameterCount(methodSymbol, names);
+			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)
 			{
@@ -35,11 +34,9 @@ namespace DebtAnalyzer.ParameterCount
 			return new DiagnosticDescriptor(DiagnosticId, title, messageFormat, "Debt", severity, true);
 		}
 
-		static int GetPreviousParameterCount(IMethodSymbol methodSymbol, Dictionary<string, DebtMethod> names)
+		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
 		{
-			var fromDirectAttribute = DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
-			var fullName = DebtAnnotation.DebtAnalyzer.GetFullName(methodSymbol);
-			return (fromDirectAttribute ?? names.Get(fullName, () => null))?.ParameterCount ?? 0;
+			return DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
 		}
 
 		public static int GetMaxParameterCount(IAssemblySymbol assembly)

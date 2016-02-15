@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis;
@@ -14,13 +13,13 @@ namespace DebtAnalyzer.MethodLength
 
 		public const int DefaultMaximumMethodLength = 20;
 
-		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context, Dictionary<string, DebtMethod> names)
+		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{
 			var method = (MethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
-			var previousMethodLength = GetPreviousMethodLength(names, methodSymbol);
+			var previousMethodLength = GetPreviousMethodLength(methodSymbol);
 			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
@@ -55,11 +54,9 @@ namespace DebtAnalyzer.MethodLength
 			return endLine - startLine + 1;
 		}
 
-		static int GetPreviousMethodLength(IReadOnlyDictionary<string, DebtMethod> assemblyAnnotations, IMethodSymbol methodSymbol)
+		static int GetPreviousMethodLength(IMethodSymbol methodSymbol)
 		{
-			var fromDirectAttribute = DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault();
-			var fullName = DebtAnnotation.DebtAnalyzer.GetFullName(methodSymbol);
-			return (fromDirectAttribute ?? assemblyAnnotations.Get(fullName, () => null))?.LineCount ?? 0;
+			return DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
 		}
 
 		public static int GetMaxLineCount(IAssemblySymbol assembly)

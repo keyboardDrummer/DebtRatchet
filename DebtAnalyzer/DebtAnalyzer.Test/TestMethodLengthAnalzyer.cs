@@ -79,18 +79,7 @@ namespace DebtAnalyzer.Test
 	{
 		VerifyCSharpDiagnostic(new [] { DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation });
 	}
-
-	[TestMethod]
-	public void TestDiagnosticWithAssemblyDebtAnnotation()
-	{
-		VerifyCSharpDiagnostic(new[] { AssemblyDebtAnnotation, DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethod });
-	}
-
-		static string AssemblyDebtAnnotation => @"
-using DebtAnalyzer
-[assembly:DebtMethod(LineCount = 30, Target = ""ConsoleApplication1.LongMethodClass.MyLongMethod()"")]
-";
-
+		
 	static string LongMethodWithAnnotation => @"
  using System;
     using System.Collections.Generic;

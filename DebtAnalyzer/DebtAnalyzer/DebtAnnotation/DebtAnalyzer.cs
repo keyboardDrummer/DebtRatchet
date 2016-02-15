@@ -19,11 +19,8 @@ namespace DebtAnalyzer.DebtAnnotation
 		{
 			context.RegisterCompilationStartAction(startContext =>
 			{
-				var attributeDatas = startContext.Compilation.Assembly.GetAttributes();
-				var names = GetDebtMethods(attributeDatas).Where(debtMethod => debtMethod.Target != null).GroupBy(debtMethod => debtMethod.Target).
-					ToDictionary(targetGroup => targetGroup.First().Target, x => x.First());
-				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext, names), SyntaxKind.MethodDeclaration);
-				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext, names), SymbolKind.Method);
+				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext), SyntaxKind.MethodDeclaration);
+				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method);
 			});
 		}
 
@@ -49,13 +46,10 @@ namespace DebtAnalyzer.DebtAnnotation
 				result.LineCount = (namedArguments[LineCountName].Value as int?) ?? 0;
 			if (namedArguments.ContainsKey(ParameterCountName))
 				result.ParameterCount = (namedArguments[ParameterCountName].Value as int?) ?? 0;
-			if (namedArguments.ContainsKey(TargetName))
-				result.Target = namedArguments[TargetName].Value as string;
 			return result;
 		}
 
 		const string LineCountName = nameof(DebtMethod.LineCount);
-		const string TargetName = nameof(DebtMethod.Target);
 		const string ParameterCountName = nameof(DebtMethod.ParameterCount);
 	}
 }

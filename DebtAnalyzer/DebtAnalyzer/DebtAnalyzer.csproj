@@ -36,7 +36,6 @@
     <Compile Include="Common\DebtAsErrorUtil.cs" />
     <Compile Include="DebtAnnotation\DebtAnalyzer.cs" />
     <Compile Include="Common\DictionaryExtensions.cs" />
-    <Compile Include="Attributes\GenerateExternalAttribute.cs" />
     <Compile Include="DebtAnnotation\MyFixAllProvider.cs" />
     <Compile Include="DebtAnnotation\RemoveDebtMethods.cs" />
     <Compile Include="DebtAnnotation\RemoveEmptyAttributeLists.cs" />

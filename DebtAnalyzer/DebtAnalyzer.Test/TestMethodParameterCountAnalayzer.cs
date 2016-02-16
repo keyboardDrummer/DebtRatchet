@@ -52,7 +52,7 @@ namespace DebtAnalyzer.Test
             var expected = new DiagnosticResult
             {
                 Id = "MaxParameterCount",
-                Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 5."),
+                Message = "Method MyBadMethod2443 has 6 parameters while it should not have more than 5.",
                 Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
@@ -62,7 +62,6 @@ namespace DebtAnalyzer.Test
 
             VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, DebtAnalyzerTestUtil.DebtAsError }, expected);
         }
-
 
 		[TestMethod]
 		public void TestDiagnosticAnnotation()

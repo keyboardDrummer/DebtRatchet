@@ -31,7 +31,7 @@ namespace DebtAnalyzer.Test
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
-						new DiagnosticResultLocation("Test0.cs", 13, 9)
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
 					}
 			};
 
@@ -49,7 +49,7 @@ namespace DebtAnalyzer.Test
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
-						new DiagnosticResultLocation("Test0.cs", 13, 9)
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
 					}
 			};
 
@@ -67,7 +67,7 @@ namespace DebtAnalyzer.Test
 				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[] {
-						new DiagnosticResultLocation("Test0.cs", 13, 9)
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
 					}
 			};
 
@@ -183,6 +183,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
+
         [DebtMethod(LineCount = 22, ParameterCount = 0)]
         void MyLongMethod()
         {
@@ -225,6 +226,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
+
         void MyLongMethod()
         {
 			int a1;
@@ -266,6 +268,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
+
         [DebtMethod(LineCount = 5, ParameterCount = 0)]
         void MyLongMethod()
         {
@@ -308,6 +311,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
+
         void MyLongMethod()
         {
 			int a1;

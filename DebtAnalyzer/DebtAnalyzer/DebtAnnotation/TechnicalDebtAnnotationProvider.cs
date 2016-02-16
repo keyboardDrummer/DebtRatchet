@@ -46,17 +46,35 @@ namespace DebtAnalyzer.DebtAnnotation
 		{
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
-			var withoutDebtAnnotations = RemoveExistingDebtAnnotations(methodBaseDecl);
-			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(withoutDebtAnnotations));
+			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(methodBaseDecl));
 			syntaxRoot = AddUsing(syntaxRoot);
 
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project;
 		}
 
-		public static BaseMethodDeclarationSyntax RemoveExistingDebtAnnotations(BaseMethodDeclarationSyntax methodBaseDecl)
+		public static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
-			return (BaseMethodDeclarationSyntax)new RemoveEmptyAttributeLists().Visit(new RemoveDebtMethods().Visit(methodBaseDecl));
+			var attributeSyntax = GetAttribute(methodBaseDecl);
+			var removeDebtMethods = new RemoveDebtMethods(attributeSyntax);
+			var withoutOldMethod = (BaseMethodDeclarationSyntax)removeDebtMethods.Visit(methodBaseDecl);
+			return removeDebtMethods.NewAttribute != null ? AddAttributeToMethod(attributeSyntax, withoutOldMethod) : withoutOldMethod;
+		}
+
+		static BaseMethodDeclarationSyntax AddAttributeToMethod(AttributeSyntax attributeSyntax, BaseMethodDeclarationSyntax withoutOldMethod)
+		{
+			var attributeListSyntax = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attributeSyntax));
+
+			var methodDecl = withoutOldMethod as MethodDeclarationSyntax;
+			if (methodDecl != null)
+			{
+				return methodDecl.WithoutTrivia().
+					AddAttributeLists(attributeListSyntax).
+					WithTriviaFrom(withoutOldMethod);
+			}
+			return ((ConstructorDeclarationSyntax) withoutOldMethod).WithoutTrivia().
+				AddAttributeLists(attributeListSyntax).
+				WithTriviaFrom(withoutOldMethod);
 		}
 
 		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
@@ -66,37 +84,19 @@ namespace DebtAnalyzer.DebtAnnotation
 				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
 				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
 
-			var withUsing = syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText) 
+			return syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText) 
 				? syntaxRoot.AddUsings(usingDirectiveSyntax) 
 				: syntaxRoot;
-			return withUsing;
 		}
 
-		public static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
-		{
-			var attributeListSyntax = GetAttributeListSyntax(methodBaseDecl);
-
-			var methodDecl = methodBaseDecl as MethodDeclarationSyntax;
-			if (methodDecl != null)
-			{
-				return methodDecl.WithoutTrivia().
-					AddAttributeLists(attributeListSyntax).
-					WithTriviaFrom(methodBaseDecl);
-			}
-			return ((ConstructorDeclarationSyntax) methodBaseDecl).WithoutTrivia().
-				AddAttributeLists(attributeListSyntax).
-				WithTriviaFrom(methodBaseDecl);
-		}
-
-		public static AttributeListSyntax GetAttributeListSyntax(BaseMethodDeclarationSyntax methodBaseDecl)
+		static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeType = typeof (DebtMethod);
 			var lineCountArgument = GetLineCountArgument(methodBaseDecl);
 			var parameterCountArgument = GetParameterCountArgument(methodBaseDecl);
 			var attributeArgumentSyntaxs = new List<AttributeArgumentSyntax> {lineCountArgument, parameterCountArgument};
 			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(SyntaxFactory.SeparatedList(attributeArgumentSyntaxs)));
-			
-			return SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attribute));
+			return attribute;
 		}
 
 		static AttributeArgumentSyntax GetParameterCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)

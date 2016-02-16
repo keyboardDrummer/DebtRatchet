@@ -6,9 +6,12 @@ namespace DebtAnalyzer.DebtAnnotation
 {
 	class RemoveDebtMethods : CSharpSyntaxRewriter
 	{
-		public RemoveDebtMethods() : base(false)
+		public RemoveDebtMethods(AttributeSyntax newAttribute) : base(false)
 		{
+			NewAttribute = newAttribute;
 		}
+
+		public AttributeSyntax NewAttribute { get; private set; }
 
 		public override SyntaxNode VisitAttributeList(AttributeListSyntax node)
 		{
@@ -21,7 +24,12 @@ namespace DebtAnalyzer.DebtAnnotation
 		public override SyntaxNode VisitAttribute(AttributeSyntax node)
 		{
 			if (node.Name.ToString() == nameof(DebtMethod))
-				return null;
+			{
+				if (NewAttribute == null) return null;
+				var value = NewAttribute;
+				NewAttribute = null;
+				return value;
+			}
 
 			return base.VisitAttribute(node);
 		}

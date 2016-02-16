@@ -71,8 +71,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			{
 				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
 				{
-					var withoutDebtAnnotations = TechnicalDebtAnnotationProvider.RemoveExistingDebtAnnotations(node);
-					return TechnicalDebtAnnotationProvider.GetNewMethod(withoutDebtAnnotations);
+					return TechnicalDebtAnnotationProvider.GetNewMethod(node);
 				}
 				return node;
 			}

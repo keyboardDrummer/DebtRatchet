@@ -1,5 +1,6 @@
 using System.Linq;
 using DebtAnalyzer.Common;
+using DebtAnalyzer.DebtAnnotation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 
@@ -16,7 +17,7 @@ namespace DebtAnalyzer.ParameterCount
 		public void AnalyzeSymbol(SymbolAnalysisContext context)
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
-			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
+			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly); //TODO Gek dat dit steeds opnieuw opgezocht moet worden. 
 			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)
@@ -36,7 +37,7 @@ namespace DebtAnalyzer.ParameterCount
 
 		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
 		{
-			return DebtAnnotation.DebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
+			return DebtDiagnosticAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
 		}
 
 		public static int GetMaxParameterCount(IAssemblySymbol assembly)

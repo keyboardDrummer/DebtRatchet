@@ -1,6 +1,6 @@
 namespace StatisticsProvider
 {
-	class MethodStatistics
+	public class MethodStatistics
 	{
 		public int TotalLines { get; set; }
 		public int LinesInFatMethods { get; set; }

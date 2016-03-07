@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace DebtAnalyzer.DebtAnnotation
 {
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class DebtAnalyzer : DiagnosticAnalyzer
+	public class DebtDiagnosticAnalyzer : DiagnosticAnalyzer
 	{
 		readonly MethodLengthAnalyzer lengthAnalyzer = new MethodLengthAnalyzer();
 		readonly MethodParameterCountAnalyzer parameterCountAnalyzer = new MethodParameterCountAnalyzer();
@@ -20,7 +20,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext), SyntaxKind.MethodDeclaration);
-				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method);
+				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method); //TODO het is gek dat de een symbol is en de andere syntax.
 			});
 		}
 

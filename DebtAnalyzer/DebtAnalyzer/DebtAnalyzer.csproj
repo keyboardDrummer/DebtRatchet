@@ -34,7 +34,7 @@
   <ItemGroup>
     <Compile Include="Attributes\DebtSeverity.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />
-    <Compile Include="DebtAnnotation\DebtAnalyzer.cs" />
+    <Compile Include="DebtAnnotation\DebtDiagnosticAnalyzer.cs" />
     <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="DebtAnnotation\MyFixAllProvider.cs" />
     <Compile Include="DebtAnnotation\RemoveDebtMethods.cs" />

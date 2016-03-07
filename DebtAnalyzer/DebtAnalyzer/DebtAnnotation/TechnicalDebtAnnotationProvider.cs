@@ -89,14 +89,13 @@ namespace DebtAnalyzer.DebtAnnotation
 				: syntaxRoot;
 		}
 
-		static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)
+		public static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeType = typeof (DebtMethod);
 			var lineCountArgument = GetLineCountArgument(methodBaseDecl);
 			var parameterCountArgument = GetParameterCountArgument(methodBaseDecl);
 			var attributeArgumentSyntaxs = new List<AttributeArgumentSyntax> {lineCountArgument, parameterCountArgument};
-			var attribute = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(SyntaxFactory.SeparatedList(attributeArgumentSyntaxs)));
-			return attribute;
+			return SyntaxFactory.Attribute(SyntaxFactory.IdentifierName(attributeType.Name), SyntaxFactory.AttributeArgumentList(SyntaxFactory.SeparatedList(attributeArgumentSyntaxs)));
 		}
 
 		static AttributeArgumentSyntax GetParameterCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)

@@ -1,6 +1,6 @@
 namespace StatisticsProvider
 {
-	class TypeStatistics
+	public class TypeStatistics
 	{
 		public int? FatClassBoundary { get; set; }
 		public int? TooManyFieldsBoundary { get; set; }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -14,21 +16,19 @@ namespace ÀttributeUpdater
 {
 	public static class MissingAttributeAdder
 	{
-		public static async Task AddMissingAttributes(Solution solution)
+		public static async Task<Solution> AddMissingAttributes(Solution solution)
 		{
 			var analyzer = new DebtDiagnosticAnalyzer();
 			var project = solution.Projects.First();
 
-			//TODO dit gaat niet werken omdat hij bestaande attributes niet update. Hij voegt alleen missende toe.
-			var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
-			var diagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
-			var fixer = new MyFixAllProvider();
-			IEnumerable<string> diagnosticIds = diagnostics.Select(d => d.Id);
-			var fixAllContext = new FixAllContext(project, new TechnicalDebtAnnotationProvider(), FixAllScope.Solution, "", diagnosticIds, new Provider(diagnostics), CancellationToken.None);
-			var fixAction = await fixer.GetFixAsync(fixAllContext);
-			var operations = fixAction.GetOperationsAsync(CancellationToken.None).Result;
-			var newSolution = operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
-			newSolution.Workspace.TryApplyChanges(newSolution);
+			var compilation = await project.GetCompilationAsync();
+			var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
+			var diagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer), CancellationToken.None);
+			var fixAllContext = new FixAllContext(project, new TechnicalDebtAnnotationProvider(), FixAllScope.Solution, "", 
+				diagnostics.Select(d => d.Id), new Provider(diagnostics), CancellationToken.None);
+			var fixAction = await new MyFixAllProvider().GetFixAsync(fixAllContext);
+			var operations = await fixAction.GetOperationsAsync(CancellationToken.None);
+			return operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
 		}
 
 		class Provider : FixAllContext.DiagnosticProvider

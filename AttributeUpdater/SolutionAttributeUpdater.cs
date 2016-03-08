@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 
-namespace ÀttributeUpdater
+namespace AttributeUpdater
 {
 	public static class SolutionAttributeUpdater
 	{

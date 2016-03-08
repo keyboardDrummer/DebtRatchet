@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TestHelper;
 
-namespace ÀttributeUpdater.Test
+namespace AttributeUpdater.Test
 {
 	[TestClass]
 	public class SolutionAttributeUpdaterTests

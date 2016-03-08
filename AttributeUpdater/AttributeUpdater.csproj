@@ -7,8 +7,8 @@
     <ProjectGuid>{86886822-D662-43C3-BCC7-24FF274E847C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ÀttributeUpdater</RootNamespace>
-    <AssemblyName>ÀttributeUpdater</AssemblyName>
+    <RootNamespace>AttributeUpdater</RootNamespace>
+    <AssemblyName>AttributeUpdater</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

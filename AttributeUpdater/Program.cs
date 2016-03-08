@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 
-namespace ÀttributeUpdater
+namespace AttributeUpdater
 {
 	class Program
 	{
@@ -19,7 +19,8 @@ namespace ÀttributeUpdater
 		static async Task UpdateAnnotations(string solutionPath)
 		{
 			var solution = await GetSolution(solutionPath);
-			await MissingAttributeAdder.AddMissingAttributes(solution);
+			var newSolution = await SolutionAttributeUpdater.UpdateAttributes(solution);
+			solution.Workspace.TryApplyChanges(newSolution);
 		}
 
 		private static async Task<Solution> GetSolution(string path)

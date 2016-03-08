@@ -6,7 +6,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
 
-namespace ÀttributeUpdater
+namespace AttributeUpdater
 {
 	class ClassAttributeUpdater : CSharpSyntaxRewriter
 	{

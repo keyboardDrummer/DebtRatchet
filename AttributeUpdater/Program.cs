@@ -16,18 +16,13 @@ namespace AttributeUpdater
 			UpdateAnnotations(solutionPath).Wait();
 		}
 
-		static async Task UpdateAnnotations(string solutionPath)
-		{
-			var solution = await GetSolution(solutionPath);
-			var newSolution = await SolutionAttributeUpdater.UpdateAttributes(solution);
-			solution.Workspace.TryApplyChanges(newSolution);
-		}
-
-		private static async Task<Solution> GetSolution(string path)
+		static async Task<bool> UpdateAnnotations(string solutionPath)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{
-				return await workspace.OpenSolutionAsync(path);
+				var solution = await workspace.OpenSolutionAsync(solutionPath);
+				var newSolution = await SolutionAttributeUpdater.UpdateAttributes(solution);
+				return workspace.TryApplyChanges(newSolution);
 			}
 		}
 	}

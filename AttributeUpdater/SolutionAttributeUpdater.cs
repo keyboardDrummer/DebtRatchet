@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 
@@ -11,8 +13,10 @@ namespace AttributeUpdater
 			foreach (var projectId in solution.ProjectIds)
 			{
 				var project = result.GetProject(projectId);
-				foreach (var document in project.Documents)
+				var documentIds = project.DocumentIds.ToList();
+				foreach (var documentId in documentIds)
 				{
+					var document = project.GetDocument(documentId);
 					var newDocument = await UpdateAttributes(document);
 					project = newDocument.Project;
 				}

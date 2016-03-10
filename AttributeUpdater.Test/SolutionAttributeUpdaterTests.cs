@@ -15,11 +15,15 @@ namespace AttributeUpdater.Test
 		[TestMethod]
 		public void TestUpdate()
 		{
-			var project = DiagnosticVerifier.CreateProject(new[] {OutdatedAnnotationProgram});
+			var project = DiagnosticVerifier.CreateProject(new[] { OutdatedAnnotationProgram, OutdatedAnnotationProgram });
 			var newSolution = SolutionAttributeUpdater.UpdateAttributes(project.Solution).Result;
 			var document = newSolution.Projects.SelectMany(newProject => newProject.Documents).First();
 			var documentText = CodeFixVerifier.GetStringFromDocument(document);
 			Assert.AreEqual(FixedProgram, documentText);
+
+			var document2 = newSolution.Projects.SelectMany(newProject => newProject.Documents).Skip(1).First();
+			var documentText2 = CodeFixVerifier.GetStringFromDocument(document2);
+			Assert.AreEqual(FixedProgram, documentText2);
 		}
 
 		public static string OutdatedAnnotationProgram => @"

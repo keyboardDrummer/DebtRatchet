@@ -20,15 +20,15 @@ namespace DebtAnalyzer.DebtAnnotation
 	{
 		public const string Title = "Update technical debt annotation";
 
-		public override sealed ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
+		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
 			MethodParameterCountAnalyzer.DiagnosticId, MethodLengthAnalyzer.DiagnosticId);
 
-		public override sealed FixAllProvider GetFixAllProvider()
+		public sealed override FixAllProvider GetFixAllProvider()
 		{
 			return new MyFixAllProvider();
 		}
 
-		public override sealed async Task RegisterCodeFixesAsync(CodeFixContext context)
+		public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)
 		{
 			var syntaxRoot = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 			
@@ -107,8 +107,7 @@ namespace DebtAnalyzer.DebtAnnotation
 		static AttributeArgumentSyntax GetLineCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodBaseDecl);
-			var lineCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
-			return lineCountArgument;
+			return GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
 		}
 
 		static AttributeArgumentSyntax GetNamedAttributeArgument(string parameterName, object parameterValue)

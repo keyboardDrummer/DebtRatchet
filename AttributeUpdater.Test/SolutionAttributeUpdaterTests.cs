@@ -15,16 +15,66 @@ namespace AttributeUpdater.Test
 		[TestMethod]
 		public void TestUpdate()
 		{
-			var project = DiagnosticVerifier.CreateProject(new[] { OutdatedAnnotationProgram, OutdatedAnnotationProgram });
+			var project = DiagnosticVerifier.CreateProject(new[] { OutdatedAnnotationProgram, OutdatedAnnotationProgram, ProgramWithUnnecessaryAnnotation });
 			var newSolution = SolutionAttributeUpdater.UpdateAttributes(project.Solution).Result;
 			var document = newSolution.Projects.SelectMany(newProject => newProject.Documents).First();
-			var documentText = CodeFixVerifier.GetStringFromDocument(document);
-			Assert.AreEqual(FixedProgram, documentText);
+			Assert.AreEqual(FixedProgram, CodeFixVerifier.GetStringFromDocument(document));
 
 			var document2 = newSolution.Projects.SelectMany(newProject => newProject.Documents).Skip(1).First();
-			var documentText2 = CodeFixVerifier.GetStringFromDocument(document2);
-			Assert.AreEqual(FixedProgram, documentText2);
+			Assert.AreEqual(FixedProgram, CodeFixVerifier.GetStringFromDocument(document2));
+
+			var document3 = newSolution.Projects.SelectMany(newProject => newProject.Documents).Skip(2).First();
+			Assert.AreEqual(ProgramWithoutAnnotationNeeded, CodeFixVerifier.GetStringFromDocument(document3));
 		}
+
+		public static string ProgramWithUnnecessaryAnnotation => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        [DebtMethod(LineCount = 1, ParameterCount = 8)]
+        void MyBadMethod2443(int a, int b, int c)
+        {
+
+        }
+    }
+}
+";
+
+		public static string ProgramWithoutAnnotationNeeded => @"
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Diagnostics;
+using DebtAnalyzer;
+
+namespace ConsoleApplication1
+{
+    class TypeName
+    {
+        /// <summary>
+        /// 
+        /// </summary>
+        void MyBadMethod2443(int a, int b, int c)
+        {
+
+        }
+    }
+}
+";
 
 		public static string OutdatedAnnotationProgram => @"
 using System;

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 
 namespace AttributeUpdater
@@ -14,10 +16,13 @@ namespace AttributeUpdater
 			{
 				var project = result.GetProject(projectId);
 				var documentIds = project.DocumentIds.ToList();
+				var compilation = await project.GetCompilationAsync();
+				var maxParameters = MethodParameterCountAnalyzer.GetMaxParameterCount(compilation.Assembly);
+				var maxMethodLength = MethodLengthAnalyzer.GetMaxLineCount(compilation.Assembly);
 				foreach (var documentId in documentIds)
 				{
 					var document = project.GetDocument(documentId);
-					var newDocument = await UpdateAttributes(document);
+					var newDocument = await UpdateAttributes(document, maxParameters, maxMethodLength);
 					project = newDocument.Project;
 				}
 				result = project.Solution;
@@ -25,10 +30,10 @@ namespace AttributeUpdater
 			return result;
 		}
 
-		static async Task<Document> UpdateAttributes(Document document)
+		private static async Task<Document> UpdateAttributes(Document document, int maxParameters, int maxMethodLength)
 		{
 			var root = await document.GetSyntaxRootAsync();
-			var newRoot = new ClassAttributeUpdater(document.Project.Solution.Workspace).Visit(root);
+			var newRoot = new ClassAttributeUpdater(document.Project.Solution.Workspace, maxParameters, maxMethodLength).Visit(root);
 			return document.WithSyntaxRoot(newRoot);
 		}
 	}

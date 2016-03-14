@@ -10,77 +10,7 @@ namespace DebtAnalyzer.Test
 	[TestClass]
 	public class TestMethodLengthAnalzyer : CodeFixVerifier
 	{
-		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-		{
-			return new DebtAnnotation.DebtDiagnosticAnalyzer();
-		}
-
-		protected override CodeFixProvider GetCSharpCodeFixProvider()
-		{
-			return new TechnicalDebtAnnotationProvider();
-		}
-
-		[TestMethod]
-		public void TestDiagnosticWithCustomSettings()
-		{
-			var test = LongMethod;
-			var expected = new DiagnosticResult
-			{
-				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 5 lines.",
-				Severity = DiagnosticSeverity.Info,
-				Locations =
-					new[] {
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
-					}
-			};
-
-			VerifyCSharpDiagnostic(new [] { test, MaximumMethodLengthFive}, expected);
-		}
-
-		[TestMethod]
-		public void TestDiagnostic()
-		{
-			var test = LongMethod;
-			var expected = new DiagnosticResult
-			{
-				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
-				Severity = DiagnosticSeverity.Info,
-				Locations =
-					new[] {
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
-					}
-			};
-
-			VerifyCSharpDiagnostic(test, expected);
-		}
-
-		[TestMethod]
-		public void TestDiagnosticAsError()
-		{
-			var test = LongMethod;
-			var expected = new DiagnosticResult
-			{
-				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
-				Severity = DiagnosticSeverity.Error,
-				Locations =
-					new[] {
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
-					}
-			};
-
-			VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtAsError} , expected);
-		}
-
-	[TestMethod]
-	public void TestDiagnosticWithDebtAnnotation()
-	{
-		VerifyCSharpDiagnostic(new [] { DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation });
-	}
-		
-	static string LongMethodWithAnnotation => @"
+		static string LongMethodWithAnnotation => @"
  using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -233,36 +163,6 @@ namespace ConsoleApplication1
 		}
     }";
 
-		[TestMethod]
-		public void TestExternalFixNoDoubleUsing()
-		{
-			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
-		}
-
-		[TestMethod]
-		public void TestFixNoDoubleUsing()
-		{
-			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
-		}
-
-		[TestMethod]
-		public void TestConstructorFix()
-		{
-			VerifyCSharpFix(LongConstructor, LongConstructorFixed, allowNewCompilerDiagnostics: true);
-		}
-
-		[TestMethod]
-		public void TestFix()
-		{
-			VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
-		}
-
-		[TestMethod]
-		public void TestOverwriteFix()
-		{
-			VerifyCSharpFix(LongMethodWithOutdatedAnnotation, LongMethodFixed, allowNewCompilerDiagnostics: true);
-		}
-
 		static string LongMethodFixed => @"
 using System;
 using System.Collections.Generic;
@@ -391,8 +291,16 @@ namespace ConsoleApplication1
     }
 }
 ";
-	
-	static string LongMethod => @"
+		static string AbstractMethod => @"
+namespace ConsoleApplication1
+{
+    class AbstractMethodClass
+    {
+          protected abstract void AbstractMethod();
+    }
+}
+";
+		static string LongMethod => @"
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -433,5 +341,114 @@ namespace ConsoleApplication1
     }
 }
 ";
+
+		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
+		{
+			return new DebtDiagnosticAnalyzer();
+		}
+
+		protected override CodeFixProvider GetCSharpCodeFixProvider()
+		{
+			return new TechnicalDebtAnnotationProvider();
+		}
+
+		[TestMethod]
+		public void TestDiagnosticWithCustomSettings()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalyzer",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 5 lines.",
+				Severity = DiagnosticSeverity.Info,
+				Locations =
+					new[]
+					{
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
+					}
+			};
+
+			VerifyCSharpDiagnostic(new[] {test, MaximumMethodLengthFive}, expected);
+		}
+
+		[TestMethod]
+		public void TestDiagnosticForAbstractMethod()
+		{
+			VerifyCSharpDiagnostic(new[] {AbstractMethod});
+		}
+
+		[TestMethod]
+		public void TestDiagnostic()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalyzer",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
+				Severity = DiagnosticSeverity.Info,
+				Locations =
+					new[]
+					{
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
+					}
+			};
+
+			VerifyCSharpDiagnostic(test, expected);
+		}
+
+		[TestMethod]
+		public void TestDiagnosticAsError()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalyzer",
+				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
+				Severity = DiagnosticSeverity.Error,
+				Locations =
+					new[]
+					{
+						new DiagnosticResultLocation("Test0.cs", 14, 9)
+					}
+			};
+
+			VerifyCSharpDiagnostic(new[] {test, DebtAnalyzerTestUtil.DebtAsError}, expected);
+		}
+
+		[TestMethod]
+		public void TestDiagnosticWithDebtAnnotation()
+		{
+			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation});
+		}
+
+		[TestMethod]
+		public void TestExternalFixNoDoubleUsing()
+		{
+			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
+
+		[TestMethod]
+		public void TestFixNoDoubleUsing()
+		{
+			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
+
+		[TestMethod]
+		public void TestConstructorFix()
+		{
+			VerifyCSharpFix(LongConstructor, LongConstructorFixed, allowNewCompilerDiagnostics: true);
+		}
+
+		[TestMethod]
+		public void TestFix()
+		{
+			VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
+
+		[TestMethod]
+		public void TestOverwriteFix()
+		{
+			VerifyCSharpFix(LongMethodWithOutdatedAnnotation, LongMethodFixed, allowNewCompilerDiagnostics: true);
+		}
 	}
 }

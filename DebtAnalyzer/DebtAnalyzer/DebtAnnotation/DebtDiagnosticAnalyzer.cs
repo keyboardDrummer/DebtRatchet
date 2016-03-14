@@ -20,7 +20,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext), SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration);
-				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method); //TODO het is gek dat de een symbol is en de andere syntax.
+				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method);
 			});
 		}
 

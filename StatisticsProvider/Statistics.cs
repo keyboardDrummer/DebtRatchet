@@ -44,9 +44,9 @@ namespace StatisticsProvider
 			return new Statistics(TypeStatistics.Concat(other.TypeStatistics), MethodStatistics.Concat(other.MethodStatistics));
 		}
 
-		public string Print()
+		public string Print(bool onlyNumbers)
 		{
-			return TypeStatistics.Print() + "\n" + MethodStatistics.Print();
+			return TypeStatistics.Print(onlyNumbers) + "\n" + MethodStatistics.Print(onlyNumbers);
 		}
 	}
 }

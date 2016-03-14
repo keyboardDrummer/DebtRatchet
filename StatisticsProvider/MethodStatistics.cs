@@ -45,17 +45,32 @@ namespace StatisticsProvider
 			return null;
 		}
 
-		public string Print()
+		public string Print(bool onlyNumbers)
 		{
+			var averageNumberOfParametersPerMethod = TotalParameters / (double)MethodCount;
+			var averageNumberOfLinesPerMethod = TotalLines / (double)MethodCount;
+			var linesInFatMethodsPercentage = (LinesInFatMethods / (double)TotalLines).ToString("P");
+			var fatMethodCountPercentage = (FatMethodCount / (double)MethodCount).ToString("P");
+			var methodsWithTooManyParametersPercentage = (MethodsWithTooManyParameters / (double)MethodCount).ToString("P");
+			if (onlyNumbers)
+			{
+				return $"{MethodCount}\n" +
+					   $"{fatMethodCountPercentage}\n" +
+					   $"{TotalLines}\n" +
+					   $"{averageNumberOfLinesPerMethod}\n" +
+					   $"{linesInFatMethodsPercentage}\n" +
+					   $"{averageNumberOfParametersPerMethod.ToString("N")}\n" +
+					   $"{methodsWithTooManyParametersPercentage}\n";
+			}
 			return $"Methods with more than {FatLineCount} lines are fat.\n" +
 				   $"Methods with more than {MaxParameterCount} parameters have too many.\n" +
 				   $"# of methods = {MethodCount}\n" +
-				   $"# of fat methods = {FatMethodCount} ({(FatMethodCount / (double)MethodCount).ToString("P")})\n" +
+				   $"# of fat methods = {FatMethodCount} ({fatMethodCountPercentage})\n" +
 				   $"# lines in methods = {TotalLines}\n" +
-				   $"Average # of lines per methods = {(TotalLines / (double)MethodCount).ToString("N")}\n" +
-				   $"# of lines in fat methods = {LinesInFatMethods} ({(LinesInFatMethods / (double)TotalLines).ToString("P")})\n" +
-				   $"Average # of parameters per method = {(TotalParameters / (double)MethodCount).ToString("N")}\n" +
-				   $"# of methods with too many parameters = {MethodsWithTooManyParameters} ({(MethodsWithTooManyParameters / (double)MethodCount).ToString("P")})\n" +
+				   $"Average # of lines per methods = {averageNumberOfLinesPerMethod.ToString("N")}\n" +
+				   $"# of lines in fat methods = {LinesInFatMethods} ({linesInFatMethodsPercentage})\n" +
+				   $"Average # of parameters per method = {averageNumberOfParametersPerMethod.ToString("N")}\n" +
+				   $"# of methods with too many parameters = {MethodsWithTooManyParameters} ({methodsWithTooManyParametersPercentage})\n" +
 				   "";
 		}
 

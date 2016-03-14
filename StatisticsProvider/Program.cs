@@ -12,18 +12,19 @@ namespace StatisticsProvider
 	{
 		static void Main(string[] args)
 		{
-			ProvideStatistics(args[0]).Wait();
+			var onlyNumbers = args.Contains("-n");
+			ProvideStatistics(args[0], onlyNumbers).Wait();
 		}
 
-		static async Task ProvideStatistics(string solutionPath)
+		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers)
 		{
 			Solution solution = await GetSolution(solutionPath);
 			var projectStatistics = await Statistics.GetProjectStatistics(solution);
 			var solutionStatistics = projectStatistics.Select(p => p.Value).Aggregate((a, b) => a.Concat(b));
-			Console.WriteLine("Solution statistics:" + Environment.NewLine + solutionStatistics.Print());
+			Console.WriteLine("Solution statistics:" + Environment.NewLine + solutionStatistics.Print(onlyNumbers));
 			foreach (var project in projectStatistics.Keys)
 			{
-				Console.WriteLine($"Project statistics for {project.Name}:\n" + projectStatistics[project].Print());
+				Console.WriteLine($"Project statistics for {project.Name}:\n" + projectStatistics[project].Print(onlyNumbers));
 			}
 		}
 

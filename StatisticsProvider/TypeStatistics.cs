@@ -39,17 +39,33 @@ namespace StatisticsProvider
 				ClassesWithTooManyFields + other.ClassesWithTooManyFields);
 		}
 
-		public string Print()
+		public string Print(bool onlyNumbers)
 		{
+			var averageNumberOfLinesPerClass = TotalLines / (double)TotalClasses;
+			var averageNumberOfFieldsPerClass = TotalFields / (double)TotalClasses;
+			var linesInFatClassesPercentage = (LinesInFatClasses / (double)TotalLines).ToString("P");
+			var numberOfFatClassesPercentage = (FatClasses / (double)TotalClasses).ToString("P");
+			var classesWithTooManyFieldsPercentage = (ClassesWithTooManyFields / (double)TotalClasses).ToString("P");
+			if (onlyNumbers)
+			{
+				return TotalClasses + "\n" +
+				       TotalLines + "\n" +
+				       averageNumberOfLinesPerClass + "\n" +
+					   numberOfFatClassesPercentage + "\n" +
+					   linesInFatClassesPercentage + "\n" +
+				       averageNumberOfFieldsPerClass + "\n" +
+					   classesWithTooManyFieldsPercentage;
+			}
+
 			return $"Classes with more than {FatClassBoundary} lines are fat\n" +
 				   $"Classes with more than {TooManyFieldsBoundary} fields have too many\n" +
 				   $"# of classes = {TotalClasses}\n" +
 				   $"# of lines = {TotalLines}\n" +
-				   $"Average # of lines per class = {(TotalLines / (double)TotalClasses).ToString("N")}\n" +
-				   $"# of fat classes = {FatClasses} ({(FatClasses / (double)TotalClasses).ToString("P")})\n" +
-				   $"# of lines in fat classes = {LinesInFatClasses} ({(LinesInFatClasses / (double)TotalLines).ToString("P")})\n" +
-				   $"Average # of fields per class = {(TotalFields / (double)TotalClasses).ToString("N")}\n" +
-				   $"# of classes with too many fields = {ClassesWithTooManyFields} ({(ClassesWithTooManyFields / (double)TotalClasses).ToString("P")})\n" +
+				   $"Average # of lines per class = {averageNumberOfLinesPerClass.ToString("N")}\n" +
+				   $"# of fat classes = {FatClasses} ({numberOfFatClassesPercentage})\n" +
+				   $"# of lines in fat classes = {LinesInFatClasses} ({linesInFatClassesPercentage})\n" +
+				   $"Average # of fields per class = {averageNumberOfFieldsPerClass.ToString("N")}\n" +
+				   $"# of classes with too many fields = {ClassesWithTooManyFields} ({classesWithTooManyFieldsPercentage})\n" +
 				   "";
 		}
 

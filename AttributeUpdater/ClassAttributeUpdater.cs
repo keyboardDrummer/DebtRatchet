@@ -11,15 +11,21 @@ namespace AttributeUpdater
 {
 	class ClassAttributeUpdater : CSharpSyntaxRewriter
 	{
-		private readonly Workspace workspace;
-		private readonly int maxParameters;
-		private readonly int maxMethodLength;
+		readonly int maxMethodLength;
+		readonly int maxParameters;
+		readonly Workspace workspace;
 
 		public ClassAttributeUpdater(Workspace workspace, int maxParameters, int maxMethodLength) : base(false)
 		{
 			this.workspace = workspace;
 			this.maxParameters = maxParameters;
 			this.maxMethodLength = maxMethodLength;
+		}
+
+		public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
+		{
+			var leadingTrivia = node.GetLeadingTrivia();
+			return base.VisitConstructorDeclaration(node).WithLeadingTrivia(leadingTrivia);
 		}
 
 		public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
@@ -30,7 +36,7 @@ namespace AttributeUpdater
 
 		public override SyntaxNode VisitAttributeList(AttributeListSyntax node)
 		{
-			var result = (AttributeListSyntax)base.VisitAttributeList(node);
+			var result = (AttributeListSyntax) base.VisitAttributeList(node);
 			return result.Attributes.Any() ? result : null;
 		}
 

@@ -7,13 +7,22 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace StatisticsProvider
 {
+	// ReSharper disable LocalizableElement
 	[TestClass]
 	public class Program
 	{
 		static void Main(string[] args)
 		{
-			var onlyNumbers = args.Contains("-n");
-			ProvideStatistics(args[0], onlyNumbers).Wait();
+			if (!args.Any())
+			{
+				Console.WriteLine("First argument should be a path to the solution file.");
+				Console.WriteLine("Add -n after the first argument to output only the raw numbers without descriptions.");
+			}
+			else
+			{
+				var onlyNumbers = args.Contains("-n");
+				ProvideStatistics(args[0], onlyNumbers).Wait();
+			}
 		}
 
 		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers)

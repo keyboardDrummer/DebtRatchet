@@ -37,7 +37,7 @@
     <Compile Include="DebtAnnotation\DebtDiagnosticAnalyzer.cs" />
     <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="DebtAnnotation\MyFixAllProvider.cs" />
-    <Compile Include="DebtAnnotation\RemoveDebtMethods.cs" />
+    <Compile Include="DebtAnnotation\UpdateOrAddDebtAttribute.cs" />
     <Compile Include="Attributes\MaxMethodLength.cs" />
     <Compile Include="Attributes\MaxParameters.cs" />
     <Compile Include="MethodLength\MethodLengthAnalyzer.cs" />

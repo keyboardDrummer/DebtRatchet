@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
@@ -56,25 +55,7 @@ namespace DebtAnalyzer.DebtAnnotation
 		public static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeSyntax = GetAttribute(methodBaseDecl);
-			var removeDebtMethods = new RemoveDebtMethods(attributeSyntax);
-			var withoutOldMethod = (BaseMethodDeclarationSyntax)removeDebtMethods.Visit(methodBaseDecl);
-			return removeDebtMethods.NewAttribute != null ? AddAttributeToMethod(attributeSyntax, withoutOldMethod) : withoutOldMethod;
-		}
-
-		static BaseMethodDeclarationSyntax AddAttributeToMethod(AttributeSyntax attributeSyntax, BaseMethodDeclarationSyntax withoutOldMethod)
-		{
-			var attributeListSyntax = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attributeSyntax));
-
-			var methodDecl = withoutOldMethod as MethodDeclarationSyntax;
-			if (methodDecl != null)
-			{
-				return methodDecl.WithoutTrivia().
-					AddAttributeLists(attributeListSyntax).
-					WithTriviaFrom(withoutOldMethod);
-			}
-			return ((ConstructorDeclarationSyntax) withoutOldMethod).WithoutTrivia().
-				AddAttributeLists(attributeListSyntax).
-				WithTriviaFrom(withoutOldMethod);
+			return (BaseMethodDeclarationSyntax)new UpdateOrAddDebtAttribute(attributeSyntax).Visit(methodBaseDecl);
 		}
 
 		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)

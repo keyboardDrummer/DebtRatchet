@@ -40,7 +40,7 @@ namespace DebtAnalyzer.MethodLength
 		{
 			SyntaxTree tree = method.SyntaxTree;
 			if (method.Body == null)
-				return 0; //TODO add testcase for abstract method.
+				return 0;
 
 			var lineSpan = tree.GetLineSpan(method.Body.Statements.Span);
 			return GetLineSpanLineCount(lineSpan);

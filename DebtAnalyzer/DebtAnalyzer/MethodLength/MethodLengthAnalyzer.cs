@@ -18,7 +18,7 @@ namespace DebtAnalyzer.MethodLength
 			var method = (MethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
-			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly); //TODO Gek dat dit steeds opnieuw opgezocht moet worden. 
+			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
 			var previousMethodLength = GetPreviousMethodLength(methodSymbol);
 			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{

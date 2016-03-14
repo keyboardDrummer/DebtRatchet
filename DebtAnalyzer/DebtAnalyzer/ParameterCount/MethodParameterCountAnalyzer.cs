@@ -17,7 +17,7 @@ namespace DebtAnalyzer.ParameterCount
 		public void AnalyzeSymbol(SymbolAnalysisContext context)
 		{
 			var methodSymbol = (IMethodSymbol)context.Symbol;
-			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly); //TODO Gek dat dit steeds opnieuw opgezocht moet worden. 
+			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
 			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
 			var parameterCount = methodSymbol.Parameters.Length;
 			if (parameterCount > previousParameterCount && parameterCount > maxParameterCount)

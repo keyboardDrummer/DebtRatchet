@@ -31,12 +31,6 @@ namespace DebtAnalyzer.DebtAnnotation
 		{
 			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(DebtMethod).Name).Select(ToDebtMethod);
 		}
-		
-		public static string GetFullName(IMethodSymbol methodSymbol)
-		{
-			string parametersString = $"{string.Join(",", methodSymbol.Parameters.Select(parameter => parameter.Type.ContainingNamespace + "." + parameter.Type.Name))}";
-			return $"{methodSymbol.ContainingNamespace.Name}.{methodSymbol.ContainingType.Name}.{methodSymbol.Name}({parametersString})";
-		}
 
 		static DebtMethod ToDebtMethod(AttributeData data)
 		{

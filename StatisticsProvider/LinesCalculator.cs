@@ -31,13 +31,10 @@ namespace StatisticsProvider
 
 		public override void VisitClassDeclaration(ClassDeclarationSyntax node)
 		{
-			var lineSpan = node.SyntaxTree.GetLineSpan(node.FullSpan);
-			var classLineCount = MethodLengthAnalyzer.GetLineSpanLineCount(lineSpan);
-			var typeStatistics = TypeStatistics;
-
+			var classLineCount = TypeLengthAnalyzer.GetTypeLength(node);
 			var fieldCount = FieldCountAnalyzer.GetFieldCount(node);
 
-			typeStatistics.FoundClass(node.Identifier.ToString(), classLineCount, fieldCount);
+			TypeStatistics.FoundClass(node.Identifier.ToString(), classLineCount, fieldCount);
 			base.VisitClassDeclaration(node);
 		}
 

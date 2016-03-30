@@ -10,7 +10,7 @@ namespace DebtAnalyzer.ClassDebt
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
 	public class TypeDebtAnalyzer : DiagnosticAnalyzer
 	{
-		readonly ClassLengthAnalyzer lengthAnalyzer = new ClassLengthAnalyzer();
+		readonly TypeLengthAnalyzer lengthAnalyzer = new TypeLengthAnalyzer();
 		readonly FieldCountAnalyzer parameterCountAnalyzer = new FieldCountAnalyzer();
 
 		public override void Initialize(AnalysisContext context)

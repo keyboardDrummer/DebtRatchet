@@ -36,7 +36,7 @@
     <Compile Include="Attributes\DebtSeverity.cs" />
     <Compile Include="Attributes\MaxTypeLength.cs" />
     <Compile Include="Attributes\MaxFieldCount.cs" />
-    <Compile Include="ClassDebt\ClassLengthAnalyzer.cs" />
+    <Compile Include="ClassDebt\TypeLengthAnalyzer.cs" />
     <Compile Include="ClassDebt\FieldCountAnalyzer.cs" />
     <Compile Include="ClassDebt\FieldVisitor.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />

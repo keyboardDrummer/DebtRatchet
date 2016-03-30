@@ -9,9 +9,9 @@ using Microsoft.CodeAnalysis.Diagnostics;
 
 namespace DebtAnalyzer.ClassDebt
 {
-	public class ClassLengthAnalyzer
+	public class TypeLengthAnalyzer
 	{
-		public const string DiagnosticId = "ClassLengthAnalyzer";
+		public const string DiagnosticId = "TypeLengthAnalyzer";
 
 		public const int DefaultMaximumTypeLength = 1000;
 

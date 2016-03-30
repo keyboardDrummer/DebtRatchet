@@ -101,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AttributeUpdater.cs" />
-    <Compile Include="FieldVisitor.cs" />
     <Compile Include="LinesCalculator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -5,13 +5,13 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DebtAnalyzer.MethodLength
+namespace DebtAnalyzer.MethodDebt
 {
 	public class MethodLengthAnalyzer
 	{
 		public const string DiagnosticId = "MethodLengthAnalyzer";
 
-		public const int DefaultMaximumMethodLength = 50;
+		public static int DefaultMaximumMethodLength = 50;
 
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{
@@ -56,7 +56,7 @@ namespace DebtAnalyzer.MethodLength
 
 		static int GetPreviousMethodLength(IMethodSymbol methodSymbol)
 		{
-			return DebtAnnotation.DebtDiagnosticAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
+			return DebtAnnotation.MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
 		}
 
 		public static int GetMaxLineCount(IAssemblySymbol assembly)

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DebtAnalyzer.ParameterCount;
 using TestHelper;
 
 namespace ÀttributeUpdater.Test
@@ -12,6 +13,11 @@ namespace ÀttributeUpdater.Test
 	[TestClass]
 	public class MissingAttributeAdderTest
 	{
+		public MissingAttributeAdderTest()
+		{
+			MethodParameterCountAnalyzer.DefaultMaximumParameterCount = 5;
+		}
+
 		[TestMethod]
 		public void TestAddMissingAttribute()
 		{

@@ -4,7 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;

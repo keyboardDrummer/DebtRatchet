@@ -24,9 +24,9 @@ namespace StatisticsProvider
 			TotalParameters = totalParameters;
 		}
 
-		public MethodStatistics(int fatMethodCount, int maxParameterCount)
+		public MethodStatistics(int fatLineCount, int maxParameterCount)
 		{
-			FatMethodCount = fatMethodCount;
+			FatLineCount = fatLineCount;
 			MaxParameterCount = maxParameterCount;
 		}
 

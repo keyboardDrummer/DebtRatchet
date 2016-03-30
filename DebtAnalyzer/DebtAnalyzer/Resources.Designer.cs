@@ -64,18 +64,18 @@ namespace DebtAnalyzer {
         /// <summary>
         ///   Looks up a localized string similar to Method {0} has {1} parameters while it should not have more than {2}..
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string TooManyParametersMessage {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("TooManyParametersMessage", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Method has too many parameters..
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string TooManyParametersTitle {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
+                return ResourceManager.GetString("TooManyParametersTitle", resourceCulture);
             }
         }
     }

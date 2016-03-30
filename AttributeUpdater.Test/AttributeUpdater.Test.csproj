@@ -120,6 +120,10 @@
       <Project>{86886822-D662-43C3-BCC7-24FF274E847C}</Project>
       <Name>ÀttributeUpdater</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DebtAnalyzer\DebtAnalyzer\DebtAnalyzer.csproj">
+      <Project>{679A037B-4B94-4152-9636-3A621B546A75}</Project>
+      <Name>DebtAnalyzer</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

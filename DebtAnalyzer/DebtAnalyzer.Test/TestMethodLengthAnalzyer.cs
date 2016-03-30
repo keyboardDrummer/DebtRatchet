@@ -1,4 +1,5 @@
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -10,6 +11,11 @@ namespace DebtAnalyzer.Test
 	[TestClass]
 	public class TestMethodLengthAnalzyer : CodeFixVerifier
 	{
+		public TestMethodLengthAnalzyer()
+		{
+			MethodLengthAnalyzer.DefaultMaximumMethodLength = 20;
+		}
+
 		static string LongMethodWithAnnotation => @"
  using System;
     using System.Collections.Generic;
@@ -344,7 +350,7 @@ namespace ConsoleApplication1
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
-			return new DebtDiagnosticAnalyzer();
+			return new MethodDebtAnalyzer();
 		}
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()

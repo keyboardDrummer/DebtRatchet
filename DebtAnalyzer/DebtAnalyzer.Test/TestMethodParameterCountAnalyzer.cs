@@ -3,14 +3,19 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System;
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.ParameterCount;
 using TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DebtAnalyzer.Test
 {
 	[TestClass]
-    public class TestMethodParameterCountAnalayzer : CodeFixVerifier
+    public class TestMethodParameterCountAnalyzer : CodeFixVerifier
 	{
+		public TestMethodParameterCountAnalyzer()
+		{
+			MethodParameterCountAnalyzer.DefaultMaximumParameterCount = 5;
+		}
 
 		[TestMethod]
 		public void TestFix()
@@ -189,7 +194,7 @@ namespace ConsoleApplication1
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DebtAnnotation.DebtDiagnosticAnalyzer();
+            return new DebtAnnotation.MethodDebtAnalyzer();
         }
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace DebtAnalyzer.DebtAnnotation
 {
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class DebtDiagnosticAnalyzer : DiagnosticAnalyzer
+	public class MethodDebtAnalyzer : DiagnosticAnalyzer
 	{
 		readonly MethodLengthAnalyzer lengthAnalyzer = new MethodLengthAnalyzer();
 		readonly MethodParameterCountAnalyzer parameterCountAnalyzer = new MethodParameterCountAnalyzer();

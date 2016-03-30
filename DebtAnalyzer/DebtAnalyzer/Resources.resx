@@ -117,10 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnalyzerMessageFormat" xml:space="preserve">
+  <data name="TooManyParametersMessage" xml:space="preserve">
     <value>Method {0} has {1} parameters while it should not have more than {2}.</value>
   </data>
-  <data name="AnalyzerTitle" xml:space="preserve">
+  <data name="TooManyParametersTitle" xml:space="preserve">
     <value>Method has too many parameters.</value>
   </data>
 </root>

@@ -17,7 +17,7 @@ namespace StatisticsProvider
 	{
 		public static async Task UpdateAttributes(Solution solution)
 		{
-			var analyzer = new DebtDiagnosticAnalyzer();
+			var analyzer = new MethodDebtAnalyzer();
 			var project = solution.Projects.First();
 
 			//TODO dit gaat niet werken omdat hij bestaande attributes niet update. Hij voegt alleen missende toe.

@@ -1,9 +1,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace StatisticsProvider
+namespace DebtAnalyzer.ClassDebt
 {
-	class FieldVisitor : CSharpSyntaxWalker
+	public class FieldVisitor : CSharpSyntaxWalker
 	{
 		public int FieldsFound { get; private set; }
 

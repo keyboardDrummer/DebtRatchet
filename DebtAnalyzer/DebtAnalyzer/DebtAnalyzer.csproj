@@ -32,17 +32,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Attributes\DebtType.cs" />
     <Compile Include="Attributes\DebtSeverity.cs" />
+    <Compile Include="Attributes\MaxTypeLength.cs" />
+    <Compile Include="Attributes\MaxFieldCount.cs" />
+    <Compile Include="ClassDebt\ClassLengthAnalyzer.cs" />
+    <Compile Include="ClassDebt\FieldCountAnalyzer.cs" />
+    <Compile Include="ClassDebt\FieldVisitor.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />
-    <Compile Include="DebtAnnotation\DebtDiagnosticAnalyzer.cs" />
+    <Compile Include="ClassDebt\TypeDebtAnalyzer.cs" />
+    <Compile Include="MethodDebt\MethodDebtAnalyzer.cs" />
     <Compile Include="Common\DictionaryExtensions.cs" />
-    <Compile Include="DebtAnnotation\MyFixAllProvider.cs" />
-    <Compile Include="DebtAnnotation\UpdateOrAddDebtAttribute.cs" />
+    <Compile Include="MethodDebt\MyFixAllProvider.cs" />
+    <Compile Include="MethodDebt\UpdateOrAddDebtAttribute.cs" />
     <Compile Include="Attributes\MaxMethodLength.cs" />
     <Compile Include="Attributes\MaxParameters.cs" />
-    <Compile Include="MethodLength\MethodLengthAnalyzer.cs" />
-    <Compile Include="DebtAnnotation\TechnicalDebtAnnotationProvider.cs" />
-    <Compile Include="ParameterCount\MethodParameterCountAnalyzer.cs" />
+    <Compile Include="MethodDebt\MethodLengthAnalyzer.cs" />
+    <Compile Include="MethodDebt\TechnicalDebtAnnotationProvider.cs" />
+    <Compile Include="MethodDebt\MethodParameterCountAnalyzer.cs" />
     <Compile Include="Attributes\DebtMethod.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
@@ -124,6 +131,9 @@
   <ItemGroup>
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
     <Analyzer Include="..\..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ParameterCount\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\v4.6\Microsoft.Portable.CSharp.targets" />
   <Target Name="AfterBuild">

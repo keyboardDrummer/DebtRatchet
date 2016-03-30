@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DebtAnalyzer.DebtAnnotation;
-using DebtAnalyzer.MethodLength;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -18,7 +17,7 @@ namespace ÀttributeUpdater
 	{
 		public static async Task<Solution> AddMissingAttributes(Solution solution)
 		{
-			var analyzer = new DebtDiagnosticAnalyzer();
+			var analyzer = new MethodDebtAnalyzer();
 			var project = solution.Projects.First();
 
 			var compilation = await project.GetCompilationAsync();

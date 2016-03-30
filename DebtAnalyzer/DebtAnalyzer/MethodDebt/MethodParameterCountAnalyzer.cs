@@ -10,9 +10,9 @@ namespace DebtAnalyzer.ParameterCount
 	{
 		public const string DiagnosticId = "MaxParameterCount";
 
-		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
-		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
-		public const int DefaultMaximumParameterCount = 8;
+		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.TooManyParametersTitle), Resources.ResourceManager, typeof(Resources));
+		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.TooManyParametersMessage), Resources.ResourceManager, typeof(Resources));
+		public static int DefaultMaximumParameterCount = 8;
 
 		public void AnalyzeSymbol(SymbolAnalysisContext context)
 		{
@@ -37,7 +37,7 @@ namespace DebtAnalyzer.ParameterCount
 
 		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
 		{
-			return DebtDiagnosticAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
+			return MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
 		}
 
 		public static int GetMaxParameterCount(IAssemblySymbol assembly)

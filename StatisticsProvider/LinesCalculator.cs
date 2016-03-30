@@ -1,6 +1,7 @@
 using System;
 using DebtAnalyzer;
-using DebtAnalyzer.MethodLength;
+using DebtAnalyzer.ClassDebt;
+using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,9 +35,7 @@ namespace StatisticsProvider
 			var classLineCount = MethodLengthAnalyzer.GetLineSpanLineCount(lineSpan);
 			var typeStatistics = TypeStatistics;
 
-			var fieldVisitor = new FieldVisitor();
-			fieldVisitor.Visit(node);
-			var fieldCount = fieldVisitor.FieldsFound;
+			var fieldCount = FieldCountAnalyzer.GetFieldCount(node);
 
 			typeStatistics.FoundClass(node.Identifier.ToString(), classLineCount, fieldCount);
 			base.VisitClassDeclaration(node);

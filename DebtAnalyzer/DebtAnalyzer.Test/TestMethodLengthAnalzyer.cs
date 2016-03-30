@@ -355,7 +355,7 @@ namespace ConsoleApplication1
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()
 		{
-			return new TechnicalDebtAnnotationProvider();
+			return new MethodDebtAnnotationProvider();
 		}
 
 		[TestMethod]

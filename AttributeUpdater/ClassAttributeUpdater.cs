@@ -49,7 +49,7 @@ namespace AttributeUpdater
 				{
 					return null;
 				}
-				return Formatter.Format(TechnicalDebtAnnotationProvider.GetAttribute(containingMethod), workspace);
+				return Formatter.Format(MethodDebtAnnotationProvider.GetAttribute(containingMethod), workspace);
 			}
 			return base.VisitAttribute(node);
 		}

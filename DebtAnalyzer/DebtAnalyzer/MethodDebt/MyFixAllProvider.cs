@@ -8,6 +8,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Linq;
 using System.Threading;
+using DebtAnalyzer.Common;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
@@ -17,7 +18,7 @@ namespace DebtAnalyzer.DebtAnnotation
 	{
 		public override Task<CodeAction> GetFixAsync(FixAllContext fixAllContext)
 		{
-			return Task.FromResult(CodeAction.Create(TechnicalDebtAnnotationProvider.Title, token => FixAll(fixAllContext, token)));
+			return Task.FromResult(CodeAction.Create(MethodDebtAnnotationProvider.Title, token => FixAll(fixAllContext, token)));
 		}
 
 		static async Task<Solution> FixAll(FixAllContext fixAllContext, CancellationToken token)
@@ -39,7 +40,7 @@ namespace DebtAnalyzer.DebtAnnotation
 					var annotator = new AnnotateMethods(diagnostics);
 					token.ThrowIfCancellationRequested();
 					var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(token);
-					var rootWithUsing = TechnicalDebtAnnotationProvider.AddUsing(root);
+					var rootWithUsing = RoslynUtil.AddUsing(root);
 					var fixedRoot = annotator.Visit(rootWithUsing);
 					result = document.WithSyntaxRoot(fixedRoot).Project;
 				}
@@ -71,7 +72,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			{
 				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
 				{
-					return TechnicalDebtAnnotationProvider.GetNewMethod(node);
+					return MethodDebtAnnotationProvider.GetNewMethod(node);
 				}
 				return node;
 			}

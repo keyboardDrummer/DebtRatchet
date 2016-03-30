@@ -23,7 +23,7 @@ namespace ÀttributeUpdater
 			var compilation = await project.GetCompilationAsync();
 			var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
 			var diagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer), CancellationToken.None);
-			var fixAllContext = new FixAllContext(project, new TechnicalDebtAnnotationProvider(), FixAllScope.Solution, "", 
+			var fixAllContext = new FixAllContext(project, new MethodDebtAnnotationProvider(), FixAllScope.Solution, "", 
 				diagnostics.Select(d => d.Id), new Provider(diagnostics), CancellationToken.None);
 			var fixAction = await new MyFixAllProvider().GetFixAsync(fixAllContext);
 			var operations = await fixAction.GetOperationsAsync(CancellationToken.None);

@@ -4,6 +4,7 @@ using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DebtAnalyzer.Common;
 using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
@@ -14,8 +15,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DebtAnalyzer.DebtAnnotation
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(TechnicalDebtAnnotationProvider)), Shared]
-	public class TechnicalDebtAnnotationProvider : CodeFixProvider
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(MethodDebtAnnotationProvider)), Shared]
+	public class MethodDebtAnnotationProvider : CodeFixProvider
 	{
 		public const string Title = "Update technical debt annotation";
 
@@ -46,7 +47,7 @@ namespace DebtAnalyzer.DebtAnnotation
 			var syntaxRoot = (CompilationUnitSyntax) await document.GetSyntaxRootAsync(cancellationToken).ConfigureAwait(false);
 
 			syntaxRoot = syntaxRoot.ReplaceNode(methodBaseDecl, GetNewMethod(methodBaseDecl));
-			syntaxRoot = AddUsing(syntaxRoot);
+			syntaxRoot = RoslynUtil.AddUsing(syntaxRoot);
 
 			var newDocument = document.WithSyntaxRoot(syntaxRoot);
 			return newDocument.Project;
@@ -56,18 +57,6 @@ namespace DebtAnalyzer.DebtAnnotation
 		{
 			var attributeSyntax = GetAttribute(methodBaseDecl);
 			return (BaseMethodDeclarationSyntax)new UpdateOrAddDebtAttribute(attributeSyntax).Visit(methodBaseDecl);
-		}
-
-		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
-		{
-			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");
-			var usingDirectiveSyntax = SyntaxFactory.UsingDirective(
-				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
-				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));
-
-			return syntaxRoot.Usings.All(@using => (@using.Name as IdentifierNameSyntax)?.Identifier.ValueText != debtAnalyzerNamespace.Identifier.ValueText) 
-				? syntaxRoot.AddUsings(usingDirectiveSyntax) 
-				: syntaxRoot;
 		}
 
 		public static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)
@@ -81,34 +70,13 @@ namespace DebtAnalyzer.DebtAnnotation
 
 		static AttributeArgumentSyntax GetParameterCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
-			var parameterCountArgument = GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodBaseDecl.ParameterList.Parameters.Count);
-			return parameterCountArgument;
+			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodBaseDecl.ParameterList.Parameters.Count);
 		}
 
 		static AttributeArgumentSyntax GetLineCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodBaseDecl);
-			return GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
-		}
-
-		static AttributeArgumentSyntax GetNamedAttributeArgument(string parameterName, object parameterValue)
-		{
-
-			return SyntaxFactory.AttributeArgument(
-				SyntaxFactory.LiteralExpression(
-					SyntaxKind.NumericLiteralExpression,
-					SyntaxFactory.Literal(
-						SyntaxFactory.TriviaList(),
-						parameterValue.ToString(),
-						parameterValue.ToString(),
-						SyntaxFactory.TriviaList())))
-				.WithNameEquals(
-					SyntaxFactory.NameEquals(
-						SyntaxFactory.IdentifierName(
-							parameterName))
-						.WithEqualsToken(
-							SyntaxFactory.Token(
-								SyntaxKind.EqualsToken)));
+			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
 		}
 	}
 }

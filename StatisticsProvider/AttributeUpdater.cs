@@ -25,7 +25,7 @@ namespace StatisticsProvider
 			var diagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
 			var fixer = new MyFixAllProvider();
 			IEnumerable<string> diagnosticIds = diagnostics.Select(d => d.Id);
-			var fixAllContext = new FixAllContext(project, new TechnicalDebtAnnotationProvider(), FixAllScope.Solution, "", diagnosticIds, new Provider(diagnostics), CancellationToken.None);
+			var fixAllContext = new FixAllContext(project, new MethodDebtAnnotationProvider(), FixAllScope.Solution, "", diagnosticIds, new Provider(diagnostics), CancellationToken.None);
 			var fixAction = await fixer.GetFixAsync(fixAllContext);
 			var operations = fixAction.GetOperationsAsync(CancellationToken.None).Result;
 			var newSolution = operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;

@@ -10,8 +10,8 @@ namespace DebtAnalyzer.ParameterCount
 	{
 		public const string DiagnosticId = "MaxParameterCount";
 
-		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.TooManyParametersTitle), Resources.ResourceManager, typeof(Resources));
-		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.TooManyParametersMessage), Resources.ResourceManager, typeof(Resources));
+		static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.TooManyParametersTitle), Resources.ResourceManager, typeof(Resources));
+		static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.TooManyParametersMessage), Resources.ResourceManager, typeof(Resources));
 		public static int DefaultMaximumParameterCount = 8;
 
 		public void AnalyzeSymbol(SymbolAnalysisContext context)

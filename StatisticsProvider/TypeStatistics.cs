@@ -23,8 +23,10 @@ namespace StatisticsProvider
 			ClassesWithTooManyFields = classesWithTooManyFields;
 		}
 
-		public TypeStatistics()
+		public TypeStatistics(int? fatClassBoundary, int tooManyFieldsBoundary)
 		{
+			FatClassBoundary = fatClassBoundary;
+			TooManyFieldsBoundary = tooManyFieldsBoundary;
 		}
 
 		public TypeStatistics Concat(TypeStatistics other)

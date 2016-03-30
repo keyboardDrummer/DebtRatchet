@@ -24,8 +24,10 @@ namespace StatisticsProvider
 			TotalParameters = totalParameters;
 		}
 
-		public MethodStatistics()
+		public MethodStatistics(int fatMethodCount, int maxParameterCount)
 		{
+			FatMethodCount = fatMethodCount;
+			MaxParameterCount = maxParameterCount;
 		}
 
 		public MethodStatistics Concat(MethodStatistics other)

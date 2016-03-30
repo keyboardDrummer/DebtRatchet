@@ -11,6 +11,8 @@ namespace StatisticsProvider
 	[TestClass]
 	public class Program
 	{
+		const string ConfigurationArgument = "-c";
+
 		static void Main(string[] args)
 		{
 			if (!args.Any())
@@ -21,14 +23,24 @@ namespace StatisticsProvider
 			else
 			{
 				var onlyNumbers = args.Contains("-n");
-				ProvideStatistics(args[0], onlyNumbers).Wait();
+				ProvideStatistics(args[0], onlyNumbers, GetEmptyStatistics(args)).Wait();
 			}
 		}
 
-		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers)
+		static Statistics GetEmptyStatistics(string[] args)
 		{
-			Solution solution = await GetSolution(solutionPath);
-			var projectStatistics = await Statistics.GetProjectStatistics(solution);
+			if (!args.Contains(ConfigurationArgument)) return null;
+
+			var defaults = args.SkipWhile(s => s != ConfigurationArgument).Skip(1).Take(4).Select(int.Parse).ToList();
+			var methodStatistics = new MethodStatistics(defaults[0], defaults[1]);
+			var typeStatistics = new TypeStatistics(defaults[2], defaults[3]);
+			return new Statistics(typeStatistics, methodStatistics);
+		}
+
+		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers, Statistics statistics)
+		{
+			var solution = await GetSolution(solutionPath);
+			var projectStatistics = await Statistics.GetProjectStatistics(solution, statistics);
 			var solutionStatistics = projectStatistics.Select(p => p.Value).Aggregate((a, b) => a.Concat(b));
 			Console.WriteLine("Solution statistics:" + Environment.NewLine + solutionStatistics.Print(onlyNumbers));
 			foreach (var project in projectStatistics.Keys)
@@ -37,7 +49,7 @@ namespace StatisticsProvider
 			}
 		}
 
-		private static async Task<Solution> GetSolution(string path)
+		static async Task<Solution> GetSolution(string path)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{

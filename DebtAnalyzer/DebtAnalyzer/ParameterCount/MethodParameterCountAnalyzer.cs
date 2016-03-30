@@ -12,7 +12,7 @@ namespace DebtAnalyzer.ParameterCount
 
 		private static readonly LocalizableString title = new LocalizableResourceString(nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
 		private static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.AnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
-		public const int DefaultMaximumParameterCount = 5;
+		public const int DefaultMaximumParameterCount = 8;
 
 		public void AnalyzeSymbol(SymbolAnalysisContext context)
 		{

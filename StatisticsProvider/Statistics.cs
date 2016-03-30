@@ -8,12 +8,12 @@ namespace StatisticsProvider
 {
 	public class Statistics
 	{
-		public static async Task<Dictionary<Project, Statistics>> GetProjectStatistics(Solution solution)
+		public static async Task<Dictionary<Project, Statistics>> GetProjectStatistics(Solution solution, Statistics emptyStatistics = null)
 		{
 			var projectStatisticsTuples = await Task.WhenAll(solution.Projects.Select(async project =>
 			{
 				var compilation = await project.GetCompilationAsync();
-				var calculator = new LinesCalculator(compilation.Assembly);
+				var calculator = emptyStatistics == null ? new LinesCalculator(compilation.Assembly) : new LinesCalculator(emptyStatistics);
 				await Task.WhenAll(project.Documents.Select(async document =>
 				{
 					var root = await document.GetSyntaxRootAsync();
@@ -29,12 +29,7 @@ namespace StatisticsProvider
 			TypeStatistics = typeStatistics;
 			MethodStatistics = methodStatistics;
 		}
-
-		public Statistics() : this(new TypeStatistics(), new MethodStatistics())
-		{
-
-		}
-
+		
 		public TypeStatistics TypeStatistics { get; }
 
 		public MethodStatistics MethodStatistics { get; }

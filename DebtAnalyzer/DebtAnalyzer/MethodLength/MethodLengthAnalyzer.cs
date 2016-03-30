@@ -11,7 +11,7 @@ namespace DebtAnalyzer.MethodLength
 	{
 		public const string DiagnosticId = "MethodLengthAnalyzer";
 
-		public const int DefaultMaximumMethodLength = 20;
+		public const int DefaultMaximumMethodLength = 50;
 
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{

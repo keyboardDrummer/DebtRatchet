@@ -11,18 +11,21 @@ namespace StatisticsProvider
 	class LinesCalculator : CSharpSyntaxWalker
 	{
 		readonly IAssemblySymbol assembly;
-		readonly Statistics statistics = new Statistics();
+		readonly Statistics statistics;
 		MethodStatistics MethodStatistics => statistics.MethodStatistics;
 		TypeStatistics TypeStatistics => statistics.TypeStatistics;
 
 		public LinesCalculator(IAssemblySymbol assembly) : base(SyntaxWalkerDepth.Node)
 		{
 			this.assembly = assembly;
-			MethodStatistics.FatLineCount = MethodLengthAnalyzer.GetMaxLineCount(assembly);
-			MethodStatistics.MaxParameterCount = MethodParameterCountAnalyzer.GetMaxParameterCount(assembly);
+			var methodStatistics = new MethodStatistics(MethodLengthAnalyzer.GetMaxLineCount(assembly), MethodParameterCountAnalyzer.GetMaxParameterCount(assembly));
+			var typeStatistics = new TypeStatistics(1000, 8);
+			statistics = new Statistics(typeStatistics, methodStatistics);
+		}
 
-			TypeStatistics.FatClassBoundary = 1000;
-			TypeStatistics.TooManyFieldsBoundary = 8;
+		public LinesCalculator(Statistics statistics) : base(SyntaxWalkerDepth.Node)
+		{
+			this.statistics = statistics;
 		}
 
 		public override void VisitClassDeclaration(ClassDeclarationSyntax node)

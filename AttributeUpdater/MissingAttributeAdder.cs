@@ -4,7 +4,9 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using DebtAnalyzer.Common;
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -25,7 +27,7 @@ namespace ÀttributeUpdater
 			var diagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer), CancellationToken.None);
 			var fixAllContext = new FixAllContext(project, new MethodDebtAnnotationProvider(), FixAllScope.Solution, "", 
 				diagnostics.Select(d => d.Id), new Provider(diagnostics), CancellationToken.None);
-			var fixAction = await new MyFixAllProvider().GetFixAsync(fixAllContext);
+			var fixAction = await new GenericDebtFixAllProvider().GetFixAsync(fixAllContext);
 			var operations = await fixAction.GetOperationsAsync(CancellationToken.None);
 			return operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
 		}

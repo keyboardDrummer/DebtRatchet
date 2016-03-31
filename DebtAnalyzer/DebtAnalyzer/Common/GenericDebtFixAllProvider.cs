@@ -1,27 +1,26 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using System.Linq;
-using System.Threading;
-using DebtAnalyzer.Common;
-using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.Text;
 
-namespace DebtAnalyzer.DebtAnnotation
+namespace DebtAnalyzer.Common
 {
-	public class MyFixAllProvider : FixAllProvider
+	public abstract class GenericDebtFixAllProvider : FixAllProvider
 	{
+		protected abstract SyntaxNode FixRootFromDiagnostics(IEnumerable<Diagnostic> diagnostics, CompilationUnitSyntax root);
+
 		public override Task<CodeAction> GetFixAsync(FixAllContext fixAllContext)
 		{
 			return Task.FromResult(CodeAction.Create(MethodDebtAnnotationProvider.Title, token => FixAll(fixAllContext, token)));
 		}
 
-		static async Task<Solution> FixAll(FixAllContext fixAllContext, CancellationToken token)
+		async Task<Solution> FixAll(FixAllContext fixAllContext, CancellationToken token)
 		{
 			var relevantProjects = GetRelevantProjects(fixAllContext);
 			var solution = fixAllContext.Solution;
@@ -37,45 +36,15 @@ namespace DebtAnalyzer.DebtAnnotation
 					var documentId = documentGroup.Key;
 					var document = result.GetDocument(documentId);
 					IEnumerable<Diagnostic> diagnostics = documentGroup;
-					var annotator = new AnnotateMethods(diagnostics);
 					token.ThrowIfCancellationRequested();
 					var root = (CompilationUnitSyntax)await document.GetSyntaxRootAsync(token);
 					var rootWithUsing = RoslynUtil.AddUsing(root);
-					var fixedRoot = annotator.Visit(rootWithUsing);
+					var fixedRoot = FixRootFromDiagnostics(diagnostics, rootWithUsing);
 					result = document.WithSyntaxRoot(fixedRoot).Project;
 				}
 				solution = result.Solution;
 			}
 			return solution;
-		}
-
-		class AnnotateMethods : CSharpSyntaxRewriter
-		{
-			readonly ImmutableHashSet<int> spans;
-
-			public AnnotateMethods(IEnumerable<Diagnostic> diagnostics) : base(false)
-			{
-				spans = diagnostics.Select(diagnostic => diagnostic.Location.GetLineSpan().StartLinePosition.Line).ToImmutableHashSet();
-			}
-
-			public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
-			{
-				return VisitMethodBase(node.Identifier, node);
-			}
-
-			public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
-			{
-				return VisitMethodBase(node.Identifier, node);
-			}
-
-			SyntaxNode VisitMethodBase(SyntaxToken identifier, BaseMethodDeclarationSyntax node)
-			{
-				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
-				{
-					return MethodDebtAnnotationProvider.GetNewMethod(node);
-				}
-				return node;
-			}
 		}
 
 		public override IEnumerable<FixAllScope> GetSupportedFixAllScopes()

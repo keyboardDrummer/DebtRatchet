@@ -14,17 +14,16 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DebtAnalyzer.ClassDebt
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(ClassDebtAnnotationProvider)), Shared]
-	public class ClassDebtAnnotationProvider : CodeFixProvider
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(TypeDebtAnnotationProvider)), Shared]
+	public class TypeDebtAnnotationProvider : CodeFixProvider
 	{
 		public const string Title = "Update technical debt annotation";
 
-		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(
-			FieldCountAnalyzer.DiagnosticId, TypeLengthAnalyzer.DiagnosticId);
+		public sealed override ImmutableArray<string> FixableDiagnosticIds => ImmutableArray.Create(FieldCountAnalyzer.DiagnosticId, TypeLengthAnalyzer.DiagnosticId);
 
 		public sealed override FixAllProvider GetFixAllProvider()
 		{
-			return null;  ///new MyFixAllProvider();
+			return new TypeDebtFixAllProvider();
 		}
 
 		public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)

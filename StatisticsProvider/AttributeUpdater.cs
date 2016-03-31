@@ -5,7 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using DebtAnalyzer.Common;
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -23,7 +25,7 @@ namespace StatisticsProvider
 			//TODO dit gaat niet werken omdat hij bestaande attributes niet update. Hij voegt alleen missende toe.
 			var compilationWithAnalyzers = project.GetCompilationAsync().Result.WithAnalyzers(ImmutableArray.Create<DiagnosticAnalyzer>(analyzer));
 			var diagnostics = await compilationWithAnalyzers.GetAllDiagnosticsAsync();
-			var fixer = new MyFixAllProvider();
+			var fixer = new GenericDebtFixAllProvider();
 			IEnumerable<string> diagnosticIds = diagnostics.Select(d => d.Id);
 			var fixAllContext = new FixAllContext(project, new MethodDebtAnnotationProvider(), FixAllScope.Solution, "", diagnosticIds, new Provider(diagnostics), CancellationToken.None);
 			var fixAction = await fixer.GetFixAsync(fixAllContext);

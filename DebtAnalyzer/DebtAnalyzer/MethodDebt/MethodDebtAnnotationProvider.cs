@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using DebtAnalyzer.Common;
-using DebtAnalyzer.MethodDebt;
+using DebtAnalyzer.DebtAnnotation;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
@@ -13,7 +13,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.DebtAnnotation
+namespace DebtAnalyzer.MethodDebt
 {
 	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(MethodDebtAnnotationProvider)), Shared]
 	public class MethodDebtAnnotationProvider : CodeFixProvider
@@ -25,7 +25,7 @@ namespace DebtAnalyzer.DebtAnnotation
 
 		public sealed override FixAllProvider GetFixAllProvider()
 		{
-			return new MyFixAllProvider();
+			return new MethodDebtFixAllProvider();
 		}
 
 		public sealed override async Task RegisterCodeFixesAsync(CodeFixContext context)

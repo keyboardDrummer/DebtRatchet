@@ -41,6 +41,7 @@
     <Compile Include="ClassDebt\TypeLengthAnalyzer.cs" />
     <Compile Include="ClassDebt\FieldCountAnalyzer.cs" />
     <Compile Include="ClassDebt\FieldVisitor.cs" />
+    <Compile Include="ClassDebt\UpdateOrAddTypeDebtAttribute.cs" />
     <Compile Include="Common\DebtAsErrorUtil.cs" />
     <Compile Include="ClassDebt\TypeDebtAnalyzer.cs" />
     <Compile Include="Common\RoslynUtil.cs" />
@@ -48,7 +49,8 @@
     <Compile Include="Common\DictionaryExtensions.cs" />
     <Compile Include="Common\GenericDebtFixAllProvider.cs" />
     <Compile Include="MethodDebt\MethodDebtFixAllProvider.cs" />
-    <Compile Include="MethodDebt\UpdateOrAddDebtAttribute.cs" />
+    <Compile Include="Common\UpdateOrAddGenericDebtAttribute.cs" />
+    <Compile Include="MethodDebt\UpdateOrAddMethodDebtAttribute.cs" />
     <Compile Include="Attributes\MaxMethodLength.cs" />
     <Compile Include="Attributes\MaxParameters.cs" />
     <Compile Include="MethodDebt\MethodLengthAnalyzer.cs" />

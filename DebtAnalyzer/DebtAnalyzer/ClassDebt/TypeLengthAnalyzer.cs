@@ -13,7 +13,7 @@ namespace DebtAnalyzer.ClassDebt
 	{
 		public const string DiagnosticId = "TypeLengthAnalyzer";
 
-		public const int DefaultMaximumTypeLength = 1000;
+		public static int DefaultMaximumTypeLength = 1000;
 
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{

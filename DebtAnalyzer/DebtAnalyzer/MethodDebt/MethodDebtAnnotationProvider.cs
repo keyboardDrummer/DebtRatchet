@@ -56,7 +56,7 @@ namespace DebtAnalyzer.MethodDebt
 		public static BaseMethodDeclarationSyntax GetNewMethod(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var attributeSyntax = GetAttribute(methodBaseDecl);
-			return (BaseMethodDeclarationSyntax)new UpdateOrAddDebtAttribute(attributeSyntax).Visit(methodBaseDecl);
+			return (BaseMethodDeclarationSyntax)new UpdateOrAddMethodDebtAttribute(attributeSyntax).Visit(methodBaseDecl);
 		}
 
 		public static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)

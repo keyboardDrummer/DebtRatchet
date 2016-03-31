@@ -3,29 +3,19 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.DebtAnnotation
+namespace DebtAnalyzer.Common
 {
-	class UpdateOrAddDebtAttribute : CSharpSyntaxRewriter
+	class UpdateOrAddGenericDebtAttribute : CSharpSyntaxRewriter
 	{
-		public UpdateOrAddDebtAttribute(AttributeSyntax newAttribute) : base(false)
+		public UpdateOrAddGenericDebtAttribute(AttributeSyntax newAttribute) : base(false)
 		{
 			NewAttribute = newAttribute;
 		}
 
 		public AttributeSyntax NewAttribute { get; private set; }
 
-		public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
-		{
-			return VisitMethodBaseDeclaration(node, n => (MethodDeclarationSyntax)base.VisitMethodDeclaration(n), (n,a) => n.AddAttributeLists(a));
-		}
-
-		public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
-		{
-			return VisitMethodBaseDeclaration(node, n => (ConstructorDeclarationSyntax)base.VisitConstructorDeclaration(n), (n, a) => n.AddAttributeLists(a));
-		}
-
-		private SyntaxNode VisitMethodBaseDeclaration<T>(T node, Func<T, T> visitBase, Func<T, AttributeListSyntax, T> addAttributeLists)
-			where T : BaseMethodDeclarationSyntax
+		protected SyntaxNode VisitDeclaration<T>(T node, Func<T, T> visitBase, Func<T, AttributeListSyntax, T> addAttributeLists)
+			where T : SyntaxNode
 		{
 			T basee = visitBase(node);
 			T withAttribute;

@@ -6,6 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using DebtAnalyzer.Common;
 using DebtAnalyzer.DebtAnnotation;
+using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
@@ -51,10 +52,10 @@ namespace DebtAnalyzer.ClassDebt
 			return newDocument.Project;
 		}
 
-		public static BaseMethodDeclarationSyntax GetNewType(TypeDeclarationSyntax typeSyntax)
+		public static TypeDeclarationSyntax GetNewType(TypeDeclarationSyntax typeSyntax)
 		{
 			var attributeSyntax = GetAttribute(typeSyntax);
-			return (BaseMethodDeclarationSyntax)new UpdateOrAddDebtAttribute(attributeSyntax).Visit(typeSyntax);
+			return (TypeDeclarationSyntax)new UpdateOrAddTypeDebtAttribute(attributeSyntax).Visit(typeSyntax);
 		}
 
 		public static AttributeSyntax GetAttribute(TypeDeclarationSyntax typeSyntax)

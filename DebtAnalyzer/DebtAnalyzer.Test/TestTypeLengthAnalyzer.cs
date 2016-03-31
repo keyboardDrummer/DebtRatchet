@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DebtAnalyzer.ClassDebt;
-using DebtAnalyzer.DebtAnnotation;
-using DebtAnalyzer.MethodDebt;
+﻿using DebtAnalyzer.ClassDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;

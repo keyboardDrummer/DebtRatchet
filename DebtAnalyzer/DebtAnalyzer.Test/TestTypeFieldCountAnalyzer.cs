@@ -24,7 +24,24 @@ namespace ConsoleApplication1
     {
         int a;
         int b;
-        int c;
+        int c { get; }
+    }
+}";
+
+		static string NotTooManyFields => @"
+using System;
+
+namespace ConsoleApplication1
+{
+    class SomeClass
+    {
+        int a;
+        int b;
+        const int c;
+        static int d;
+        static int e { get; }
+        int f { get { return 3; } }
+        int g { get { return 3; } set { d = value; } }
     }
 }";
 
@@ -39,7 +56,7 @@ namespace ConsoleApplication1
     {
         int a;
         int b;
-        int c;
+        int c { get; }
     }
 }";
 
@@ -54,7 +71,7 @@ namespace ConsoleApplication1
 		}
 
 		[TestMethod]
-		public void TestDiagnostic()
+		public void TestTooManyFields()
 		{
 			var test = TooManyFields;
 			var expected = new DiagnosticResult
@@ -70,6 +87,12 @@ namespace ConsoleApplication1
 			};
 
 			VerifyCSharpDiagnostic(test, expected);
+		}
+
+		[TestMethod]
+		public void TestNotTooManyFields()
+		{
+			VerifyCSharpDiagnostic(NotTooManyFields);
 		}
 
 		[TestMethod]

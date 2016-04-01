@@ -42,7 +42,7 @@ namespace DebtAnalyzer.Common
 
 		public override SyntaxNode VisitAttribute(AttributeSyntax node)
 		{
-			if (node.Name.ToString() == nameof(DebtMethod))
+			if (Equals(node.Name, NewAttribute?.Name))
 			{
 				if (NewAttribute == null) return null;
 				var value = NewAttribute;

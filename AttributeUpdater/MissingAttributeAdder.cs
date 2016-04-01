@@ -25,15 +25,20 @@ namespace AttributeUpdater
 		static async Task<Solution> ApplyFixToSolution(DiagnosticAnalyzer analyzer, CodeFixProvider annotationProvider, FixAllProvider fixAllProvider, 
 			Solution solution)
 		{
-			var project = solution.Projects.First();
-			var compilation = await project.GetCompilationAsync();
-			var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzer));
-			var diagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync(ImmutableArray.Create(analyzer), CancellationToken.None);
-			var fixAllContext = new FixAllContext(project, annotationProvider, FixAllScope.Solution, "",
-				diagnostics.Select(d => d.Id), new Provider(diagnostics), CancellationToken.None);
-			var fixAction = await fixAllProvider.GetFixAsync(fixAllContext);
-			var operations = await fixAction.GetOperationsAsync(CancellationToken.None);
-			return operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
+			var result = solution;
+			foreach (var projectId in solution.ProjectIds)
+			{
+				var project = result.GetProject(projectId);
+				var compilation = await project.GetCompilationAsync();
+				var compilationWithAnalyzers = compilation.WithAnalyzers(ImmutableArray.Create(analyzer));
+				var projectDiagnostics = await compilationWithAnalyzers.GetAnalyzerDiagnosticsAsync(ImmutableArray.Create(analyzer), CancellationToken.None);
+				var fixAllContext = new FixAllContext(project, annotationProvider, FixAllScope.Project, "",
+					projectDiagnostics.Select(d => d.Id), new Provider(projectDiagnostics), CancellationToken.None);
+				var fixAction = await fixAllProvider.GetFixAsync(fixAllContext);
+				var operations = await fixAction.GetOperationsAsync(CancellationToken.None);
+				result = operations.OfType<ApplyChangesOperation>().Single().ChangedSolution;
+			}
+			return result;
 		}
 
 		class Provider : FixAllContext.DiagnosticProvider

@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -9,8 +12,19 @@ namespace DebtAnalyzer.ClassDebt
 
 		public override void VisitFieldDeclaration(FieldDeclarationSyntax node)
 		{
-			FieldsFound++;
+			var modifiers = node.Modifiers;
+			if (IsInstanceField(modifiers))
+			{
+				FieldsFound++;
+			}
+
 			base.VisitFieldDeclaration(node);
+		}
+
+		static readonly ISet<SyntaxKind> forbidden = new HashSet<SyntaxKind> {SyntaxKind.StaticKeyword, SyntaxKind.ConstKeyword};
+		static bool IsInstanceField(SyntaxTokenList modifiers)
+		{
+			return modifiers.All(token => !forbidden.Contains(token.Kind()));
 		}
 
 		public override void VisitPropertyDeclaration(PropertyDeclarationSyntax node)
@@ -18,7 +32,7 @@ namespace DebtAnalyzer.ClassDebt
 			if (node.AccessorList == null || !node.AccessorList.Accessors.Any())
 				return;
 
-			if (node.AccessorList.Accessors.First().Body == null)
+			if (node.AccessorList.Accessors.First().Body == null && IsInstanceField(node.Modifiers))
 				FieldsFound++;
 
 			base.VisitPropertyDeclaration(node);

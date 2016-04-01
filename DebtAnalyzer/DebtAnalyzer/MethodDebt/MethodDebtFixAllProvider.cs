@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DebtAnalyzer.MethodDebt
 {
-	class MethodDebtFixAllProvider : GenericDebtFixAllProvider
+	public class MethodDebtFixAllProvider : GenericDebtFixAllProvider
 	{
 		protected override SyntaxNode FixRootFromDiagnostics(IEnumerable<Diagnostic> diagnostics, CompilationUnitSyntax root)
 		{

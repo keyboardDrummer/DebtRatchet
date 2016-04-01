@@ -15,16 +15,17 @@ namespace DebtAnalyzer.MethodDebt
 
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{
-			var method = (MethodDeclarationSyntax)context.Node;
+			var method = (BaseMethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
 			var previousMethodLength = GetPreviousMethodLength(methodSymbol);
+			var identifier = (method as MethodDeclarationSyntax)?.Identifier.Text ?? (method as ConstructorDeclarationSyntax)?.Identifier.Text;
 			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var diagnosticDescriptor = CreateDiagnosticDescriptor(severity);
-				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), method.Identifier.Text, methodLength, maxLineCount);
+				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), identifier, methodLength, maxLineCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}

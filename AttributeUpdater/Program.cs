@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.MSBuild;
 
 namespace AttributeUpdater
@@ -13,16 +9,24 @@ namespace AttributeUpdater
 		static void Main(string[] args)
 		{
 			var solutionPath = args[0];
-			UpdateAnnotations(solutionPath).Wait();
+			var addAnnotations = args.Contains("-a");
+			UpdateAnnotations(solutionPath, addAnnotations, true).Wait();
 		}
 
-		static async Task<bool> UpdateAnnotations(string solutionPath)
+		static async Task<bool> UpdateAnnotations(string solutionPath, bool addAnnotations, bool updateAttributes)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{
 				var solution = await workspace.OpenSolutionAsync(solutionPath);
-				var newSolution = await SolutionAttributeUpdater.UpdateAttributes(solution);
-				return workspace.TryApplyChanges(newSolution);
+				if (addAnnotations)
+				{
+					solution = await MissingAttributeAdder.AddMissingAttributes(solution);
+				}
+				if (updateAttributes)
+				{
+					solution = await SolutionAttributeUpdater.UpdateAttributes(solution);
+				}
+				return workspace.TryApplyChanges(solution);
 			}
 		}
 	}

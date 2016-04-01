@@ -9,7 +9,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DebtAnalyzer.ClassDebt
 {
-	class TypeDebtFixAllProvider : GenericDebtFixAllProvider
+	public class TypeDebtFixAllProvider : GenericDebtFixAllProvider
 	{
 		protected override SyntaxNode FixRootFromDiagnostics(IEnumerable<Diagnostic> diagnostics, CompilationUnitSyntax root)
 		{

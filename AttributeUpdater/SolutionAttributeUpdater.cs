@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DebtAnalyzer.MethodDebt;
@@ -30,7 +29,7 @@ namespace AttributeUpdater
 			return result;
 		}
 
-		private static async Task<Document> UpdateAttributes(Document document, int maxParameters, int maxMethodLength)
+		static async Task<Document> UpdateAttributes(Document document, int maxParameters, int maxMethodLength)
 		{
 			var root = await document.GetSyntaxRootAsync();
 			var newRoot = new ClassAttributeUpdater(document.Project.Solution.Workspace, maxParameters, maxMethodLength).Visit(root);

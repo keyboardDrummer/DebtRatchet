@@ -104,6 +104,7 @@
   <ItemGroup>
     <Compile Include="DebtAnalyzerTestUtil.cs" />
     <Compile Include="TestMethodLengthAnalzyer.cs" />
+    <Compile Include="TestTypeFieldCountAnalyzer.cs" />
     <Compile Include="TestTypeLengthAnalyzer.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />

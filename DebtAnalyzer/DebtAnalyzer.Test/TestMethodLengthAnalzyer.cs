@@ -13,57 +13,30 @@ namespace DebtAnalyzer.Test
 	{
 		public TestMethodLengthAnalzyer()
 		{
-			MethodLengthAnalyzer.DefaultMaximumMethodLength = 20;
+			MethodLengthAnalyzer.DefaultMaximumMethodLength = 3;
 		}
 
 		static string LongMethodWithAnnotation => @"
- using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-    using DebtAnalyzer;
+using System;
+using DebtAnalyzer;
 
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    class LongMethodClass
     {
-        class LongMethodClass
+		[DebtMethod(LineCount = 30)]
+        void MyLongMethod()
         {
-			[DebtMethod(LineCount = 30)]
-            void MyLongMethod()
-            {
-				int a1;
-				int a2;
-				int a3;
-				int a4;
-				int a5;
-				int a6;
-				int a7;
-				int a8;
-				int a9;
-				int a10;
-				int a11;
-				int a12;
-				int a13;
-				int a14;
-				int a15;
-				int a16;
-				int a17;
-				int a18;
-				int a19;
-				int a20;
-				int a21;
-            }
+			int a1;
+			int a2;
+			int a3;
+			int a4;
         }
-    }";
+    }
+}";
 
 		static string LongConstructor => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DebtAnalyzer;
 
 namespace ConsoleApplication1
@@ -77,24 +50,6 @@ namespace ConsoleApplication1
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
@@ -102,11 +57,6 @@ namespace ConsoleApplication1
 
 		static string LongConstructorFixed => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DebtAnalyzer;
 
 namespace ConsoleApplication1
@@ -114,68 +64,40 @@ namespace ConsoleApplication1
     class LongMethodClass
     {
 
-        [DebtMethod(LineCount = 22, ParameterCount = 0)]
+        [DebtMethod(LineCount = 4, ParameterCount = 0)]
         void LongMethodClass()
         {
 			int a1;
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
 ";
 
 		static string MaximumMethodLengthFive => @"
- using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-    using DebtAnalyzer;
+using System;
+using DebtAnalyzer;
 
-	[assembly: MaxMethodLength(5)]
-    namespace DebtAnalyzer
-    {
+[assembly: MaxMethodLength(2)]
+namespace DebtAnalyzer
+{
 
-		[AttributeUsage(AttributeTargets.Assembly)]
-		class MaxMethodLength : Attribute
+	[AttributeUsage(AttributeTargets.Assembly)]
+	class MaxMethodLength : Attribute
+	{
+		public MaxMethodLength(int length)
 		{
-			public MaxMethodLength(int length)
-			{
-				Length = length;
-			}
-
-			public int Length { get; }
+			Length = length;
 		}
-    }";
+
+		public int Length { get; }
+	}
+}";
 
 		static string LongMethodFixed => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DebtAnalyzer;
 
 namespace ConsoleApplication1
@@ -183,42 +105,19 @@ namespace ConsoleApplication1
     class LongMethodClass
     {
 
-        [DebtMethod(LineCount = 22, ParameterCount = 0)]
+        [DebtMethod(LineCount = 4, ParameterCount = 0)]
         void MyLongMethod()
         {
 			int a1;
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
 ";
 		static string LongMethodWithDebtUsing => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 using DebtAnalyzer;
 
 namespace ConsoleApplication1
@@ -232,24 +131,6 @@ namespace ConsoleApplication1
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
@@ -257,11 +138,6 @@ namespace ConsoleApplication1
 
 		static string LongMethodWithOutdatedAnnotation => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace ConsoleApplication1
 {
@@ -275,24 +151,6 @@ namespace ConsoleApplication1
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
@@ -308,11 +166,6 @@ namespace ConsoleApplication1
 ";
 		static string LongMethod => @"
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace ConsoleApplication1
 {
@@ -325,24 +178,6 @@ namespace ConsoleApplication1
 			int a2;
 			int a3;
 			int a4;
-			int a5;
-			int a6;
-			int a7;
-			int a8;
-			int a9;
-			int a10;
-			int a11;
-			int a12;
-			int a13;
-			int a14;
-			int a15;
-			int a16;
-			int a17;
-			int a18;
-			int a19;
-			int a20;
-			int a21;
-			int a22;
         }
     }
 }
@@ -365,12 +200,12 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 5 lines.",
+				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 2 lines.",
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 9)
 					}
 			};
 
@@ -390,12 +225,12 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
+				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 3 lines.",
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 9)
 					}
 			};
 
@@ -409,12 +244,12 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "MethodLengthAnalyzer",
-				Message = "Method MyLongMethod is 22 lines long while it should not be longer than 20 lines.",
+				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 3 lines.",
 				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 14, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 9)
 					}
 			};
 

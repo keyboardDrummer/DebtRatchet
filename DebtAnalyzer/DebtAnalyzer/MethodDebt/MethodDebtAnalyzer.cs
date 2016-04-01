@@ -37,9 +37,9 @@ namespace DebtAnalyzer.DebtAnnotation
 			var namedArguments = data.NamedArguments.ToDictionary(kv => kv.Key, kv => kv.Value);
 			var result = new DebtMethod();
 			if (namedArguments.ContainsKey(LineCountName))
-				result.LineCount = (namedArguments[LineCountName].Value as int?) ?? 0;
+				result.LineCount = namedArguments[LineCountName].Value as int? ?? 0;
 			if (namedArguments.ContainsKey(ParameterCountName))
-				result.ParameterCount = (namedArguments[ParameterCountName].Value as int?) ?? 0;
+				result.ParameterCount = namedArguments[ParameterCountName].Value as int? ?? 0;
 			return result;
 		}
 

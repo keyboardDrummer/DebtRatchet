@@ -1,5 +1,6 @@
 using System.Linq;
 using DebtAnalyzer.Common;
+using DebtAnalyzer.DebtAnnotation;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -55,9 +56,9 @@ namespace DebtAnalyzer.MethodDebt
 			return endLine - startLine + 1;
 		}
 
-		static int GetPreviousMethodLength(IMethodSymbol methodSymbol)
+		static int GetPreviousMethodLength(ISymbol methodSymbol)
 		{
-			return DebtAnnotation.MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
+			return MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
 		}
 
 		public static int GetMaxLineCount(IAssemblySymbol assembly)

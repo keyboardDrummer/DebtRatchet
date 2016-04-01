@@ -28,10 +28,10 @@ namespace DebtAnalyzer.ClassDebt
 
 		public static IEnumerable<DebtType> GetDebtAnnotations(ImmutableArray<AttributeData> attributeDatas)
 		{
-			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(DebtType).Name).Select(ToDebtMethod);
+			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(DebtType).Name).Select(ToDebtType);
 		}
 
-		static DebtType ToDebtMethod(AttributeData data)
+		static DebtType ToDebtType(AttributeData data)
 		{
 			var namedArguments = data.NamedArguments.ToDictionary(kv => kv.Key, kv => kv.Value);
 			var result = new DebtType();

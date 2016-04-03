@@ -21,6 +21,7 @@ namespace ConsoleApplication1
 	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
 	public class ResCommon
 	{
+        int a;
 
 
 
@@ -33,8 +34,7 @@ namespace ConsoleApplication1
 
 
 
-
-
+        int b;
     }
 }";
 		static string LongType => @"
@@ -44,6 +44,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
+        int a;
 
 
 
@@ -63,9 +64,10 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
-    [DebtType(LineCount = 13, FieldCount = 0)]
+    [DebtType(LineCount = 11, FieldCount = 1)]
     class LongMethodClass
     {
+        int a;
 
 
 
@@ -96,7 +98,7 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "TypeLengthAnalyzer",
-				Message = "Type LongMethodClass is 13 lines long while it should not be longer than 10 lines.",
+				Message = "Type LongMethodClass is 11 lines long while it should not be longer than 10 lines.",
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[]

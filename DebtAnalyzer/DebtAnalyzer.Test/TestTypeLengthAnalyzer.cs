@@ -53,7 +53,7 @@ namespace ConsoleApplication1
 
 
 
-         class InnerClass { }
+        class InnerClass { }
     }
 }";
 

@@ -13,17 +13,17 @@ namespace DebtAnalyzer.ClassDebt
 
 		public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
 		{
-			return VisitDeclaration(node, n => (ClassDeclarationSyntax)base.VisitClassDeclaration(n), (n, a) => n.AddAttributeLists(a));
+			return VisitDeclaration(node, n => n.AttributeLists, (n, a) => n.WithAttributeLists(a));
 		}
 
 		public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
 		{
-			return VisitDeclaration(node, n => (StructDeclarationSyntax)base.VisitStructDeclaration(n), (n, a) => n.AddAttributeLists(a));
+			return VisitDeclaration(node, n => node.AttributeLists, (n, a) => n.WithAttributeLists(a));
 		}
 
 		public override SyntaxNode VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
 		{
-			return VisitDeclaration(node, n => (InterfaceDeclarationSyntax)base.VisitInterfaceDeclaration(n), (n, a) => n.AddAttributeLists(a));
+			return VisitDeclaration(node, n => node.AttributeLists, (n, a) => n.WithAttributeLists(a));
 		}
 	}
 }

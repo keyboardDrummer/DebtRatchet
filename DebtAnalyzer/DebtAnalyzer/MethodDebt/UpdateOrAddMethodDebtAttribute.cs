@@ -12,12 +12,12 @@ namespace DebtAnalyzer.MethodDebt
 
 		public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
 		{
-			return VisitDeclaration(node, n => (MethodDeclarationSyntax)base.VisitMethodDeclaration(n), (n,a) => n.AddAttributeLists(a));
+			return VisitDeclaration(node, n => n.AttributeLists, (n,a) => n.WithAttributeLists(a));
 		}
 
 		public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
 		{
-			return VisitDeclaration(node, n => (ConstructorDeclarationSyntax)base.VisitConstructorDeclaration(n), (n, a) => n.AddAttributeLists(a));
+			return VisitDeclaration(node, n => n.AttributeLists, (n, a) => n.WithAttributeLists(a));
 		}
 	}
 }

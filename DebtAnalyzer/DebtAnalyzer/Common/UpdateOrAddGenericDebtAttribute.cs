@@ -14,20 +14,20 @@ namespace DebtAnalyzer.Common
 
 		public AttributeSyntax NewAttribute { get; private set; }
 
-		protected SyntaxNode VisitDeclaration<T>(T node, Func<T, T> visitBase, Func<T, AttributeListSyntax, T> addAttributeLists)
+		protected SyntaxNode VisitDeclaration<T>(T node, Func<T, SyntaxList<AttributeListSyntax>> getAttributeLists, Func<T, SyntaxList<AttributeListSyntax>, T> withAttributeLists)
 			where T : SyntaxNode
 		{
-			T basee = visitBase(node);
+			var newAttributeLists = VisitList(getAttributeLists(node));
 			T withAttribute;
 			if (NewAttribute == null)
 			{
-				withAttribute = basee;
+				withAttribute = withAttributeLists(node, newAttributeLists);
 			}
 			else
 			{
-				var attributeListSyntax = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(NewAttribute));
+				newAttributeLists = newAttributeLists.Add(SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(NewAttribute)));
 				NewAttribute = null;
-				withAttribute = addAttributeLists(basee.WithoutTrivia(), attributeListSyntax);
+				withAttribute = withAttributeLists(node.WithoutTrivia(), newAttributeLists);
 			}
 			return withAttribute.WithTriviaFrom(node);
 		}

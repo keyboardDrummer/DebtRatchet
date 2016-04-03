@@ -31,7 +31,7 @@ namespace ConsoleApplication1
 
 
 
-
+        class InnerClass { }
     }
 }";
 
@@ -53,7 +53,7 @@ namespace ConsoleApplication1
 
 
 
-
+         class InnerClass { }
     }
 }";
 

@@ -27,16 +27,29 @@ namespace AttributeUpdater
 			this.maxFieldCount = maxFieldCount;
 		}
 
+		public override SyntaxNode VisitClassDeclaration(ClassDeclarationSyntax node)
+		{
+			return base.VisitClassDeclaration(node).WithLeadingTrivia(node.GetLeadingTrivia());
+		}
+
+		public override SyntaxNode VisitInterfaceDeclaration(InterfaceDeclarationSyntax node)
+		{
+			return base.VisitInterfaceDeclaration(node).WithLeadingTrivia(node.GetLeadingTrivia());
+		}
+
+		public override SyntaxNode VisitStructDeclaration(StructDeclarationSyntax node)
+		{
+			return base.VisitStructDeclaration(node).WithLeadingTrivia(node.GetLeadingTrivia());
+		}
+
 		public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
 		{
-			var leadingTrivia = node.GetLeadingTrivia();
-			return base.VisitConstructorDeclaration(node).WithLeadingTrivia(leadingTrivia);
+			return base.VisitConstructorDeclaration(node).WithLeadingTrivia(node.GetLeadingTrivia());
 		}
 
 		public override SyntaxNode VisitMethodDeclaration(MethodDeclarationSyntax node)
 		{
-			var leadingTrivia = node.GetLeadingTrivia();
-			return base.VisitMethodDeclaration(node).WithLeadingTrivia(leadingTrivia);
+			return base.VisitMethodDeclaration(node).WithLeadingTrivia(node.GetLeadingTrivia());
 		}
 
 		public override SyntaxNode VisitAttributeList(AttributeListSyntax node)

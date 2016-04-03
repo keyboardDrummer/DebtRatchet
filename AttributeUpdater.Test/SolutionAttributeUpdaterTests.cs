@@ -44,6 +44,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
+    //Joo
     [DebtType(LineCount = 100, FieldCount = 8)]
     class TypeName
     {
@@ -70,6 +71,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
+    //Joo
     class TypeName
     {
         /// <summary>
@@ -94,6 +96,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
+    //Joo
     class TypeName
     {
         /// <summary>
@@ -119,6 +122,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
+    //Joo
     class TypeName
     {
         /// <summary>

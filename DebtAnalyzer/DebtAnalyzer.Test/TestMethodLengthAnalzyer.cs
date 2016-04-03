@@ -1,4 +1,3 @@
-using DebtAnalyzer.DebtAnnotation;
 using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;

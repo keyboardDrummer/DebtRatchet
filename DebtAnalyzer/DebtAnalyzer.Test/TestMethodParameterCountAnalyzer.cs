@@ -2,7 +2,6 @@
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System;
-using DebtAnalyzer.DebtAnnotation;
 using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using TestHelper;
@@ -195,7 +194,7 @@ namespace ConsoleApplication1
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
-            return new DebtAnnotation.MethodDebtAnalyzer();
+            return new MethodDebtAnalyzer();
         }
     }
 }

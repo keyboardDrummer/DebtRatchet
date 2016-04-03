@@ -1,7 +1,6 @@
 using System.Linq;
 using DebtAnalyzer;
 using DebtAnalyzer.ClassDebt;
-using DebtAnalyzer.DebtAnnotation;
 using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;

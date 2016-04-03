@@ -16,6 +16,25 @@ namespace DebtAnalyzer.Test
 			MethodLengthAnalyzer.DefaultMaximumMethodLength = 3;
 		}
 
+		static string StaticConstructorWithDebtAnnotation = @"
+using System;
+using DebtAnalyzer;
+
+namespace ConsoleApplication1
+{
+	class LongMethodClass
+	{
+		[DebtMethod(LineCount = 4)]
+		static LongMethodClass()
+		{
+			int a1;
+			int a2;
+			int a3;
+			int a4;
+		}
+	}
+}";
+
 		static string LongMethodWithAnnotation => @"
 using System;
 using DebtAnalyzer;
@@ -210,6 +229,12 @@ namespace ConsoleApplication1
 			};
 
 			VerifyCSharpDiagnostic(new[] {test, MaximumMethodLengthFive}, expected);
+		}
+
+		[TestMethod]
+		public void TestDebtAnnotationForStaticConstructor()
+		{
+			VerifyCSharpDiagnostic(new[] { DebtAnalyzerTestUtil.DebtMethodAnnotation, StaticConstructorWithDebtAnnotation });
 		}
 
 		[TestMethod]

@@ -1,5 +1,6 @@
 using System.Linq;
 using DebtAnalyzer;
+using DebtAnalyzer.ClassDebt;
 using DebtAnalyzer.DebtAnnotation;
 using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
@@ -13,13 +14,17 @@ namespace AttributeUpdater
 	{
 		readonly int maxMethodLength;
 		readonly int maxParameters;
+		readonly int maxTypeLength;
+		readonly int maxFieldCount;
 		readonly Workspace workspace;
 
-		public ClassAttributeUpdater(Workspace workspace, int maxParameters, int maxMethodLength) : base(false)
+		public ClassAttributeUpdater(Workspace workspace, int maxParameters, int maxMethodLength, int maxTypeLength, int maxFieldCount) : base(false)
 		{
 			this.workspace = workspace;
 			this.maxParameters = maxParameters;
 			this.maxMethodLength = maxMethodLength;
+			this.maxTypeLength = maxTypeLength;
+			this.maxFieldCount = maxFieldCount;
 		}
 
 		public override SyntaxNode VisitConstructorDeclaration(ConstructorDeclarationSyntax node)
@@ -44,12 +49,32 @@ namespace AttributeUpdater
 		{
 			if (node.Name.ToString() == nameof(DebtMethod))
 			{
-				var containingMethod = node.Ancestors().OfType<BaseMethodDeclarationSyntax>().First();
+				var containingMethod = node.Ancestors().OfType<BaseMethodDeclarationSyntax>().FirstOrDefault();
+				if (containingMethod == null)
+				{
+					return node;
+				}
+
 				if (containingMethod.ParameterList.Parameters.Count <= maxParameters && MethodLengthAnalyzer.GetMethodLength(containingMethod) < maxMethodLength)
 				{
 					return null;
 				}
 				return Formatter.Format(MethodDebtAnnotationProvider.GetAttribute(containingMethod), workspace);
+			}
+
+			if (node.Name.ToString() == nameof(DebtType))
+			{
+				var containingType = node.Ancestors().OfType<TypeDeclarationSyntax>().FirstOrDefault();
+				if (containingType == null)
+				{
+					return node;
+				}
+				if (TypeLengthAnalyzer.GetTypeLength(containingType) < maxTypeLength && 
+					FieldCountAnalyzer.GetFieldCount(containingType) < maxFieldCount)
+				{
+					return null;
+				}
+				return Formatter.Format(TypeDebtAnnotationProvider.GetAttribute(containingType), workspace);
 			}
 			return base.VisitAttribute(node);
 		}

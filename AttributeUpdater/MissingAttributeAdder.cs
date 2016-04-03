@@ -19,7 +19,7 @@ namespace AttributeUpdater
 		public static async Task<Solution> AddMissingAttributes(Solution solution)
 		{
 			var solutionWithDebtMethods = await ApplyFixToSolution(new MethodDebtAnalyzer(), new MethodDebtAnnotationProvider(), new MethodDebtFixAllProvider(), solution);
-			return await ApplyFixToSolution(new TypeDebtAnalyzer(), new TypeDebtAnnotationProvider(), new TypeDebtFixAllProvider(), solutionWithDebtMethods);
+			return solutionWithDebtMethods; //await ApplyFixToSolution(new TypeDebtAnalyzer(), new TypeDebtAnnotationProvider(), new TypeDebtFixAllProvider(), solutionWithDebtMethods);
 		}
 
 		static async Task<Solution> ApplyFixToSolution(DiagnosticAnalyzer analyzer, CodeFixProvider annotationProvider, FixAllProvider fixAllProvider, 

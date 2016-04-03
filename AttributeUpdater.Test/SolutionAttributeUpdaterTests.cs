@@ -44,6 +44,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
+    [DebtType(LineCount = 100, FieldCount = 8)]
     class TypeName
     {
         /// <summary>

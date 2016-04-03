@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using DebtAnalyzer.ClassDebt;
 using DebtAnalyzer.MethodDebt;
 using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
@@ -15,13 +16,11 @@ namespace AttributeUpdater
 			{
 				var project = result.GetProject(projectId);
 				var documentIds = project.DocumentIds.ToList();
-				var compilation = await project.GetCompilationAsync();
-				var maxParameters = MethodParameterCountAnalyzer.GetMaxParameterCount(compilation.Assembly);
-				var maxMethodLength = MethodLengthAnalyzer.GetMaxLineCount(compilation.Assembly);
+				var updater = await GetClassUpdater(project);
 				foreach (var documentId in documentIds)
 				{
 					var document = project.GetDocument(documentId);
-					var newDocument = await UpdateAttributes(document, maxParameters, maxMethodLength);
+					var newDocument = await UpdateAttributes(document, updater);
 					project = newDocument.Project;
 				}
 				result = project.Solution;
@@ -29,10 +28,20 @@ namespace AttributeUpdater
 			return result;
 		}
 
-		static async Task<Document> UpdateAttributes(Document document, int maxParameters, int maxMethodLength)
+		static async Task<ClassAttributeUpdater> GetClassUpdater(Project project)
+		{
+			var compilation = await project.GetCompilationAsync();
+			var maxParameters = MethodParameterCountAnalyzer.GetMaxParameterCount(compilation.Assembly);
+			var maxMethodLength = MethodLengthAnalyzer.GetMaxLineCount(compilation.Assembly);
+			var maxTypeLength = TypeLengthAnalyzer.GetMaxLineCount(compilation.Assembly);
+			var maxFieldCount = FieldCountAnalyzer.GetMaxFieldCount(compilation.Assembly);
+			return new ClassAttributeUpdater(project.Solution.Workspace, maxParameters, maxMethodLength, maxTypeLength, maxFieldCount);
+		}
+
+		static async Task<Document> UpdateAttributes(Document document, ClassAttributeUpdater updater)
 		{
 			var root = await document.GetSyntaxRootAsync();
-			var newRoot = new ClassAttributeUpdater(document.Project.Solution.Workspace, maxParameters, maxMethodLength).Visit(root);
+			var newRoot = updater.Visit(root);
 			return document.WithSyntaxRoot(newRoot);
 		}
 	}

@@ -10,7 +10,7 @@ namespace DebtAnalyzer.ClassDebt
 	public class FieldCountAnalyzer
 	{
 		public const string DiagnosticId = "MaxFieldCount";
-		public static int DefaultMaximumFieldCount = 8;
+		public static int DefaultMaximumFieldCount = 20;
 
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{

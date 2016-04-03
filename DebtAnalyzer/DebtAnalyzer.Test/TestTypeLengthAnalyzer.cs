@@ -15,6 +15,28 @@ namespace DebtAnalyzer.Test
 			TypeLengthAnalyzer.DefaultMaximumTypeLength = 10;
 		}
 
+		static string GeneratedType => @"
+namespace ConsoleApplication1
+{
+	[global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
+	public class ResCommon
+	{
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+}";
 		static string LongType => @"
 using System;
 
@@ -84,6 +106,12 @@ namespace ConsoleApplication1
 			};
 
 			VerifyCSharpDiagnostic(test, expected);
+		}
+
+		[TestMethod]
+		public void TestNoErrorOnGeneratedCode()
+		{
+			VerifyCSharpDiagnostic(GeneratedType);
 		}
 
 		[TestMethod]

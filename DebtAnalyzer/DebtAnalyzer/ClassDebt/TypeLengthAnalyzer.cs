@@ -18,6 +18,11 @@ namespace DebtAnalyzer.ClassDebt
 		{
 			var type = (TypeDeclarationSyntax)context.Node;
 			var typeSymbol = context.SemanticModel.GetDeclaredSymbol(type);
+			if (RoslynUtil.IsTypeGenerated(typeSymbol))
+			{
+				return;
+			}
+
 			var typeLength = GetTypeLength(type);
 			var maxLineCount = GetMaxLineCount(typeSymbol.ContainingAssembly);
 			var previousTypeLength = GetPreviousTypeLength(typeSymbol);

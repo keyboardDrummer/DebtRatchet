@@ -16,6 +16,10 @@ namespace DebtAnalyzer.ClassDebt
 		{
 			var type = (TypeDeclarationSyntax)context.Node;
 			var typeSymbol = context.SemanticModel.GetDeclaredSymbol(type);
+			if (RoslynUtil.IsTypeGenerated(typeSymbol))
+			{
+				return;
+			}
 			var maxFieldCount = GetMaxFieldCount(typeSymbol.ContainingAssembly);
 			var previousFieldCount = GetPreviousFieldCount(typeSymbol);
 			var fieldCount = GetFieldCount(type);

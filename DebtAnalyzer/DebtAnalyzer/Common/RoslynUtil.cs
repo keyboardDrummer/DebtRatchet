@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -39,6 +41,11 @@ namespace DebtAnalyzer.Common
 						.WithEqualsToken(
 							SyntaxFactory.Token(
 								SyntaxKind.EqualsToken)));
+		}
+
+		public static bool IsTypeGenerated(INamedTypeSymbol typeSymbol)
+		{
+			return typeSymbol.GetAttributes().Any(attribute => attribute.AttributeClass.Name.ToString() == typeof(CompilerGeneratedAttribute).Name);
 		}
 	}
 }

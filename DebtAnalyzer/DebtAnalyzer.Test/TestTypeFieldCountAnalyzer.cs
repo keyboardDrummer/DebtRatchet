@@ -51,7 +51,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
-    [DebtType(LineCount = 3, FieldCount = 3)]
+    [DebtType(LineCount = 6, FieldCount = 3)]
     class SomeClass
     {
         int a;

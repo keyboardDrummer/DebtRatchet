@@ -45,8 +45,9 @@ namespace DebtAnalyzer.ClassDebt
 		public static int GetTypeLength(TypeDeclarationSyntax type)
 		{
 			SyntaxTree tree = type.SyntaxTree;
-			var lineSpan = tree.GetLineSpan(type.Members.Span);
-			return MethodLengthAnalyzer.GetLineSpanLineCount(lineSpan);
+			var keywordLineSpan = tree.GetLineSpan(type.Keyword.Span);
+			var wholeLineSpan = tree.GetLineSpan(type.Span);
+			return wholeLineSpan.EndLinePosition.Line - keywordLineSpan.StartLinePosition.Line + 1;
 		}
 
 		static int GetPreviousTypeLength(INamedTypeSymbol typeSymbol)

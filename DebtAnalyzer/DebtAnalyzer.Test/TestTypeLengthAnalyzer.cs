@@ -64,7 +64,7 @@ using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
-    [DebtType(LineCount = 11, FieldCount = 1)]
+    [DebtType(LineCount = 14, FieldCount = 1)]
     class LongMethodClass
     {
         int a;
@@ -98,7 +98,7 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "TypeLengthAnalyzer",
-				Message = "Type LongMethodClass is 11 lines long while it should not be longer than 10 lines.",
+				Message = "Type LongMethodClass is 14 lines long while it should not be longer than 10 lines.",
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[]

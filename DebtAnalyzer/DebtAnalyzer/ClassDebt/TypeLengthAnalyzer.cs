@@ -30,7 +30,7 @@ namespace DebtAnalyzer.ClassDebt
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(typeSymbol);
 				var diagnosticDescriptor = CreateDiagnosticDescriptor(severity);
-				var diagnostic = Diagnostic.Create(diagnosticDescriptor, type.GetLocation(), type.Identifier.Text, typeLength, maxLineCount);
+				var diagnostic = Diagnostic.Create(diagnosticDescriptor, type.Identifier.GetLocation(), type.Identifier.Text, typeLength, maxLineCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}

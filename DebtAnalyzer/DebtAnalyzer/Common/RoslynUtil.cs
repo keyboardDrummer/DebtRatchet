@@ -10,7 +10,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace DebtAnalyzer.Common
 {
-	class RoslynUtil
+	static class RoslynUtil
 	{
 		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
 		{
@@ -46,6 +46,11 @@ namespace DebtAnalyzer.Common
 		public static bool IsTypeGenerated(INamedTypeSymbol typeSymbol)
 		{
 			return typeSymbol.GetAttributes().Any(attribute => attribute.AttributeClass.Name.ToString() == typeof(CompilerGeneratedAttribute).Name);
+		}
+
+		public static SyntaxToken GetIdentifier(this BaseMethodDeclarationSyntax method)
+		{
+			return (method as MethodDeclarationSyntax)?.Identifier ?? (method as ConstructorDeclarationSyntax).Identifier;
 		}
 	}
 }

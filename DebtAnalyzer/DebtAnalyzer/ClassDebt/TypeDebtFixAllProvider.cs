@@ -42,7 +42,7 @@ namespace DebtAnalyzer.ClassDebt
 
 			SyntaxNode VisitTypeDeclaration(TypeDeclarationSyntax node)
 			{
-				if (spans.Contains(node.Identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
+				if (spans.Contains(node.Identifier.GetLocation().GetLineSpan().StartLinePosition.Line)) //TODO unstable.
 				{
 					return TypeDebtAnnotationProvider.GetNewType(node);
 				}

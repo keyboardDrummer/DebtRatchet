@@ -2,7 +2,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using DebtAnalyzer.ClassDebt;
 using DebtAnalyzer.MethodDebt;
-using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 
 namespace AttributeUpdater

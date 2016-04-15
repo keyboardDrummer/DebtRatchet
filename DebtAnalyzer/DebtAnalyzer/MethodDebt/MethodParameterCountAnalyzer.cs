@@ -1,10 +1,11 @@
 using System.Linq;
 using DebtAnalyzer.Common;
-using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Text;
 
-namespace DebtAnalyzer.ParameterCount
+namespace DebtAnalyzer.MethodDebt
 {
 	public class MethodParameterCountAnalyzer
 	{
@@ -14,9 +15,10 @@ namespace DebtAnalyzer.ParameterCount
 		static readonly LocalizableString messageFormat = new LocalizableResourceString(nameof(Resources.TooManyParametersMessage), Resources.ResourceManager, typeof(Resources));
 		public static int DefaultMaximumParameterCount = 8;
 
-		public void AnalyzeSymbol(SymbolAnalysisContext context)
+		public void AnalyzeSymbol(SyntaxNodeAnalysisContext context)
 		{
-			var methodSymbol = (IMethodSymbol)context.Symbol;
+			var method = (BaseMethodDeclarationSyntax)context.Node;
+			var methodSymbol = (IMethodSymbol)context.SemanticModel.GetDeclaredSymbol(method);
 			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
 			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
 			var parameterCount = methodSymbol.Parameters.Length;
@@ -24,7 +26,8 @@ namespace DebtAnalyzer.ParameterCount
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var descriptor = CreateDiagnosticDescriptor(severity);
-				var diagnostic = Diagnostic.Create(descriptor, methodSymbol.Locations[0], methodSymbol.Name, parameterCount, maxParameterCount);
+				var identifier = method.GetIdentifier();
+				var diagnostic = Diagnostic.Create(descriptor, identifier.GetLocation(), identifier.Text, parameterCount, maxParameterCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}

@@ -103,7 +103,7 @@ namespace ConsoleApplication1
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 6, 5)
+						new DiagnosticResultLocation("Test0.cs", 6, 11)
 					}
 			};
 

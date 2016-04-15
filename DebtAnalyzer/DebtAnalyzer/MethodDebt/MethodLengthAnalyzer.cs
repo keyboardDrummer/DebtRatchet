@@ -20,16 +20,17 @@ namespace DebtAnalyzer.MethodDebt
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
 			var previousMethodLength = GetPreviousMethodLength(methodSymbol);
-			var identifier = (method as MethodDeclarationSyntax)?.Identifier.Text ?? (method as ConstructorDeclarationSyntax)?.Identifier.Text;
 			if (methodLength > previousMethodLength && methodLength > maxLineCount)
 			{
 				var severity = DebtAsErrorUtil.GetDiagnosticSeverity(methodSymbol);
 				var diagnosticDescriptor = CreateDiagnosticDescriptor(severity);
-				var diagnostic = Diagnostic.Create(diagnosticDescriptor, method.GetLocation(), identifier, methodLength, maxLineCount);
+				var identifier = method.GetIdentifier();
+				var diagnostic = Diagnostic.Create(diagnosticDescriptor, identifier.GetLocation(), identifier.Text, methodLength, maxLineCount);
 
 				context.ReportDiagnostic(diagnostic);
 			}
 		}
+
 
 		public DiagnosticDescriptor CreateDiagnosticDescriptor(DiagnosticSeverity severity)
 		{

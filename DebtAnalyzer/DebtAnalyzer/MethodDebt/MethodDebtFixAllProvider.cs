@@ -36,7 +36,7 @@ namespace DebtAnalyzer.MethodDebt
 
 			SyntaxNode VisitMethodBase(SyntaxToken identifier, BaseMethodDeclarationSyntax node)
 			{
-				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line))
+				if (spans.Contains(identifier.GetLocation().GetLineSpan().StartLinePosition.Line)) //TODO unstable.
 				{
 					return MethodDebtAnnotationProvider.GetNewMethod(node);
 				}

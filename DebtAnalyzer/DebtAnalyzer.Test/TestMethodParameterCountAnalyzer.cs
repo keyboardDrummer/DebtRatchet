@@ -3,7 +3,6 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using System;
 using DebtAnalyzer.MethodDebt;
-using DebtAnalyzer.ParameterCount;
 using TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

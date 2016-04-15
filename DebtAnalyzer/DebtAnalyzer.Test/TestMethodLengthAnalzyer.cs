@@ -223,7 +223,7 @@ namespace ConsoleApplication1
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 9, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 14)
 					}
 			};
 
@@ -254,7 +254,7 @@ namespace ConsoleApplication1
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 9, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 14)
 					}
 			};
 
@@ -273,7 +273,7 @@ namespace ConsoleApplication1
 				Locations =
 					new[]
 					{
-						new DiagnosticResultLocation("Test0.cs", 9, 9)
+						new DiagnosticResultLocation("Test0.cs", 9, 14)
 					}
 			};
 

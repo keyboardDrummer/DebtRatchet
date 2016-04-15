@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DebtAnalyzer.ParameterCount;
+using DebtAnalyzer.MethodDebt;
 using TestHelper;
 
 namespace AttributeUpdater.Test

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using DebtAnalyzer.ParameterCount;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
@@ -19,7 +18,7 @@ namespace DebtAnalyzer.MethodDebt
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext), SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration);
-				startContext.RegisterSymbolAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SymbolKind.Method);
+				startContext.RegisterSyntaxNodeAction(nodeContext => parameterCountAnalyzer.AnalyzeSymbol(nodeContext), SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration);
 			});
 		}
 

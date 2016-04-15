@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AttributeUpdater;
-using DebtAnalyzer.ParameterCount;
+using DebtAnalyzer.MethodDebt;
 using TestHelper;
 
 namespace ÀttributeUpdater.Test

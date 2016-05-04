@@ -1,16 +1,15 @@
-# RoslynDebtAnalyzer
-Visual studio plugin that helps reduce technical debt in legacy codebases.
+# LegacyTourNiquet
+LegacyTourNiquet is a Roslyn diagnostic, meaning it's a plugin for the .NET compiler that runs while you program. Using the principle of a tourniquet, it allows you to systematically reduce technical debt in legacy codebases. 
 
-This plugin detects increases in your code's technical debt. Depending on your configuration, 
-an error or warning is given when technical debt increases.
+When the plugin detects an increase in technical debt, an error or warning is given depending on your configuration.
 
-For the plugin to work it must be allowed to automatically annotate your codebase in places where technical debt currently occurs.
-This allows the plugin to report only *increases* in technical debt.
-
-The current technical debt checks that are available are the following:
+The plugin detects technical debt using these simple rules:
 * Method has too many parameters
 * Method is too long
 * Type has too many fields
 * Type is too long
 
-The plugin can be configured using assembly annotations. 
+The thresholds for these rules can be configured using assembly level attributes.
+
+For the plugin to work it must be allowed to automatically annotate your codebase in places where technical debt occurs.
+This allows the plugin to report only *increases* in technical debt.

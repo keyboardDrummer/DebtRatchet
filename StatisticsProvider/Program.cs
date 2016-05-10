@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
@@ -23,7 +24,7 @@ namespace StatisticsProvider
 			else
 			{
 				var onlyNumbers = args.Contains("-n");
-				ProvideStatistics(args[0], onlyNumbers, GetEmptyStatistics(args)).Wait();
+				ProvideStatistics(args[0], onlyNumbers, GetEmptyStatistics(args));
 			}
 		}
 
@@ -37,15 +38,22 @@ namespace StatisticsProvider
 			return new Statistics(typeStatistics, methodStatistics);
 		}
 
-		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers, Statistics statistics)
+		static async void ProvideStatistics(string solutionPath, bool onlyNumbers, Statistics statistics)
 		{
-			var solution = await GetSolution(solutionPath);
-			var projectStatistics = await Statistics.GetProjectStatistics(solution, statistics);
-			var solutionStatistics = projectStatistics.Select(p => p.Value).Aggregate((a, b) => a.Concat(b));
-			Console.WriteLine("Solution statistics:" + Environment.NewLine + solutionStatistics.Print(onlyNumbers));
-			foreach (var project in projectStatistics.Keys)
+			try
 			{
-				Console.WriteLine($"Project statistics for {project.Name}:\n" + projectStatistics[project].Print(onlyNumbers));
+				var solution = await GetSolution(solutionPath);
+				var projectStatistics = await Statistics.GetProjectStatistics(solution, statistics);
+				var solutionStatistics = projectStatistics.Select(p => p.Value).Aggregate((a, b) => a.Concat(b));
+				Console.WriteLine("Solution statistics:" + Environment.NewLine + solutionStatistics.Print(onlyNumbers));
+				foreach (var project in projectStatistics.Keys)
+				{
+					Console.WriteLine($"Project statistics for {project.Name}:\n" + projectStatistics[project].Print(onlyNumbers));
+				}
+			}
+			catch (FileNotFoundException e)
+			{
+				Console.Write(e.Message);
 			}
 		}
 
@@ -53,7 +61,7 @@ namespace StatisticsProvider
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{
-				return await workspace.OpenSolutionAsync(path);
+					return await workspace.OpenSolutionAsync(path);
 			}
 		}
 	}

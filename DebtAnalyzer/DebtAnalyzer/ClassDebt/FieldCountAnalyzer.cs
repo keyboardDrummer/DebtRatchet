@@ -43,7 +43,7 @@ namespace DebtAnalyzer.ClassDebt
 		public DiagnosticDescriptor CreateDiagnosticDescriptor(DiagnosticSeverity severity)
 		{
 			return new DiagnosticDescriptor(DiagnosticId, "Type has too many fields", 
-				"Type {0} has {1} fields it should have more than {2}.", "Debt", severity, true);
+				"Type {0} has {1} fields while it should not have more than {2}.", "Debt", severity, true);
 		}
 
 		static int GetPreviousFieldCount(INamedTypeSymbol typeSymbol)

@@ -15,4 +15,4 @@ For the plugin to work it must be allowed to automatically annotate your codebas
 This allows the plugin to report only *increases* in technical debt.
 
 Here is a screenshot of this plugin in action.
-![Screenshot](http://imgur.com/Bwj9E8h)
+![Screenshot](http://i.imgur.com/Bwj9E8h.png)

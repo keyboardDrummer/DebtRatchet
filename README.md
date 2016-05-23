@@ -21,4 +21,4 @@ Below is a screenshot of this plugin in action. It demonstrates four scenario's 
 3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this error right now and have annotated the method so that it does not give an error.
 4. A legacy method with too many parameters has gained even more parameters after we started using LegacyRatchet and annotated it with the DebtMethod annotations. Because we don't want our legacy technical debt to grow, this method does give an error.
 
-![Screenshot](http://i.imgur.com/olSbEFO.png)
+![Screenshot](http://i.imgur.com/6Gp7qMm.png)

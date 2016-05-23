@@ -19,6 +19,6 @@ Below is a screenshot of this plugin in action. It demonstrates four scenario's 
 1. A method has exactly five parameters so it is within the limit.
 2. A method has six parameters, so it is over the limit and gives an error.
 3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this error right now and have annotated the method so that it does not give an error.
-4. A legacy method with too many parameters has gained even more parameters after we started using DebtRatchet and annotated it with the DebtMethod annotation. Because we don't want our legacy technical debt to grow, this method does give an error.
+4. A legacy method with too many parameters has gained even more parameters after we started using DebtRatchet and annotated it with the DebtMethod annotation. Because we don't want our technical debt to grow, this method does give an error.
 
 ![Screenshot](http://i.imgur.com/6Gp7qMm.png)

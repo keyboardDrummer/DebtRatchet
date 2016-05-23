@@ -1,4 +1,4 @@
-# DebtRatchet
+# Summary
 DebtRatchet is a Roslyn diagnostic, meaning it's a plugin for the .NET compiler that runs while you program. Using the principle of a ratchet, it allows you to systematically reduce technical debt in legacy codebases. 
 
 When the plugin detects an increase in technical debt, an error or warning is given depending on your configuration.
@@ -14,6 +14,7 @@ The thresholds for these rules can be configured using assembly level attributes
 For the plugin to work it must be allowed to automatically annotate your codebase in places where technical debt occurs.
 This allows the plugin to report only *increases* in technical debt.
 
+#Example
 Below is a screenshot of this plugin in action. It demonstrates four scenario's related to the rule 'Method has too many parameters'. The assembly level annotations specify that a method may not have more than five parameters, and that voilations of this rule result in a compile error. The four scenario show the following cases:
 
 1. A method has exactly five parameters so it is within the limit.

@@ -14,5 +14,6 @@ The thresholds for these rules can be configured using assembly level attributes
 For the plugin to work it must be allowed to automatically annotate your codebase in places where technical debt occurs.
 This allows the plugin to report only *increases* in technical debt.
 
-Here is a screenshot of this plugin in action.
+Here is a screenshot of this plugin in action:
+
 ![Screenshot](http://i.imgur.com/c9cAkwr.png)

@@ -18,7 +18,7 @@ Below is a screenshot of this plugin in action. It demonstrates four scenario's 
 
 1. A method has exactly five parameters so it is within the limit.
 2. A method has six parameters, so it is over the limit and gives an error.
-3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this technical debt right now and have annotated the method so that it does not give an error. These annotations can be generated for an entire solution using a provided command line tool, or through using Visual Studio 'fixes'.
+3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this technical debt right now and have annotated the method so that it does not give an error. These annotations can be generated for an entire solution using a provided command line tool, or by using Visual Studio fixes that come with the Roslyn diagnostic.
 4. A legacy method with too many parameters has gained even more parameters after we started using DebtRatchet and annotated it with the DebtMethod annotation. Because we don't want our technical debt to grow, this method does give an error.
 
 ![Screenshot](http://i.imgur.com/6Gp7qMm.png)

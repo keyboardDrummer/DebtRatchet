@@ -1,5 +1,5 @@
-# LegacyTourNiquet
-LegacyTourNiquet is a Roslyn diagnostic, meaning it's a plugin for the .NET compiler that runs while you program. Using the principle of a tourniquet, it allows you to systematically reduce technical debt in legacy codebases. 
+# LegacyRatchet
+LegacyRatchet is a Roslyn diagnostic, meaning it's a plugin for the .NET compiler that runs while you program. Using the principle of a ratchet, it allows you to systematically reduce technical debt in legacy codebases. 
 
 When the plugin detects an increase in technical debt, an error or warning is given depending on your configuration.
 

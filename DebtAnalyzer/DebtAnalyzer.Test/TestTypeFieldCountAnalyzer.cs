@@ -77,7 +77,7 @@ namespace ConsoleApplication1
 			var expected = new DiagnosticResult
 			{
 				Id = "MaxFieldCount",
-				Message = "Type SomeClass has 3 fields it should have more than 2.",
+				Message = "Type SomeClass has 3 fields while it should not have more than 2.",
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[]

@@ -17,6 +17,11 @@ namespace DebtAnalyzer.MethodDebt
 		{
 			var method = (BaseMethodDeclarationSyntax)context.Node;
 			var methodSymbol = context.SemanticModel.GetDeclaredSymbol(method);
+			if (RoslynUtil.IsSymbolGenerated(methodSymbol))
+			{
+				return;
+			}
+
 			var methodLength = GetMethodLength(method);
 			var maxLineCount = GetMaxLineCount(methodSymbol.ContainingAssembly);
 			var previousMethodLength = GetPreviousMethodLength(methodSymbol);

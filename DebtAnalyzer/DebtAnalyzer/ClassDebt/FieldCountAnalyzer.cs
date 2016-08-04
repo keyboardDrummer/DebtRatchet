@@ -16,7 +16,7 @@ namespace DebtAnalyzer.ClassDebt
 		{
 			var type = (TypeDeclarationSyntax)context.Node;
 			var typeSymbol = context.SemanticModel.GetDeclaredSymbol(type);
-			if (RoslynUtil.IsTypeGenerated(typeSymbol))
+			if (RoslynUtil.IsSymbolGenerated(typeSymbol))
 			{
 				return;
 			}

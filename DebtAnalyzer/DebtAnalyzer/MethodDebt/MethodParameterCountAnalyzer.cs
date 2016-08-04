@@ -19,6 +19,11 @@ namespace DebtAnalyzer.MethodDebt
 		{
 			var method = (BaseMethodDeclarationSyntax)context.Node;
 			var methodSymbol = (IMethodSymbol)context.SemanticModel.GetDeclaredSymbol(method);
+			if (RoslynUtil.IsSymbolGenerated(methodSymbol))
+			{
+				return;
+			}
+
 			var maxParameterCount = GetMaxParameterCount(methodSymbol.ContainingAssembly);
 			var previousParameterCount = GetPreviousParameterCount(methodSymbol);
 			var parameterCount = methodSymbol.Parameters.Length;

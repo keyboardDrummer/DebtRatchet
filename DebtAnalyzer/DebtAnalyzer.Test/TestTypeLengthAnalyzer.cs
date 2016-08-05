@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestHelper;
 
 namespace DebtAnalyzer.Test
@@ -91,7 +92,7 @@ namespace ConsoleApplication1
 			return new TypeDebtAnnotationProvider();
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnostic()
 		{
 			var test = LongType;
@@ -110,13 +111,13 @@ namespace ConsoleApplication1
 			VerifyCSharpDiagnostic(test, expected);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestNoErrorOnGeneratedCode()
 		{
 			VerifyCSharpDiagnostic(GeneratedType);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestFix()
 		{
 			VerifyCSharpFix(LongType, LongTypeFixed, allowNewCompilerDiagnostics: true);

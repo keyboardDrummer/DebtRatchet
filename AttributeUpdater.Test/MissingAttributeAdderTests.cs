@@ -1,15 +1,11 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ÀttributeUpdater;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AttributeUpdater;
+﻿using System.Linq;
 using DebtAnalyzer.MethodDebt;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestHelper;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
-namespace ÀttributeUpdater.Test
+namespace AttributeUpdater.Test
 {
 	[TestClass]
 	public class MissingAttributeAdderTest
@@ -19,7 +15,7 @@ namespace ÀttributeUpdater.Test
 			MethodParameterCountAnalyzer.DefaultMaximumParameterCount = 5;
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestAddMissingAttribute()
 		{
 			var project = DiagnosticVerifier.CreateProject(new[] { OutdatedAnnotationProgram });

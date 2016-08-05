@@ -1,12 +1,13 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ÀttributeUpdater;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DebtAnalyzer.MethodDebt;
+using NUnit.Framework;
 using TestHelper;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace AttributeUpdater.Test
 {
@@ -18,7 +19,7 @@ namespace AttributeUpdater.Test
 			MethodParameterCountAnalyzer.DefaultMaximumParameterCount = 5;
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestUpdate()
 		{
 			var project = DiagnosticVerifier.CreateProject(new[] { OutdatedAnnotationProgram, OutdatedAnnotationProgram, ProgramWithUnnecessaryAnnotation });

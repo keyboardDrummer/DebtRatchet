@@ -5,6 +5,7 @@ using System;
 using DebtAnalyzer.MethodDebt;
 using TestHelper;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace DebtAnalyzer.Test
 {
@@ -16,14 +17,14 @@ namespace DebtAnalyzer.Test
 			MethodParameterCountAnalyzer.DefaultMaximumParameterCount = 5;
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestFix()
 		{
 			VerifyCSharpFix(TestProgramInput, FixedProgram, allowNewCompilerDiagnostics: true);
 		}
 
 		//No diagnostics expected to show up
-		[TestMethod]
+		[Test]
         public void TestEmptyProgramHasNoDiagnostics()
         {
             var test = @"";
@@ -31,7 +32,7 @@ namespace DebtAnalyzer.Test
             VerifyCSharpDiagnostic(test);
         }
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnostic()
 		{
 			var test = TestProgramInput;
@@ -49,7 +50,7 @@ namespace DebtAnalyzer.Test
 			VerifyCSharpDiagnostic(new[] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, MaxParametersAnnotation }, expected);
 		}
 
-		[TestMethod]
+		[Test]
         public void TestDiagnosticAsError()
         {
             var test = TestProgramInput;
@@ -67,7 +68,7 @@ namespace DebtAnalyzer.Test
             VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, DebtAnalyzerTestUtil.DebtAsError }, expected);
         }
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnosticAnnotation()
 		{
 			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, FixedProgram });
@@ -142,7 +143,7 @@ namespace ConsoleApplication1
 }
 ";
 
-		[TestMethod]
+		[Test]
 		public void TestConstructorFix()
 		{
 			VerifyCSharpFix(WithConstructor, FixedWithConstructor, allowNewCompilerDiagnostics: true);

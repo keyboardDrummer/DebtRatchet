@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+    <!--Info: http://msdn.microsoft.com/en-us/library/jj635153.aspx -->
+    <NUnit>
+        <IgnoreTestImpact>True</IgnoreTestImpact>
+        <MapInconclusiveToFailed>True</MapInconclusiveToFailed>
+        <CaptureTraceOutput>False</CaptureTraceOutput>
+        <DeleteDeploymentDirectoryAfterTestRunIsComplete>False</DeleteDeploymentDirectoryAfterTestRunIsComplete>
+        <DeploymentEnabled>False</DeploymentEnabled>
+    </NUnit>
+</RunSettings>

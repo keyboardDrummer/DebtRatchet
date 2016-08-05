@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using TestHelper;
 
 namespace DebtAnalyzer.Test
@@ -70,7 +71,7 @@ namespace ConsoleApplication1
 			return new TypeDebtAnnotationProvider();
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestTooManyFields()
 		{
 			var test = TooManyFields;
@@ -89,13 +90,13 @@ namespace ConsoleApplication1
 			VerifyCSharpDiagnostic(test, expected);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestNotTooManyFields()
 		{
 			VerifyCSharpDiagnostic(NotTooManyFields);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestFix()
 		{
 			VerifyCSharpFix(TooManyFields, TooManyFieldsFixed, allowNewCompilerDiagnostics: true);

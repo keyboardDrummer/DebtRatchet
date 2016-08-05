@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TestHelper;
+using NUnit.Framework;
 
 namespace DebtAnalyzer.Test
 {
@@ -211,7 +212,7 @@ namespace ConsoleApplication1
 			return new MethodDebtAnnotationProvider();
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnosticWithCustomSettings()
 		{
 			var test = LongMethod;
@@ -230,19 +231,19 @@ namespace ConsoleApplication1
 			VerifyCSharpDiagnostic(new[] {test, MaximumMethodLengthFive}, expected);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDebtAnnotationForStaticConstructor()
 		{
 			VerifyCSharpDiagnostic(new[] { DebtAnalyzerTestUtil.DebtMethodAnnotation, StaticConstructorWithDebtAnnotation });
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnosticForAbstractMethod()
 		{
 			VerifyCSharpDiagnostic(new[] {AbstractMethod});
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnostic()
 		{
 			var test = LongMethod;
@@ -261,7 +262,7 @@ namespace ConsoleApplication1
 			VerifyCSharpDiagnostic(test, expected);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnosticAsError()
 		{
 			var test = LongMethod;
@@ -280,37 +281,37 @@ namespace ConsoleApplication1
 			VerifyCSharpDiagnostic(new[] {test, DebtAnalyzerTestUtil.DebtAsError}, expected);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestDiagnosticWithDebtAnnotation()
 		{
 			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation});
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestExternalFixNoDoubleUsing()
 		{
 			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestFixNoDoubleUsing()
 		{
 			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestConstructorFix()
 		{
 			VerifyCSharpFix(LongConstructor, LongConstructorFixed, allowNewCompilerDiagnostics: true);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestFix()
 		{
 			VerifyCSharpFix(LongMethod, LongMethodFixed, allowNewCompilerDiagnostics: true);
 		}
 
-		[TestMethod]
+		[Test]
 		public void TestOverwriteFix()
 		{
 			VerifyCSharpFix(LongMethodWithOutdatedAnnotation, LongMethodFixed, allowNewCompilerDiagnostics: true);

@@ -8,7 +8,7 @@ using NUnit.Framework;
 
 namespace DebtAnalyzer.Test
 {
-	[TestClass]
+	
 	public class TestMethodLengthAnalzyer : CodeFixVerifier
 	{
 		public TestMethodLengthAnalzyer()

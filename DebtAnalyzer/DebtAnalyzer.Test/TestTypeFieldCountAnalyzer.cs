@@ -8,7 +8,7 @@ using TestHelper;
 
 namespace DebtAnalyzer.Test
 {
-	[TestClass]
+	
 	public class TestTypeFieldCountAnalyzer : CodeFixVerifier
 	{
 		public TestTypeFieldCountAnalyzer()

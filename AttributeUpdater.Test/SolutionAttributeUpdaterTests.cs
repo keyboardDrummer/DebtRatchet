@@ -11,7 +11,7 @@ using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace AttributeUpdater.Test
 {
-	[TestClass]
+	
 	public class SolutionAttributeUpdaterTests
 	{
 		public SolutionAttributeUpdaterTests()

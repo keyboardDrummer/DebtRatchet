@@ -9,7 +9,7 @@ using NUnit.Framework;
 
 namespace DebtAnalyzer.Test
 {
-	[TestClass]
+	
     public class TestMethodParameterCountAnalyzer : CodeFixVerifier
 	{
 		public TestMethodParameterCountAnalyzer()

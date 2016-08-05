@@ -8,7 +8,6 @@ using TestHelper;
 
 namespace DebtAnalyzer.Test
 {
-	[TestClass]
 	public class TestTypeLengthAnalyzer : CodeFixVerifier
 	{
 		public TestTypeLengthAnalyzer()

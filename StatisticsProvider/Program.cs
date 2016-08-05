@@ -9,7 +9,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace StatisticsProvider
 {
 	// ReSharper disable LocalizableElement
-	[TestClass]
+	
 	public class Program
 	{
 		const string ConfigurationArgument = "-c";

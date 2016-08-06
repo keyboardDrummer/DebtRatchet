@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtAnalyzer", "DebtAnalyzer\DebtAnalyzer\DebtAnalyzer.csproj", "{679A037B-4B94-4152-9636-3A621B546A75}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeUpdater", "AttributeUpdater\AttributeUpdater.csproj", "{86886822-D662-43C3-BCC7-24FF274E847C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeUpdater.Test", "AttributeUpdater.Test\AttributeUpdater.Test.csproj", "{23457767-C056-4A4D-AFF3-C246220ADB55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRatchet.Test", "DebtRatchet.Test\DebtRatchet.Test.csproj", "{70C1AFA9-469F-4D24-A3D6-C1F8FF0866A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{23457767-C056-4A4D-AFF3-C246220ADB55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23457767-C056-4A4D-AFF3-C246220ADB55}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23457767-C056-4A4D-AFF3-C246220ADB55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70C1AFA9-469F-4D24-A3D6-C1F8FF0866A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70C1AFA9-469F-4D24-A3D6-C1F8FF0866A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70C1AFA9-469F-4D24-A3D6-C1F8FF0866A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70C1AFA9-469F-4D24-A3D6-C1F8FF0866A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

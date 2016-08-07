@@ -1,5 +1,3 @@
-using System;
-using DebtAnalyzer;
 using DebtAnalyzer.ClassDebt;
 using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;

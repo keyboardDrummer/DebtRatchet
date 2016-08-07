@@ -1,15 +1,15 @@
 using DebtAnalyzer.MethodDebt;
-using DebtAnalyzer.Test;
+using DebtRatchet.Test;
+using DebtRatchet.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using NUnit.Framework;
-using TestHelper;
 
 namespace AttributeUpdater.Test
 {
 	
-	public class TestMethodLengthAnalzyer : CodeFixVerifier
+	public class TestMethodLengthAnalzyer : DebtRatchet.Test.Verifiers.CodeFixVerifier
 	{
 		[Test]
 		public void TestWithNothing()

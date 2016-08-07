@@ -1,14 +1,13 @@
 ﻿using DebtAnalyzer.ClassDebt;
+using DebtRatchet.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
-using TestHelper;
 
-namespace DebtAnalyzer.Test
+namespace DebtRatchet.Test
 {
-	public class TestTypeLengthAnalyzer : CodeFixVerifier
+	public class TestTypeLengthAnalyzer : Verifiers.CodeFixVerifier
 	{
 		public TestTypeLengthAnalyzer()
 		{

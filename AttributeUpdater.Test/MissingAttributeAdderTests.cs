@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using DebtAnalyzer.MethodDebt;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
-using TestHelper;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
+using CodeFixVerifier = DebtRatchet.Test.Verifiers.CodeFixVerifier;
+using DiagnosticVerifier = DebtRatchet.Test.Verifiers.DiagnosticVerifier;
 
 namespace AttributeUpdater.Test
 {

@@ -1,6 +1,5 @@
 using System.Linq;
 using DebtAnalyzer.Common;
-using DebtAnalyzer.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

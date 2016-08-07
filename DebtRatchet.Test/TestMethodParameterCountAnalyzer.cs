@@ -1,16 +1,15 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using DebtAnalyzer.MethodDebt;
+using DebtRatchet.Test.Verifiers;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using System;
-using DebtAnalyzer.MethodDebt;
-using TestHelper;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NUnit.Framework;
 
-namespace DebtAnalyzer.Test
+namespace DebtRatchet.Test
 {
 	
-    public class TestMethodParameterCountAnalyzer : CodeFixVerifier
+    public class TestMethodParameterCountAnalyzer : Verifiers.CodeFixVerifier
 	{
 		public TestMethodParameterCountAnalyzer()
 		{

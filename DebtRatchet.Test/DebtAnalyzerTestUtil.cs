@@ -1,4 +1,4 @@
-﻿namespace DebtAnalyzer.Test
+﻿namespace DebtRatchet.Test
 {
 	public static class DebtAnalyzerTestUtil
 	{

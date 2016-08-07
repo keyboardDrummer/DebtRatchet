@@ -175,9 +175,9 @@
   </Choose>
   <ItemGroup>
     <Compile Include="DebtAnalyzerTestUtil.cs" />
-    <Compile Include="Helpers\CodeFixVerifier.Helper.cs" />
-    <Compile Include="Helpers\DiagnosticResult.cs" />
-    <Compile Include="Helpers\DiagnosticVerifier.Helper.cs" />
+    <Compile Include="Verifiers\CodeFixVerifier.Helper.cs" />
+    <Compile Include="Verifiers\DiagnosticResult.cs" />
+    <Compile Include="Verifiers\DiagnosticVerifier.Helper.cs" />
     <Compile Include="TestMethodLengthAnalzyer.cs" />
     <Compile Include="TestMethodParameterCountAnalyzer.cs" />
     <Compile Include="TestTypeFieldCountAnalyzer.cs" />
@@ -200,6 +200,7 @@
       <Name>DebtAnalyzer</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

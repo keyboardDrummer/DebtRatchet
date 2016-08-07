@@ -1,5 +1,21 @@
 ﻿param($installPath, $toolsPath, $package, $project)
 
+$libsPaths = Join-Path (Join-Path (Split-Path -Path $toolsPath -Parent) "lib" ) * -Resolve
+foreach($libsPath in $libsPaths)
+{
+    # Install the language agnostic analyzers.
+    if (Test-Path $libsPath)
+    {
+        foreach ($libFilePath in Get-ChildItem $libsPath -Filter *.dll)
+        {
+            if($project.Object.References)
+            {
+                $project.Object.References.Remove($libFilePath.FullName)
+            }
+        }
+    }
+}
+
 $analyzersPaths = Join-Path (Join-Path (Split-Path -Path $toolsPath -Parent) "analyzers" ) * -Resolve
 
 foreach($analyzersPath in $analyzersPaths)

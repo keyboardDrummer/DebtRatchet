@@ -114,6 +114,7 @@
     <Compile Include="MissingAttributeAdderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SolutionAttributeUpdaterTests.cs" />
+    <Compile Include="TestMethodLengthAnalzyer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AttributeUpdater\AttributeUpdater.csproj">

@@ -11,6 +11,12 @@ namespace DebtAnalyzer.Test
 	
 	public class TestMethodLengthAnalzyer : CodeFixVerifier
 	{
+		[Test]
+		public void TestWithNothing()
+		{
+			
+		}
+
 		public TestMethodLengthAnalzyer()
 		{
 			MethodLengthAnalyzer.DefaultMaximumMethodLength = 3;

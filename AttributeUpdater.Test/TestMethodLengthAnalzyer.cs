@@ -1,12 +1,12 @@
 using DebtAnalyzer.MethodDebt;
+using DebtAnalyzer.Test;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using TestHelper;
 using NUnit.Framework;
+using TestHelper;
 
-namespace DebtAnalyzer.Test
+namespace AttributeUpdater.Test
 {
 	
 	public class TestMethodLengthAnalzyer : CodeFixVerifier

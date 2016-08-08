@@ -149,7 +149,7 @@ namespace DebtRatchet.Test.Verifiers
 
 	        var workspace = new AdhocWorkspace();
 			workspace.Options = workspace.Options.
-				WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, Environment.NewLine).
+				WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n").
 				WithChangedOption(FormattingOptions.UseTabs, LanguageNames.CSharp, false);
 	        var solution = workspace
                 .CurrentSolution

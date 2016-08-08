@@ -22,7 +22,7 @@ namespace AttributeUpdater.Test
 			var newSolution = MissingAttributeAdder.AddMissingAttributes(project.Solution).Result;
 			var document = newSolution.Projects.SelectMany(newProject => newProject.Documents).First();
 			var documentText = CodeFixVerifier.GetStringFromDocument(document);
-			Assert.AreEqual(FixedProgram, documentText);
+			Assert.AreEqual(FixedProgram.Replace("\r\n","\n"), documentText.Replace("\r\n", "\n"));
 		}
 
 		public static string OutdatedAnnotationProgram => @"

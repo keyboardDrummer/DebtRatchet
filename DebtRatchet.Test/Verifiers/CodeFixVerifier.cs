@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Microsoft.CodeAnalysis;
@@ -73,6 +74,7 @@ namespace DebtRatchet.Test.Verifiers
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
         private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string expected, int? codeFixIndex, bool allowNewCompilerDiagnostics)
         {
+	        oldSource = oldSource.Replace("\r\n", "\n"); //TODO solve this some other way. Not sure how line break in verbatim strings are interpreted, but it did not match up with Environment.Newline.
             var document = CreateDocument(oldSource, language);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
             var compilerDiagnostics = GetCompilerDiagnostics(document);
@@ -121,6 +123,7 @@ namespace DebtRatchet.Test.Verifiers
             }
 
             //after applying all of the code fixes, compare the resulting string to the inputted one
+	        expected = expected.Replace("\r\n", "\n"); //TODO solve some other way. Look at TODO above for more info.
             var actual = GetStringFromDocument(document);
 
 			if (!expected.Equals(actual))

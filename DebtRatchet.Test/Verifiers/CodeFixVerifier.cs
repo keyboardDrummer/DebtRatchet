@@ -125,19 +125,20 @@ namespace DebtRatchet.Test.Verifiers
 
 			if (!newSource.Equals(actual))
 			{
-				if (newSource.Length > actual.Length)
-					throw new System.Exception($"newSource = actual + {newSource.Substring(actual.Length)}");
-
-				if (actual.Length > newSource.Length)
-					throw new System.Exception($"actual = newSource + {actual.Substring(newSource.Length)}");
-
-				for (int i = 0;i<newSource.Length;i++)
+				int i = 0;
+				for (;i<newSource.Length&&i<actual.Length;i++)
 				{
 					if (newSource[i] != actual[i])
 					{
 						throw new System.Exception($"newSource = {newSource[i]} while actual = {actual[i]}");
 					}
 				}
+
+				if (newSource.Length > actual.Length)
+					throw new System.Exception($"newSource = actual + {newSource.Substring(actual.Length)}");
+
+				if (actual.Length > newSource.Length)
+					throw new System.Exception($"actual = newSource + {actual.Substring(newSource.Length)}");
 			}
             Assert.AreEqual(newSource, actual);
         }

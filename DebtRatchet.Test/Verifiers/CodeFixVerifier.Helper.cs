@@ -76,12 +76,9 @@ namespace DebtRatchet.Test.Verifiers
         /// <returns>A string containing the syntax of the Document after formatting</returns>
         public static string GetStringFromDocument(Document document)
         {
-	        var workspace = document.Project.Solution.Workspace;
-	        var options = workspace.Options.WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n");
-
             var simplifiedDoc = Simplifier.ReduceAsync(document, Simplifier.Annotation).Result;
             var root = simplifiedDoc.GetSyntaxRootAsync().Result;
-            root = Formatter.Format(root, Formatter.Annotation, simplifiedDoc.Project.Solution.Workspace, options: options);
+            //root = Formatter.Format(root, simplifiedDoc.Project.Solution.Workspace, options: options);
             return root.GetText().ToString();
         }
     }

@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
+using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Text;
 
 namespace DebtRatchet.Test.Verifiers
@@ -146,7 +147,11 @@ namespace DebtRatchet.Test.Verifiers
 
             var projectId = ProjectId.CreateNewId(debugName: TestProjectName);
 
-            var solution = new AdhocWorkspace()
+	        var workspace = new AdhocWorkspace();
+			workspace.Options = workspace.Options.
+				WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\r\n").
+				WithChangedOption(FormattingOptions.UseTabs, LanguageNames.CSharp, false);
+	        var solution = workspace
                 .CurrentSolution
                 .AddProject(projectId, TestProjectName, TestProjectName, language)
                 .AddMetadataReference(projectId, CorlibReference)

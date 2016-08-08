@@ -130,7 +130,7 @@ namespace DebtRatchet.Test.Verifiers
 				{
 					if (newSource[i] != actual[i])
 					{
-						throw new System.Exception($"newSource = {(int)newSource[i]} while actual = {actual[i]}");
+						throw new System.Exception($"newSource = {(int)newSource[i]} while actual = {(int)actual[i]}");
 					}
 				}
 

@@ -122,6 +122,20 @@ namespace DebtRatchet.Test.Verifiers
 
             //after applying all of the code fixes, compare the resulting string to the inputted one
             var actual = GetStringFromDocument(document);
+
+			if (!newSource.Equals(actual))
+			{
+				if (newSource.Length != actual.Length)
+					throw new System.Exception($"newSource.length = {newSource.Length} while actual.Length = {actual.Length}");
+
+				for (int i = 0;i<newSource.Length;i++)
+				{
+					if (newSource[i] != actual[i])
+					{
+						throw new System.Exception($"newSource = {newSource[i]} while actual = {actual[i]}");
+					}
+				}
+			}
             Assert.AreEqual(newSource, actual);
         }
     }

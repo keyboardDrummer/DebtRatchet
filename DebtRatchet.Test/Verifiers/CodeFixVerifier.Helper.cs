@@ -3,7 +3,9 @@ using System.Linq;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.Formatting;
 using Microsoft.CodeAnalysis.Simplification;
+using Microsoft.CodeAnalysis.Options;
 
 namespace DebtRatchet.Test.Verifiers
 {
@@ -74,9 +76,12 @@ namespace DebtRatchet.Test.Verifiers
         /// <returns>A string containing the syntax of the Document after formatting</returns>
         public static string GetStringFromDocument(Document document)
         {
+	        var workspace = document.Project.Solution.Workspace;
+	        var options = workspace.Options.WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n");
+
             var simplifiedDoc = Simplifier.ReduceAsync(document, Simplifier.Annotation).Result;
             var root = simplifiedDoc.GetSyntaxRootAsync().Result;
-            //root = Formatter.Format(root, Formatter.Annotation, simplifiedDoc.Project.Solution.Workspace);
+            root = Formatter.Format(root, Formatter.Annotation, simplifiedDoc.Project.Solution.Workspace, options: options);
             return root.GetText().ToString();
         }
     }

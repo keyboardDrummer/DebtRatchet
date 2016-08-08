@@ -1,4 +1,4 @@
-﻿using DebtAnalyzer.ClassDebt;
+﻿using DebtRatchet.ClassDebt;
 using DebtRatchet.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;

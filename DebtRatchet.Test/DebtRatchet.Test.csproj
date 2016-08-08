@@ -196,7 +196,7 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DebtAnalyzer\DebtAnalyzer\DebtAnalyzer.csproj">
+    <ProjectReference Include="..\DebtRatchet\DebtRatchet.csproj">
       <Project>{679a037b-4b94-4152-9636-3a621b546a75}</Project>
       <Name>DebtAnalyzer</Name>
     </ProjectReference>

@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using DebtAnalyzer.Common;
+using DebtRatchet.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.MethodDebt
+namespace DebtRatchet.MethodDebt
 {
 	public class MethodDebtFixAllProvider : GenericDebtFixAllProvider
 	{

@@ -1,8 +1,9 @@
 using System;
 using System.Linq;
+using DebtAnalyzer;
 using Microsoft.CodeAnalysis;
 
-namespace DebtAnalyzer.Common
+namespace DebtRatchet.Common
 {
 	public static class DebtAsErrorUtil
 	{

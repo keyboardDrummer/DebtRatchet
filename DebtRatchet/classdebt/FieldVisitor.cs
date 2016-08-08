@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.ClassDebt
+namespace DebtRatchet.ClassDebt
 {
 	public class FieldVisitor : CSharpSyntaxWalker
 	{

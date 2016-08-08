@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using DebtAnalyzer.MethodDebt;
+using DebtRatchet.MethodDebt;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.Common
+namespace DebtRatchet.Common
 {
 	public abstract class GenericDebtFixAllProvider : FixAllProvider
 	{

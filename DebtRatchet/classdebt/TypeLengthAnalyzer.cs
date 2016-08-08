@@ -1,11 +1,12 @@
 using System.Linq;
-using DebtAnalyzer.Common;
+using DebtAnalyzer;
+using DebtRatchet.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DebtAnalyzer.ClassDebt
+namespace DebtRatchet.ClassDebt
 {
 	public class TypeLengthAnalyzer
 	{

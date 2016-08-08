@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
+using DebtAnalyzer;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
 
-namespace DebtAnalyzer.MethodDebt
+namespace DebtRatchet.MethodDebt
 {
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
 	public class MethodDebtAnalyzer : DiagnosticAnalyzer

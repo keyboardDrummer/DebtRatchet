@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
-using DebtAnalyzer.ClassDebt;
-using DebtAnalyzer.MethodDebt;
+using DebtRatchet.ClassDebt;
+using DebtRatchet.MethodDebt;
 using Microsoft.CodeAnalysis;
 
 namespace AttributeUpdater

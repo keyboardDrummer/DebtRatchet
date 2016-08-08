@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using DebtAnalyzer.MethodDebt;
+using DebtRatchet.MethodDebt;
 using NUnit.Framework;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using CodeFixVerifier = DebtRatchet.Test.Verifiers.CodeFixVerifier;

@@ -55,7 +55,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DebtAnalyzer\DebtAnalyzer.csproj">
+    <ProjectReference Include="..\DebtRatchet\DebtRatchet.csproj">
       <Project>{679A037B-4B94-4152-9636-3A621B546A75}</Project>
       <Name>DebtAnalyzer</Name>
     </ProjectReference>

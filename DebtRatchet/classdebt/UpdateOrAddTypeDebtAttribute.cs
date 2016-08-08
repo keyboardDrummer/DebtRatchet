@@ -1,8 +1,8 @@
-using DebtAnalyzer.Common;
+using DebtRatchet.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
-namespace DebtAnalyzer.ClassDebt
+namespace DebtRatchet.ClassDebt
 {
 	class UpdateOrAddTypeDebtAttribute : UpdateOrAddGenericDebtAttribute
 	{

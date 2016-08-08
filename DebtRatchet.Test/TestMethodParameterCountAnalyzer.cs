@@ -1,5 +1,5 @@
 ﻿using System;
-using DebtAnalyzer.MethodDebt;
+using DebtRatchet.MethodDebt;
 using DebtRatchet.Test.Verifiers;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CodeFixes;

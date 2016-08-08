@@ -68,10 +68,10 @@ namespace DebtRatchet.Test.Verifiers
         /// <param name="analyzer">The analyzer to be applied to the source code</param>
         /// <param name="codeFixProvider">The codefix to be applied to the code wherever the relevant Diagnostic is found</param>
         /// <param name="oldSource">A class in the form of a string before the CodeFix was applied to it</param>
-        /// <param name="newSource">A class in the form of a string after the CodeFix was applied to it</param>
+        /// <param name="expected">A class in the form of a string after the CodeFix was applied to it</param>
         /// <param name="codeFixIndex">Index determining which codefix to apply if there are multiple</param>
         /// <param name="allowNewCompilerDiagnostics">A bool controlling whether or not the test will fail if the CodeFix introduces other warnings after being applied</param>
-        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string newSource, int? codeFixIndex, bool allowNewCompilerDiagnostics)
+        private void VerifyFix(string language, DiagnosticAnalyzer analyzer, CodeFixProvider codeFixProvider, string oldSource, string expected, int? codeFixIndex, bool allowNewCompilerDiagnostics)
         {
             var document = CreateDocument(oldSource, language);
             var analyzerDiagnostics = GetSortedDiagnosticsFromDocuments(analyzer, new[] { document });
@@ -123,24 +123,24 @@ namespace DebtRatchet.Test.Verifiers
             //after applying all of the code fixes, compare the resulting string to the inputted one
             var actual = GetStringFromDocument(document);
 
-			if (!newSource.Equals(actual))
+			if (!expected.Equals(actual))
 			{
 				int i = 0;
-				for (;i<newSource.Length&&i<actual.Length;i++)
+				for (;i<expected.Length&&i<actual.Length;i++)
 				{
-					if (newSource[i] != actual[i])
+					if (expected[i] != actual[i])
 					{
-						throw new System.Exception($"newSource = {(int)newSource[i]} while actual = {(int)actual[i]}");
+						throw new System.Exception($"expected = {(int)expected[i]} while actual = {(int)actual[i]}");
 					}
 				}
 
-				if (newSource.Length > actual.Length)
-					throw new System.Exception($"newSource = actual + {newSource.Substring(actual.Length)}");
+				if (expected.Length > actual.Length)
+					throw new System.Exception($"expected = actual + {expected.Substring(actual.Length)}");
 
-				if (actual.Length > newSource.Length)
-					throw new System.Exception($"actual = newSource + {actual.Substring(newSource.Length)}");
+				if (actual.Length > expected.Length)
+					throw new System.Exception($"actual = expected + {actual.Substring(expected.Length)}");
 			}
-            Assert.AreEqual(newSource, actual);
+            Assert.AreEqual(expected, actual);
         }
     }
 }

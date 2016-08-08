@@ -125,8 +125,11 @@ namespace DebtRatchet.Test.Verifiers
 
 			if (!newSource.Equals(actual))
 			{
-				if (newSource.Length != actual.Length)
-					throw new System.Exception($"newSource.length = {newSource.Length} while actual.Length = {actual.Length}");
+				if (newSource.Length > actual.Length)
+					throw new System.Exception($"newSource = actual + {newSource.Substring(actual.Length)}");
+
+				if (actual.Length > newSource.Length)
+					throw new System.Exception($"actual = newSource + {actual.Substring(newSource.Length)}");
 
 				for (int i = 0;i<newSource.Length;i++)
 				{

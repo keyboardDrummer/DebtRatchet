@@ -91,10 +91,10 @@ namespace ConsoleApplication1
         [DebtMethod(LineCount = 4, ParameterCount = 0)]
         void LongMethodClass()
         {
-			int a1;
-			int a2;
-			int a3;
-			int a4;
+            int a1;
+            int a2;
+            int a3;
+            int a4;
         }
     }
 }
@@ -132,10 +132,10 @@ namespace ConsoleApplication1
         [DebtMethod(LineCount = 4, ParameterCount = 0)]
         void MyLongMethod()
         {
-			int a1;
-			int a2;
-			int a3;
-			int a4;
+            int a1;
+            int a2;
+            int a3;
+            int a4;
         }
     }
 }

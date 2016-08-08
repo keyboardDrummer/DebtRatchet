@@ -1,19 +1,17 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>DebtAnalyzer</id>
+    <id>DebtRatchet</id>
     <version>1.0.0.0</version>
-    <title>DebtAnalyzer</title>
-    <authors>Remy</authors>
-    <owners>Remy</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>https://github.com/keyboardDrummer/RoslynDebtAnalyzer</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <title>DebtRatchet</title>
+    <authors>keyboardDrummer</authors>
+    <owners>keyboardDrummer</owners>
+    <projectUrl>https://github.com/keyboardDrummer/DebtRatchet</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/keyboardDrummer/SmartReactives/master/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>DebtAnalyzer</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <description>Remove technical debt from your code gradually using a Roslyn diagnostic</description>
     <copyright>Copyright</copyright>
-    <tags>DebtAnalyzer, analyzers</tags>
+    <tags>technical debt, analyzers</tags>
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
   <files>

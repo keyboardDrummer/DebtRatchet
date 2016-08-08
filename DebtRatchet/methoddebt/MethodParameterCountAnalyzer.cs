@@ -1,5 +1,4 @@
 using System.Linq;
-using DebtAnalyzer;
 using DebtRatchet.Common;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;

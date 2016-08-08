@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtRatchet
 {
 	public enum Severity { Info, Warning, Error }
 

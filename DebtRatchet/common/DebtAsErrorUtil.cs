@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using DebtAnalyzer;
 using Microsoft.CodeAnalysis;
 
 namespace DebtRatchet.Common

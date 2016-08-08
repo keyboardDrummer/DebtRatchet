@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtRatchet
 {
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class MaxFieldCount : Attribute

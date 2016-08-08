@@ -1,6 +1,6 @@
 using System;
 
-namespace DebtAnalyzer
+namespace DebtRatchet
 {
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
 	public class DebtType : Attribute

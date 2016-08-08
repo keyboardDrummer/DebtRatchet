@@ -1,5 +1,5 @@
 using System.Linq;
-using DebtAnalyzer;
+using DebtRatchet;
 using DebtRatchet.ClassDebt;
 using DebtRatchet.MethodDebt;
 using Microsoft.CodeAnalysis;

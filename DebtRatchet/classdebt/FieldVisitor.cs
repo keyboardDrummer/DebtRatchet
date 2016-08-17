@@ -17,7 +17,6 @@ namespace DebtRatchet.ClassDebt
 			{
 				FieldsFound++;
 			}
-
 			base.VisitFieldDeclaration(node);
 		}
 

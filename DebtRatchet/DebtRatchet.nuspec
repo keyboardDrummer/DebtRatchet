@@ -15,8 +15,8 @@
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
   <files>
-    <file src="**\DebtRatchet.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
-		<file src="**\DebtRatchet.Library.dll" target="lib" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="**\DebtRatchet**.dll" target="analyzers\dotnet\cs" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+		<file src="**\DebtRatchet.Library.dll" target="lib" exclude="**\Microsoft.CodeAnalysis.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
     <file src="tools\*.ps1" target="tools\" />
   </files>
 </package>

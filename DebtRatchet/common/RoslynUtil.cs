@@ -11,7 +11,7 @@ namespace DebtRatchet.Common
 	{
 		public static CompilationUnitSyntax AddUsing(CompilationUnitSyntax syntaxRoot)
 		{
-			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtAnalyzer");
+			var debtAnalyzerNamespace = SyntaxFactory.IdentifierName("DebtRatchet");
 			var usingDirectiveSyntax = SyntaxFactory.UsingDirective(
 				debtAnalyzerNamespace).WithUsingKeyword(SyntaxFactory.Token(SyntaxKind.UsingKeyword))
 				.WithSemicolonToken(SyntaxFactory.Token(SyntaxKind.SemicolonToken));

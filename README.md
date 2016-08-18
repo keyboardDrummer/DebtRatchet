@@ -8,8 +8,6 @@ When DebtRatchet detects an increase in technical debt, an error or warning is g
 * Type has too many fields
 * Type is too long
 
-The thresholds for these rules can be configured using assembly level attributes.
-
 DebtRatchet has been used in a large enterprise codebase succesfully, where it greatly increased the pace at which technical debt was reduced. To start using DebtRachet download the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0).
 
 ###### Related work

@@ -2,9 +2,7 @@
 
 DebtRatchet is a Roslyn diagnostic, meaning it's a plugin for the .NET compiler that runs while you program. Using the principle of a ratchet, it allows you to systematically reduce technical debt in legacy codebases. 
 
-When the plugin detects an increase in technical debt, an error or warning is given depending on your configuration.
-
-The plugin detects technical debt using these simple rules:
+When DebtRatchet detects an increase in technical debt, an error or warning is given depending on your configuration. These simple rules are used to detect technical debt:
 * Method has too many parameters
 * Method is too long
 * Type has too many fields
@@ -12,8 +10,9 @@ The plugin detects technical debt using these simple rules:
 
 The thresholds for these rules can be configured using assembly level attributes.
 
-For the plugin to work it must be allowed to automatically annotate your codebase in places where technical debt occurs.
-This allows the plugin to report only *increases* in technical debt.
+For the plugin to report only increases in technical debt, and not go off on existing technical debt, it must be allowed to annotate your codebase in places where technical debt occurs. This is a one-time operation performed when you start using DebtRatchet. It is important to also tighten the ratchet every once in a while. This means updating the debt annotations after you've reduced technical debt. 
+
+DebtRatchet has been used in a large enterprise codebase succesfully, where it greatly increased the pace at which technical debt was reduced. To start using DebtRachet download the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0).
 
 ###### Related work
 - [git-ratchet](https://gowalker.org/github.com/iangrunert/git-ratchet) is a tool that allows you to track metrics and apply a ratchet to them.

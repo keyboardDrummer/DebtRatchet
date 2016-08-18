@@ -10,8 +10,6 @@ When DebtRatchet detects an increase in technical debt, an error or warning is g
 
 The thresholds for these rules can be configured using assembly level attributes.
 
-For the plugin to report only increases in technical debt, and not go off on existing technical debt, it must be allowed to annotate your codebase in places where technical debt occurs. This is a one-time operation performed when you start using DebtRatchet. It is important to also tighten the ratchet every once in a while. This means updating the debt annotations after you've reduced technical debt. 
-
 DebtRatchet has been used in a large enterprise codebase succesfully, where it greatly increased the pace at which technical debt was reduced. To start using DebtRachet download the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0).
 
 ###### Related work
@@ -29,4 +27,8 @@ Here follows a screenshot showing the plugin in action.
 2. A method has six parameters, so it is over the limit and gives an error.
 3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this technical debt right now and have annotated the method so that it does not give an error. These annotations can be generated for an entire solution using a provided command line tool, or by using Visual Studio fixes that come with the Roslyn diagnostic.
 4. A legacy method with too many parameters has gained even more parameters after we started using DebtRatchet and annotated it with the DebtMethod annotation. Because we don't want our technical debt to grow, this method does give an error.
+
+## Workflow
+
+For the plugin to report only increases in technical debt, and not go off on existing technical debt, it must be allowed to annotate your codebase in places where technical debt occurs. This is a one-time operation performed when you start using DebtRatchet. It is important to also tighten the ratchet every once in a while. This means updating the debt annotations after you've reduced technical debt. 
 

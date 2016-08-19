@@ -42,7 +42,7 @@ namespace DebtRatchet.Test
 				Severity = DiagnosticSeverity.Info,
 				Locations =
 					new[] {
-							new DiagnosticResultLocation("Test0.cs", 17, 14)
+							new DiagnosticResultLocation("Test0.cs", 16, 14)
 						}
 			};
 
@@ -60,7 +60,7 @@ namespace DebtRatchet.Test
                 Severity = DiagnosticSeverity.Error,
                 Locations =
                     new[] {
-                            new DiagnosticResultLocation("Test0.cs", 17, 14)
+                            new DiagnosticResultLocation("Test0.cs", 16, 14)
                         }
             };
 
@@ -100,7 +100,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -125,7 +125,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
@@ -155,7 +154,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -175,7 +174,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {

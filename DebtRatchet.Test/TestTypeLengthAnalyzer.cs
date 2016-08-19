@@ -59,7 +59,7 @@ namespace ConsoleApplication1
 
 		static string LongTypeFixed => @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {

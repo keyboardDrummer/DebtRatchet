@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using DebtRatchet.MethodDebt;
 using NUnit.Framework;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 using CodeFixVerifier = DebtRatchet.Test.Verifiers.CodeFixVerifier;
 using DiagnosticVerifier = DebtRatchet.Test.Verifiers.DiagnosticVerifier;
 

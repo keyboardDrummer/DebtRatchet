@@ -4,7 +4,7 @@
 	{
 		public static string DebtMethodAnnotation => @"using System;
 
-namespace DebtAnalyzer
+namespace DebtRatchet
 {
     
 	[AttributeUsage(AttributeTargets.Method)]
@@ -20,10 +20,10 @@ namespace DebtAnalyzer
 using System;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using DebtAnalyzer;
+using DebtRatchet;
 
 [assembly: DebtSeverity(Severity.Error)]
-namespace DebtAnalyzer
+namespace DebtRatchet
 {
 	public enum Severity { Info, Warning, Error }
 

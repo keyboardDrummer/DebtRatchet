@@ -2,14 +2,14 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>DebtRatchet</id>
-    <version>1.0.0.0</version>
+    <version>1.0.0</version>
     <title>DebtRatchet</title>
     <authors>keyboardDrummer</authors>
     <owners>keyboardDrummer</owners>
     <projectUrl>https://github.com/keyboardDrummer/DebtRatchet</projectUrl>
     <iconUrl>https://raw.githubusercontent.com/keyboardDrummer/DebtRatchet/master/icon.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Remove technical debt from your code gradually using a Roslyn diagnostic</description>
+    <description>Remove technical debt from your code gradually using a Roslyn diagnostic. Requires VS 2015 update 3.</description>
     <copyright>Copyright</copyright>
     <tags>technical debt, analyzers</tags>
   </metadata>

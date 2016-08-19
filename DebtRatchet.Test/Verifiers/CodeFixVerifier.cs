@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace DebtRatchet.Test.Verifiers
 {
@@ -126,23 +126,23 @@ namespace DebtRatchet.Test.Verifiers
 	        expected = expected.Replace("\r\n", "\n"); //TODO solve some other way. Look at TODO above for more info.
             var actual = GetStringFromDocument(document);
 
-			if (!expected.Equals(actual))
-			{
-				int i = 0;
-				for (;i<expected.Length&&i<actual.Length;i++)
-				{
-					if (expected[i] != actual[i])
-					{
-						throw new System.Exception($"expected = {(int)expected[i]} while actual = {(int)actual[i]}");
-					}
-				}
+			//if (!expected.Equals(actual))
+			//{
+			//	int i = 0;
+			//	for (;i<expected.Length&&i<actual.Length;i++)
+			//	{
+			//		if (expected[i] != actual[i])
+			//		{
+			//			throw new System.Exception($"expected = asci({(int)expected[i]}) while actual = asci({(int)actual[i]}) at index {i}");
+			//		}
+			//	}
 
-				if (expected.Length > actual.Length)
-					throw new System.Exception($"expected = actual + {expected.Substring(actual.Length)}");
+			//	if (expected.Length > actual.Length)
+			//		throw new System.Exception($"expected = actual + {expected.Substring(actual.Length)}");
 
-				if (actual.Length > expected.Length)
-					throw new System.Exception($"actual = expected + {actual.Substring(expected.Length)}");
-			}
+			//	if (actual.Length > expected.Length)
+			//		throw new System.Exception($"actual = expected + {actual.Substring(expected.Length)}");
+			//}
             Assert.AreEqual(expected, actual);
         }
     }

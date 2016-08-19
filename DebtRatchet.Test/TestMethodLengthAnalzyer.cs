@@ -23,7 +23,7 @@ namespace DebtRatchet.Test
 
 		static string StaticConstructorWithDebtAnnotation = @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -42,7 +42,7 @@ namespace ConsoleApplication1
 
 		static string LongMethodWithAnnotation => @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -61,7 +61,6 @@ namespace ConsoleApplication1
 
 		static string LongConstructor => @"
 using System;
-using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {
@@ -81,7 +80,7 @@ namespace ConsoleApplication1
 
 		static string LongConstructorFixed => @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -122,7 +121,7 @@ namespace DebtAnalyzer
 
 		static string LongMethodFixed => @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {
@@ -142,7 +141,6 @@ namespace ConsoleApplication1
 ";
 		static string LongMethodWithDebtUsing => @"
 using System;
-using DebtAnalyzer;
 
 namespace ConsoleApplication1
 {

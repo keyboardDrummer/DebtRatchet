@@ -47,7 +47,7 @@ namespace ConsoleApplication1
 
 		static string TooManyFieldsFixed => @"
 using System;
-using DebtAnalyzer;
+using DebtRatchet;
 
 namespace ConsoleApplication1
 {

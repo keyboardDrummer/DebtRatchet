@@ -24,7 +24,11 @@ In the example you will see the attribute ```MethodHasDebt``` above two methods.
 
 You can see that hovering the mouse over a method with an error from DebtRatchet shows a tooltip. From the tooltip you can generate the MethodHasDebt attribute to quickly eliminate the error, in case you don't want to refactor your code at this time.
 
-## Workflow
+## How-to
 
-For the plugin to report only increases in technical debt, and not go off on existing technical debt, it must be allowed to annotate your codebase in places where technical debt occurs. This is a one-time operation performed when you start using DebtRatchet. It is important to also tighten the ratchet every once in a while. This means updating the debt annotations after you've reduced technical debt. 
-
+- Install the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0) into your solution.
+- Restart Visual Studio to see that it now reports errors on methods with technical debt.
+- Run the tool AttributeUpdater.exe which is included in the NuGet package on your solution, to add the attributes ```MethodHasDebt``` and ```TypeHasDebt``` to your code, which records where technical debt is already present.
+- Program away while DebtRatchet makes sure you don't increase your debt.
+- Once you've reduced technical debt in your code a bit, run AttributeUpdater.exe on your solution again. This will tighten the parameters on the debt attributes, so that you can't regress into more technical debt again. This tightening is where DebtRatchet gets its name from.
+- That's it!

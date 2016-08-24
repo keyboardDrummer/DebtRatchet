@@ -22,7 +22,7 @@ In the example you will see the attribute ```MethodHasDebt``` above two methods.
 
 ![Screenshot](http://i.imgur.com/gD5iUz6.png)
 
-You can see that hovering the mouse over a method with an error from DebtRatchet causes a tooltip to popup. From this tooltip you can generate the MethodHasDebt attribute to quickly eliminate the error, in case you don't want to refactor your code at that time.
+You can see that hovering the mouse over a method with an error from DebtRatchet shows a tooltip. From the tooltip you can generate the MethodHasDebt attribute to quickly eliminate the error, in case you don't want to refactor your code at this time.
 
 ## Workflow
 

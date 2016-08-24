@@ -29,7 +29,7 @@ You can see that hovering the mouse over a method with an error from DebtRatchet
 - Install the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0) into your solution.
 - Restart Visual Studio to see that it now reports errors on methods with technical debt.
 - Optionally configure DebtRachet using assembly level attributes.
-- Run the tool AttributeUpdater.exe, which is included in the NuGet package, on your solution. This records where technical debt is already present in your code, by adding the attributes ```MethodHasDebt``` and ```TypeHasDebt```.
+- Run the tool AttributeUpdater, which is included in the NuGet package, on your solution. This records where technical debt is already present in your code, by adding the attributes ```MethodHasDebt``` and ```TypeHasDebt```.
 - Program away while DebtRatchet makes sure you don't increase your debt.
-- Once you've reduced technical debt in your code a bit, run AttributeUpdater.exe on your solution again. This will tighten the parameters on the debt attributes, so that you can't regress into old debt. This tightening is where DebtRatchet gets its name from.
+- Once you've reduced technical debt in your code a bit, run AttributeUpdater on your solution again. This will tighten the parameters on the debt attributes, so that you can't regress into old debt. This tightening is where DebtRatchet gets its name from.
 - That's it!

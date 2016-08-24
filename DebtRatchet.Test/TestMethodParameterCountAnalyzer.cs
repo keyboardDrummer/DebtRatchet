@@ -39,7 +39,7 @@ namespace DebtRatchet.Test
 			{
 				Id = "MaxParameterCount",
 				Message = String.Format("Method MyBadMethod2443 has 6 parameters while it should not have more than 4."),
-				Severity = DiagnosticSeverity.Info,
+				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[] {
 							new DiagnosticResultLocation("Test0.cs", 16, 14)

@@ -223,7 +223,7 @@ namespace ConsoleApplication1
 			{
 				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 2 lines.",
-				Severity = DiagnosticSeverity.Info,
+				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[]
 					{
@@ -254,7 +254,7 @@ namespace ConsoleApplication1
 			{
 				Id = "MethodLengthAnalyzer",
 				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 3 lines.",
-				Severity = DiagnosticSeverity.Info,
+				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[]
 					{
@@ -263,6 +263,25 @@ namespace ConsoleApplication1
 			};
 
 			VerifyCSharpDiagnostic(test, expected);
+		}
+
+		[Test]
+		public void TestDiagnosticAsWarning()
+		{
+			var test = LongMethod;
+			var expected = new DiagnosticResult
+			{
+				Id = "MethodLengthAnalyzer",
+				Message = "Method MyLongMethod is 4 lines long while it should not be longer than 3 lines.",
+				Severity = DiagnosticSeverity.Warning,
+				Locations =
+					new[]
+					{
+						new DiagnosticResultLocation("Test0.cs", 9, 14)
+					}
+			};
+
+			VerifyCSharpDiagnostic(new[] { test, DebtAnalyzerTestUtil.DebtAsWarning }, expected);
 		}
 
 		[Test]

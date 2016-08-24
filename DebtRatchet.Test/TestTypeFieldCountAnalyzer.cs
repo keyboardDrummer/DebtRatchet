@@ -78,7 +78,7 @@ namespace ConsoleApplication1
 			{
 				Id = "MaxFieldCount",
 				Message = "Type SomeClass has 3 fields while it should not have more than 2.",
-				Severity = DiagnosticSeverity.Info,
+				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[]
 					{

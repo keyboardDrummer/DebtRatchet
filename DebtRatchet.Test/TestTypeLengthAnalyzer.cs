@@ -98,7 +98,7 @@ namespace ConsoleApplication1
 			{
 				Id = "TypeLengthAnalyzer",
 				Message = "Type LongMethodClass is 14 lines long while it should not be longer than 10 lines.",
-				Severity = DiagnosticSeverity.Info,
+				Severity = DiagnosticSeverity.Error,
 				Locations =
 					new[]
 					{

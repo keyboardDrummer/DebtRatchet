@@ -13,6 +13,7 @@ DebtRatchet has been used in a large enterprise codebase succesfully, where it g
 ###### Related work
 - [git-ratchet](https://gowalker.org/github.com/iangrunert/git-ratchet) is a tool that allows you to track metrics and apply a ratchet to them.
 - [Quality](https://github.com/apiology/quality) is debt ratchet tool for Ruby.
+- [git-code-debt](https://github.com/Yelp/git-code-debt) A dashboard for monitoring code debt in a git repository.
 
 ## Demo
 Here follows a screenshot showing the plugin in action.

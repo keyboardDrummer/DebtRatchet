@@ -20,7 +20,7 @@ Here follows an example showing the plugin in action. The example contains an in
 
 In the example you will see the attribute MethodHasDebt above two methods. This attribute is used to indicate already existing debt, allowing us to differentiate between new and old debt. 
 
-![Screenshot](http://i.imgur.com/12ye5JG.png)
+![Screenshot](http://i.imgur.com/gD5iUz6.png)
 
 You can see that hovering the mouse over a method with an error from DebtRatchet causes a tooltip to popup. From this tooltip you can generate the MethodHasDebt attribute to quickly eliminate the error, in case you don't want to refactor your code at that time.
 

@@ -51,7 +51,7 @@ using DebtRatchet;
 
 namespace ConsoleApplication1
 {
-    [DebtType(LineCount = 6, FieldCount = 3)]
+    [TypeHasDebt(LineCount = 6, FieldCount = 3)]
     class SomeClass
     {
         int a;

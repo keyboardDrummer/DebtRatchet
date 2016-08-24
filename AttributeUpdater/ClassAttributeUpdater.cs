@@ -74,7 +74,7 @@ namespace AttributeUpdater
 				return Formatter.Format(MethodDebtAnnotationProvider.GetAttribute(containingMethod), workspace);
 			}
 
-			if (node.Name.ToString() == nameof(DebtType))
+			if (node.Name.ToString() == nameof(TypeHasDebt))
 			{
 				var containingType = node.Ancestors().OfType<TypeDeclarationSyntax>().FirstOrDefault();
 				if (containingType == null)

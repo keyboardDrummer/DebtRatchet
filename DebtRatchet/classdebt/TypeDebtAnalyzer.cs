@@ -26,15 +26,15 @@ namespace DebtRatchet.ClassDebt
 		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(lengthAnalyzer.CreateDiagnosticDescriptor(DiagnosticSeverity.Warning),
 			parameterCountAnalyzer.CreateDiagnosticDescriptor(DiagnosticSeverity.Warning));
 
-		public static IEnumerable<DebtType> GetDebtAnnotations(ImmutableArray<AttributeData> attributeDatas)
+		public static IEnumerable<TypeHasDebt> GetDebtAnnotations(ImmutableArray<AttributeData> attributeDatas)
 		{
-			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(DebtType).Name).Select(ToDebtType);
+			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(TypeHasDebt).Name).Select(ToTypeHasDebt);
 		}
 
-		static DebtType ToDebtType(AttributeData data)
+		static TypeHasDebt ToTypeHasDebt(AttributeData data)
 		{
 			var namedArguments = data.NamedArguments.ToDictionary(kv => kv.Key, kv => kv.Value);
-			var result = new DebtType();
+			var result = new TypeHasDebt();
 			if (namedArguments.ContainsKey(LineCountName))
 				result.LineCount = (namedArguments[LineCountName].Value as int?) ?? 0;
 			if (namedArguments.ContainsKey(FieldCountName))
@@ -42,7 +42,7 @@ namespace DebtRatchet.ClassDebt
 			return result;
 		}
 
-		const string LineCountName = nameof(DebtType.LineCount);
-		const string FieldCountName = nameof(DebtType.FieldCount);
+		const string LineCountName = nameof(TypeHasDebt.LineCount);
+		const string FieldCountName = nameof(TypeHasDebt.FieldCount);
 	}
 }

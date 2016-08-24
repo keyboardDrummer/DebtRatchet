@@ -8,7 +8,7 @@ namespace DebtRatchet
 	/// If the type becomes more debtful, then DebtRatchet will report this.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Class | AttributeTargets.Struct | AttributeTargets.Interface)]
-	public class DebtType : Attribute
+	public class TypeHasDebt : Attribute
 	{
 		/// <summary>
 		/// The maximum number of fields that we allow in the type. Includes properties with backing fields.

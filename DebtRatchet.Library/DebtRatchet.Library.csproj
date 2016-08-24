@@ -37,9 +37,9 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DebtMethod.cs" />
+    <Compile Include="MethodHasDebt.cs" />
     <Compile Include="DebtSeverity.cs" />
-    <Compile Include="DebtType.cs" />
+    <Compile Include="TypeHasDebt.cs" />
     <Compile Include="MaxFieldCount.cs" />
     <Compile Include="MaxMethodLength.cs" />
     <Compile Include="MaxParameters.cs" />

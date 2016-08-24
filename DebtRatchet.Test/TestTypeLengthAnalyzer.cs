@@ -63,7 +63,7 @@ using DebtRatchet;
 
 namespace ConsoleApplication1
 {
-    [DebtType(LineCount = 14, FieldCount = 1)]
+    [TypeHasDebt(LineCount = 14, FieldCount = 1)]
     class LongMethodClass
     {
         int a;

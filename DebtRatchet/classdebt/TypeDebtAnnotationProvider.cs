@@ -58,7 +58,7 @@ namespace DebtRatchet.ClassDebt
 
 		public static AttributeSyntax GetAttribute(TypeDeclarationSyntax typeSyntax)
 		{
-			var attributeType = typeof (DebtType);
+			var attributeType = typeof (TypeHasDebt);
 			var lineCountArgument = GetLineCountArgument(typeSyntax);
 			var parameterCountArgument = GetParameterCountArgument(typeSyntax);
 			var attributeArgumentSyntaxs = new List<AttributeArgumentSyntax> {lineCountArgument, parameterCountArgument};
@@ -67,12 +67,12 @@ namespace DebtRatchet.ClassDebt
 
 		static AttributeArgumentSyntax GetParameterCountArgument(TypeDeclarationSyntax typeSyntax)
 		{
-			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtType.FieldCount), FieldCountAnalyzer.GetFieldCount(typeSyntax));
+			return RoslynUtil.GetNamedAttributeArgument(nameof(TypeHasDebt.FieldCount), FieldCountAnalyzer.GetFieldCount(typeSyntax));
 		}
 
 		static AttributeArgumentSyntax GetLineCountArgument(TypeDeclarationSyntax typeSyntax)
 		{
-			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtType.LineCount), TypeLengthAnalyzer.GetTypeLength(typeSyntax));
+			return RoslynUtil.GetNamedAttributeArgument(nameof(TypeHasDebt.LineCount), TypeLengthAnalyzer.GetTypeLength(typeSyntax));
 		}
 	}
 }

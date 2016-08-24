@@ -8,7 +8,7 @@ When DebtRatchet detects an increase in technical debt, an error or warning is g
 * Type has too many fields
 * Type is too long
 
-DebtRatchet has been used in a large enterprise codebase succesfully, where it greatly increased the pace at which technical debt was reduced. To start using DebtRachet download the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0).
+DebtRatchet has been used in a large enterprise codebase succesfully, where it greatly increased the pace at which technical debt was reduced. To start using DebtRachet download the [NuGet package](https://www.nuget.org/packages/DebtRatchet/1.0.0). Note that using DebtRatchet requires VS 2015 update 3.
 
 ###### Related work
 - [git-ratchet](https://gowalker.org/github.com/iangrunert/git-ratchet) is a tool that allows you to track metrics and apply a ratchet to them.

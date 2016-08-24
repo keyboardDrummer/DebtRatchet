@@ -18,7 +18,7 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 ## Demo
 Here follows a screenshot showing the plugin in action.
 
-![Screenshot](http://i.imgur.com/a/9EDT6g)
+![Screenshot](http://i.imgur.com/a/9EDT6g.png)
 
  The assembly level annotations at the top specify that a method may not have more than five parameters, and that violations of this rule result in a compile error. Inside the class are four scenario's all related to the rule 'Method has too many parameters'. From top to bottom these scenario's are:
 

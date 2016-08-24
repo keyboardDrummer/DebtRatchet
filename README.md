@@ -16,9 +16,13 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 - [git-code-debt](https://github.com/Yelp/git-code-debt) A dashboard for monitoring code debt in a git repository.
 
 ## Demo
-Here follows an example showing the plugin in action. The example contains an interface with four methods. Two of these methods are fine, but for the other two DebtRatchet finds that they have increased in technical debt, resulting in an error. You can see that hovering the mouse over a method with an error from DebtRatchet causes a tooltip to popup.
+Here follows an example showing the plugin in action. The example contains an interface with four methods. Two of these methods are fine, but for the other two DebtRatchet finds that they have increased in technical debt, resulting in an error. 
+
+In the example you will see the attribute MethodHasDebt above two methods. This attribute is used to indicate already existing debt, allowing us to differentiate between new and old debt. 
 
 ![Screenshot](http://i.imgur.com/12ye5JG.png)
+
+You can see that hovering the mouse over a method with an error from DebtRatchet causes a tooltip to popup. From this tooltip you can generate the MethodHasDebt attribute to quickly eliminate the error, in case you don't want to refactor your code at that time.
 
 ## Workflow
 

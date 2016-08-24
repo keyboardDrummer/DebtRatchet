@@ -18,7 +18,7 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 ## Demo
 The screenshot below shows DebtRatchet in action. The code contains an interface with four methods. Two of these methods are fine, but DebtRatchet finds the other two methods have increased in technical debt, resulting in an error. 
 
-In the example you will see the attribute ```MethodHasDebt``` above two methods. This attribute is used to indicate already existing debt, allowing us to differentiate between new and old debt. 
+In the example you will see the attribute ```MethodHasDebt``` above two methods. This indicates already existing debt, allowing us to differentiate between new and old debt. 
 
 ![Screenshot](http://i.imgur.com/gD5iUz6.png)
 

@@ -6,7 +6,7 @@ namespace DebtRatchet.Common
 {
 	public static class DebtAsErrorUtil
 	{
-		const Severity DefaultSeverity = Severity.Info;
+		const Severity DefaultSeverity = Severity.Error;
 
 		public static DiagnosticSeverity GetDiagnosticSeverity(ISymbol symbol)
 		{

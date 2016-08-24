@@ -59,7 +59,7 @@ namespace AttributeUpdater
 
 		public override SyntaxNode VisitAttribute(AttributeSyntax node)
 		{
-			if (node.Name.ToString() == nameof(DebtMethod))
+			if (node.Name.ToString() == nameof(MethodHasDebt))
 			{
 				var containingMethod = node.Ancestors().OfType<BaseMethodDeclarationSyntax>().FirstOrDefault();
 				if (containingMethod == null)

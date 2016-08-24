@@ -46,7 +46,7 @@ namespace DebtRatchet.Test
 						}
 			};
 
-			VerifyCSharpDiagnostic(new[] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, MaxParametersAnnotation }, expected);
+			VerifyCSharpDiagnostic(new[] { test, DebtAnalyzerTestUtil.MethodHasDebtAnnotation, MaxParametersAnnotation }, expected);
 		}
 
 		[Test]
@@ -64,13 +64,13 @@ namespace DebtRatchet.Test
                         }
             };
 
-            VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.DebtMethodAnnotation, DebtAnalyzerTestUtil.DebtAsError }, expected);
+            VerifyCSharpDiagnostic(new [] { test, DebtAnalyzerTestUtil.MethodHasDebtAnnotation, DebtAnalyzerTestUtil.DebtAsError }, expected);
         }
 
 		[Test]
 		public void TestDiagnosticAnnotation()
 		{
-			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, FixedProgram });
+			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.MethodHasDebtAnnotation, FixedProgram });
 		}
 		
 		public static string MaxParametersAnnotation => @"
@@ -109,7 +109,7 @@ namespace ConsoleApplication1
         /// <summary>
         /// 
         /// </summary>
-        [DebtMethod(LineCount = 1, ParameterCount = 6)]
+        [MethodHasDebt(LineCount = 1, ParameterCount = 6)]
         void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
         {
 
@@ -160,7 +160,7 @@ namespace ConsoleApplication1
 {
     class TypeName
     {
-        [DebtMethod(LineCount = 1, ParameterCount = 6)]
+        [MethodHasDebt(LineCount = 1, ParameterCount = 6)]
         TypeName(int a, int b, int c, int d, int e, int g) {
         }
     }

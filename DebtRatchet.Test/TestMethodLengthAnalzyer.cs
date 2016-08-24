@@ -29,7 +29,7 @@ namespace ConsoleApplication1
 {
 	class LongMethodClass
 	{
-		[DebtMethod(LineCount = 4)]
+		[MethodHasDebt(LineCount = 4)]
 		static LongMethodClass()
 		{
 			int a1;
@@ -48,7 +48,7 @@ namespace ConsoleApplication1
 {
     class LongMethodClass
     {
-		[DebtMethod(LineCount = 30)]
+		[MethodHasDebt(LineCount = 30)]
         void MyLongMethod()
         {
 			int a1;
@@ -87,7 +87,7 @@ namespace ConsoleApplication1
     class LongMethodClass
     {
 
-        [DebtMethod(LineCount = 4, ParameterCount = 0)]
+        [MethodHasDebt(LineCount = 4, ParameterCount = 0)]
         void LongMethodClass()
         {
             int a1;
@@ -128,7 +128,7 @@ namespace ConsoleApplication1
     class LongMethodClass
     {
 
-        [DebtMethod(LineCount = 4, ParameterCount = 0)]
+        [MethodHasDebt(LineCount = 4, ParameterCount = 0)]
         void MyLongMethod()
         {
             int a1;
@@ -139,7 +139,7 @@ namespace ConsoleApplication1
     }
 }
 ";
-		static string LongMethodWithDebtUsing => @"
+		static string LongMethodHasDebtUsing => @"
 using System;
 
 namespace ConsoleApplication1
@@ -166,7 +166,7 @@ namespace ConsoleApplication1
     class LongMethodClass
     {
 
-        [DebtMethod(LineCount = 5, ParameterCount = 0)]
+        [MethodHasDebt(LineCount = 5, ParameterCount = 0)]
         void MyLongMethod()
         {
             int a1;
@@ -237,7 +237,7 @@ namespace ConsoleApplication1
 		[Test]
 		public void TestDebtAnnotationForStaticConstructor()
 		{
-			VerifyCSharpDiagnostic(new[] { DebtAnalyzerTestUtil.DebtMethodAnnotation, StaticConstructorWithDebtAnnotation });
+			VerifyCSharpDiagnostic(new[] { DebtAnalyzerTestUtil.MethodHasDebtAnnotation, StaticConstructorWithDebtAnnotation });
 		}
 
 		[Test]
@@ -287,19 +287,19 @@ namespace ConsoleApplication1
 		[Test]
 		public void TestDiagnosticWithDebtAnnotation()
 		{
-			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.DebtMethodAnnotation, LongMethodWithAnnotation});
+			VerifyCSharpDiagnostic(new[] {DebtAnalyzerTestUtil.MethodHasDebtAnnotation, LongMethodWithAnnotation});
 		}
 
 		[Test]
 		public void TestExternalFixNoDoubleUsing()
 		{
-			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+			VerifyCSharpFix(LongMethodHasDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 		}
 
 		[Test]
 		public void TestFixNoDoubleUsing()
 		{
-			VerifyCSharpFix(LongMethodWithDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
+			VerifyCSharpFix(LongMethodHasDebtUsing, LongMethodFixed, allowNewCompilerDiagnostics: true);
 		}
 
 		[Test]

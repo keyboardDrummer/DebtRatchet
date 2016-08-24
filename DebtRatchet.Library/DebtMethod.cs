@@ -8,7 +8,7 @@ namespace DebtRatchet
 	/// If the method becomes more debtful, then DebtRatchet will report this.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Method | AttributeTargets.Constructor)]
-    public class DebtMethod : Attribute
+    public class MethodHasDebt : Attribute
     {
 		/// <summary>
 		/// The maximum amount of parameters that we allow in the method.

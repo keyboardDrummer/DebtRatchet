@@ -64,7 +64,7 @@ namespace ConsoleApplication1
         /// <summary>
         /// 
         /// </summary>
-        [DebtMethod(LineCount = 1, ParameterCount = 6)]
+        [MethodHasDebt(LineCount = 1, ParameterCount = 6)]
         void MyBadMethod2443(int a, int b, int c, int d, int e, int g)
         {
 

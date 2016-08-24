@@ -63,7 +63,7 @@ namespace DebtRatchet.MethodDebt
 
 		static int GetPreviousMethodLength(ISymbol methodSymbol)
 		{
-			return MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
+			return MethodDebtAnalyzer.GetMethodHasDebts(methodSymbol.GetAttributes()).FirstOrDefault()?.LineCount ?? 0;
 		}
 
 		public static int GetMaxLineCount(IAssemblySymbol assembly)

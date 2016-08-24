@@ -25,15 +25,15 @@ namespace DebtRatchet.MethodDebt
 		public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics => ImmutableArray.Create(lengthAnalyzer.CreateDiagnosticDescriptor(DiagnosticSeverity.Warning),
 			parameterCountAnalyzer.CreateDiagnosticDescriptor(DiagnosticSeverity.Warning));
 
-		public static IEnumerable<DebtMethod> GetDebtMethods(ImmutableArray<AttributeData> attributeDatas)
+		public static IEnumerable<MethodHasDebt> GetMethodHasDebts(ImmutableArray<AttributeData> attributeDatas)
 		{
-			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(DebtMethod).Name).Select(ToDebtMethod);
+			return attributeDatas.Where(data => data.AttributeClass.Name == typeof(MethodHasDebt).Name).Select(ToMethodHasDebt);
 		}
 
-		static DebtMethod ToDebtMethod(AttributeData data)
+		static MethodHasDebt ToMethodHasDebt(AttributeData data)
 		{
 			var namedArguments = data.NamedArguments.ToDictionary(kv => kv.Key, kv => kv.Value);
-			var result = new DebtMethod();
+			var result = new MethodHasDebt();
 			if (namedArguments.ContainsKey(LineCountName))
 				result.LineCount = namedArguments[LineCountName].Value as int? ?? 0;
 			if (namedArguments.ContainsKey(ParameterCountName))
@@ -41,7 +41,7 @@ namespace DebtRatchet.MethodDebt
 			return result;
 		}
 
-		const string LineCountName = nameof(DebtMethod.LineCount);
-		const string ParameterCountName = nameof(DebtMethod.ParameterCount);
+		const string LineCountName = nameof(MethodHasDebt.LineCount);
+		const string ParameterCountName = nameof(MethodHasDebt.ParameterCount);
 	}
 }

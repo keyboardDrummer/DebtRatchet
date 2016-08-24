@@ -59,7 +59,7 @@ namespace DebtRatchet.MethodDebt
 
 		public static AttributeSyntax GetAttribute(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
-			var attributeType = typeof (DebtMethod);
+			var attributeType = typeof (MethodHasDebt);
 			var lineCountArgument = GetLineCountArgument(methodBaseDecl);
 			var parameterCountArgument = GetParameterCountArgument(methodBaseDecl);
 			var attributeArgumentSyntaxs = new List<AttributeArgumentSyntax> {lineCountArgument, parameterCountArgument};
@@ -68,13 +68,13 @@ namespace DebtRatchet.MethodDebt
 
 		static AttributeArgumentSyntax GetParameterCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
-			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtMethod.ParameterCount), methodBaseDecl.ParameterList.Parameters.Count);
+			return RoslynUtil.GetNamedAttributeArgument(nameof(MethodHasDebt.ParameterCount), methodBaseDecl.ParameterList.Parameters.Count);
 		}
 
 		static AttributeArgumentSyntax GetLineCountArgument(BaseMethodDeclarationSyntax methodBaseDecl)
 		{
 			var methodLength = MethodLengthAnalyzer.GetMethodLength(methodBaseDecl);
-			return RoslynUtil.GetNamedAttributeArgument(nameof(DebtMethod.LineCount), methodLength);
+			return RoslynUtil.GetNamedAttributeArgument(nameof(MethodHasDebt.LineCount), methodLength);
 		}
 	}
 }

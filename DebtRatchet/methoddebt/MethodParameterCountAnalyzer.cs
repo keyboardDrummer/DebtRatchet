@@ -44,7 +44,7 @@ namespace DebtRatchet.MethodDebt
 
 		static int GetPreviousParameterCount(IMethodSymbol methodSymbol)
 		{
-			return MethodDebtAnalyzer.GetDebtMethods(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
+			return MethodDebtAnalyzer.GetMethodHasDebts(methodSymbol.GetAttributes()).FirstOrDefault()?.ParameterCount ?? 0;
 		}
 
 		public static int GetMaxParameterCount(IAssemblySymbol assembly)

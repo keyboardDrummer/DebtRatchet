@@ -2,13 +2,13 @@
 {
 	public static class DebtAnalyzerTestUtil
 	{
-		public static string DebtMethodAnnotation => @"using System;
+		public static string MethodHasDebtAnnotation => @"using System;
 
 namespace DebtRatchet
 {
     
 	[AttributeUsage(AttributeTargets.Method)]
-    public class DebtMethod : Attribute
+    public class MethodHasDebt : Attribute
     {
 		public int ParameterCount { get; set; }    
 		public int LineCount { get; set; }

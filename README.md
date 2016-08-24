@@ -11,9 +11,9 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 * Type is too long
 
 ###### Related work
-- [git-ratchet](https://gowalker.org/github.com/iangrunert/git-ratchet) is a tool that allows you to track metrics and apply a ratchet to them.
-- [Quality](https://github.com/apiology/quality) is debt ratchet tool for Ruby.
-- [git-code-debt](https://github.com/Yelp/git-code-debt) A dashboard for monitoring code debt in a git repository.
+- [git-ratchet](https://gowalker.org/github.com/iangrunert/git-ratchet): a tool that allows you to track metrics and apply a ratchet to them.
+- [Quality](https://github.com/apiology/quality): a debt ratchet tool for Ruby.
+- [git-code-debt](https://github.com/Yelp/git-code-debt): a dashboard for monitoring code debt in a git repository.
 
 ## Demo
 The screenshot below shows DebtRatchet in action. The code contains an interface with four methods. Two of these methods are fine, but DebtRatchet finds the other two methods have increased in technical debt, resulting in an error. 

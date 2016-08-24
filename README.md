@@ -16,16 +16,9 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 - [git-code-debt](https://github.com/Yelp/git-code-debt) A dashboard for monitoring code debt in a git repository.
 
 ## Demo
-Here follows a screenshot showing the plugin in action.
+Here follows a screenshot showing the plugin in action. Inside the interface are four scenario's all related to the rule 'Method has too many parameters'.
 
 ![Screenshot](http://i.imgur.com/12ye5JG.png)
-
- The assembly level annotations at the top specify that a method may not have more than five parameters, and that violations of this rule result in a compile error. Inside the class are four scenario's all related to the rule 'Method has too many parameters'. From top to bottom these scenario's are:
-
-1. A method has exactly five parameters so it is within the limit.
-2. A method has six parameters, so it is over the limit and gives an error.
-3. A legacy method has more than six parameters. Since it is legacy we don't wish to fix this technical debt right now. The method is annotated so that it does not give an error. These annotations are generated when you start using DebtRatchet.
-4. A legacy method with too many parameters has gained even more parameters after we started using DebtRatchet. Because we don't want our technical debt to grow, this method does give an error.
 
 ## Workflow
 

@@ -16,7 +16,7 @@ DebtRatchet uses some rules to determine what it considers debt. These rules are
 - [git-code-debt](https://github.com/Yelp/git-code-debt) A dashboard for monitoring code debt in a git repository.
 
 ## Demo
-Here follows a screenshot showing the plugin in action. Inside the interface are four scenario's all related to the rule 'Method has too many parameters'.
+Here follows an example showing the plugin in action. The example contains an interface with four methods that all display a difference case why the rule 'Method has too many parameters' does or does not hold. You can see that hovering the mouse over a method with an error from DebtRatchet causes a tooltip to popup.
 
 ![Screenshot](http://i.imgur.com/12ye5JG.png)
 

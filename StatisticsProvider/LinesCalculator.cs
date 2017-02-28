@@ -17,7 +17,7 @@ namespace StatisticsProvider
 		{
 			this.assembly = assembly;
 			var methodStatistics = new MethodStatistics(MethodLengthAnalyzer.GetMaxLineCount(assembly), MethodParameterCountAnalyzer.GetMaxParameterCount(assembly));
-			var typeStatistics = new TypeStatistics(1000, 8);
+			var typeStatistics = new TypeStatistics(TypeLengthAnalyzer.GetMaxLineCount(assembly), FieldCountAnalyzer.GetMaxFieldCount(assembly));
 			statistics = new Statistics(typeStatistics, methodStatistics);
 		}
 

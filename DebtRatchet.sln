@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRatchet.Library2", "DebtRatchet.Library2\DebtRatchet.Library2.csproj", "{DF7721AD-B41D-4FFA-9615-59BEE03773E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebtRatchet.Library", "DebtRatchet.Library\DebtRatchet.Library.csproj", "{DF7721AD-B41D-4FFA-9615-59BEE03773E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRachet2", "DebtRachet2\DebtRachet2\DebtRachet2.csproj", "{9159E3E1-2AF6-4722-ACB0-719B5989AB0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebtRachet", "DebtRachet\DebtRachet.csproj", "{9159E3E1-2AF6-4722-ACB0-719B5989AB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRachet2.Vsix", "DebtRachet2\DebtRachet2.Vsix\DebtRachet2.Vsix.csproj", "{50D42E01-F2A7-4AB3-9FAA-DAADA1895498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRachet2.Vsix", "DebtRachet.Vsix\DebtRachet2.Vsix.csproj", "{50D42E01-F2A7-4AB3-9FAA-DAADA1895498}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeUpdater2", "AttributeUpdater2\AttributeUpdater2.csproj", "{BA2E7091-8EEB-45F6-9C64-11F96525307C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeUpdater", "AttributeUpdater\AttributeUpdater.csproj", "{BA2E7091-8EEB-45F6-9C64-11F96525307C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticProvider2", "StatisticProvider2\StatisticProvider2.csproj", "{BB38C4CF-F46A-4932-A746-8434A278FE8A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatisticProvider", "StatisticProvider\StatisticProvider.csproj", "{BB38C4CF-F46A-4932-A746-8434A278FE8A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticsProvider.Test2", "StatisticsProvider.Test2\StatisticsProvider.Test2.csproj", "{25967261-7D43-4A37-B3C3-16719F439B8F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StatisticsProvider.Test", "StatisticsProvider.Test\StatisticsProvider.Test.csproj", "{25967261-7D43-4A37-B3C3-16719F439B8F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeUpdate.Test2", "AttributeUpdate.Test2\AttributeUpdate.Test2.csproj", "{D082DF05-B930-42F7-B31E-840D51C17C64}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AttributeUpdate.Test", "AttributeUpdate.Test\AttributeUpdate.Test.csproj", "{D082DF05-B930-42F7-B31E-840D51C17C64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRatchet2.Test", "DebtRatchet2.Test\DebtRatchet2.Test.csproj", "{26DE6C79-07E2-4F91-A8FB-F897A1214B86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRatchet.Test", "DebtRatchet.Test\DebtRatchet.Test.csproj", "{26DE6C79-07E2-4F91-A8FB-F897A1214B86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

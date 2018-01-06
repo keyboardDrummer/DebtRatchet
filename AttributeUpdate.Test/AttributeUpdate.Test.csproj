@@ -205,21 +205,21 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AttributeUpdater2\AttributeUpdater2.csproj">
+    <ProjectReference Include="..\AttributeUpdater\AttributeUpdater.csproj">
       <Project>{ba2e7091-8eeb-45f6-9c64-11f96525307c}</Project>
-      <Name>AttributeUpdater2</Name>
+      <Name>AttributeUpdater</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DebtRachet2\DebtRachet2\DebtRachet2.csproj">
+    <ProjectReference Include="..\DebtRachet\DebtRachet.csproj">
       <Project>{9159e3e1-2af6-4722-acb0-719b5989ab0b}</Project>
-      <Name>DebtRachet2</Name>
+      <Name>DebtRachet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DebtRatchet.Library2\DebtRatchet.Library2.csproj">
+    <ProjectReference Include="..\DebtRatchet.Library\DebtRatchet.Library.csproj">
       <Project>{df7721ad-b41d-4ffa-9615-59bee03773e4}</Project>
-      <Name>DebtRatchet.Library2</Name>
+      <Name>DebtRatchet.Library</Name>
     </ProjectReference>
-    <ProjectReference Include="..\DebtRatchet2.Test\DebtRatchet2.Test.csproj">
+    <ProjectReference Include="..\DebtRatchet.Test\DebtRatchet.Test.csproj">
       <Project>{26de6c79-07e2-4f91-a8fb-f897a1214b86}</Project>
-      <Name>DebtRatchet2.Test</Name>
+      <Name>DebtRatchet.Test</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

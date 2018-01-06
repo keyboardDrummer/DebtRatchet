@@ -173,9 +173,9 @@
     <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.1.1.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DebtRachet2\DebtRachet2\DebtRachet2.csproj">
+    <ProjectReference Include="..\DebtRachet\DebtRachet.csproj">
       <Project>{9159e3e1-2af6-4722-acb0-719b5989ab0b}</Project>
-      <Name>DebtRachet2</Name>
+      <Name>DebtRachet</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

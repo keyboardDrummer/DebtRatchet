@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebtRatchet.Library", "Debt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebtRachet", "DebtRachet\DebtRachet.csproj", "{9159E3E1-2AF6-4722-ACB0-719B5989AB0B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRachet2.Vsix", "DebtRachet.Vsix\DebtRachet2.Vsix.csproj", "{50D42E01-F2A7-4AB3-9FAA-DAADA1895498}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DebtRachet.Vsix", "DebtRachet.Vsix\DebtRachet.Vsix.csproj", "{50D42E01-F2A7-4AB3-9FAA-DAADA1895498}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeUpdater", "AttributeUpdater\AttributeUpdater.csproj", "{BA2E7091-8EEB-45F6-9C64-11F96525307C}"
 EndProject

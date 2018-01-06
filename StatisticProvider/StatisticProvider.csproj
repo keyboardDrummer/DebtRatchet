@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DebtRachet2\DebtRachet2\DebtRachet2.csproj" />
+    <ProjectReference Include="..\DebtRachet\DebtRachet.csproj" />
   </ItemGroup>
 
 </Project>

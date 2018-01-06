@@ -7,7 +7,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-    <PackageId>DebtRachet2</PackageId>
+    <PackageId>DebtRachet</PackageId>
     <PackageVersion>1.0.0.0</PackageVersion>
     <Authors>Steen</Authors>
     <PackageLicenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</PackageLicenseUrl>
@@ -15,10 +15,10 @@
     <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
     <RepositoryUrl>http://REPOSITORY_URL_HERE_OR_DELETE_THIS_LINE</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>DebtRachet2</Description>
+    <Description>DebtRachet</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
-    <PackageTags>DebtRachet2, analyzers</PackageTags>
+    <PackageTags>DebtRachet, analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <RootNamespace>DebtRachet</RootNamespace>
   </PropertyGroup>
@@ -34,7 +34,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\DebtRatchet.Library2\DebtRatchet.Library2.csproj" />
+    <ProjectReference Include="..\DebtRatchet.Library\DebtRatchet.Library.csproj" />
   </ItemGroup>
 
   <ItemGroup>

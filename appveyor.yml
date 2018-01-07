@@ -1,5 +1,7 @@
 before_build:
-  - dotnet restore
+  - nuget restore
+
+image: Visual Studio 2017
 
 build:
   project: DebtRatchet.sln

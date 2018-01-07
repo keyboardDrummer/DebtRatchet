@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>DebtRatchet</id>
-    <version>1.0.1</version>
+    <version>1.0.4</version>
     <title>DebtRatchet</title>
     <authors>keyboardDrummer</authors>
     <owners>keyboardDrummer</owners>
@@ -15,10 +15,12 @@
   </metadata>
   <!-- The convention for analyzers is to put language agnostic dlls in analyzers\dotnet and language specific analyzers in either analyzers\dotnet\cs or analyzers\dotnet\vb -->
   <files>
-    <file src="DebtRatchet.Library\bin\Release\DebtRatchet.Library.dll" target="lib\portable-net45+win8"/>
-    <file src="DebtRatchet\bin\Release\*.dll" target="analyzers\dotnet\cs\" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
-    <file src="AttributeUpdater\bin\Release\AttributeUpdater.exe" target="tools\AttributeUpdater.exe"/>
-    <file src="StatisticsProvider\bin\Release\StatisticsProvider.exe" target="tools\StatisticsProvider.exe" /> 
-    <file src="DebtRatchet\tools\*.ps1" target="tools\" />
+    <file src="DebtRatchet.Library\bin\Release\netstandard1.3\DebtRatchet.Library.dll" target="lib\netstandard1.3"/>
+    <file src="DebtRatchet\bin\Release\netstandard1.3\*.dll" target="analyzers\dotnet\cs\" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
+    <file src="AttributeUpdater\bin\Release\net471\AttributeUpdater.exe" target="AttributeUpdater\AttributeUpdater.exe"/>
+    <file src="AttributeUpdater\bin\Release\net471\*.dll" target="AttributeUpdater\"/>
+    <file src="StatisticsProvider\bin\Release\net471\StatisticsProvider.exe" target="StatisticsProvider\StatisticsProvider.exe" /> 
+    <file src="StatisticsProvider\bin\Release\net471\*.dll" target="StatisticsProvider\" /> 
+    <file src="DebtRatchet\Tools\*.ps1" target="tools\" />
   </files>
 </package>

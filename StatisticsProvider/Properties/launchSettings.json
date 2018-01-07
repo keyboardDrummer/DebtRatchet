@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "StatisticsProvider": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Dropbox\\Projects\\Code\\DebtAnalyzer\\ExampleLibrary\\ExampleLibrary.sln"
+    }
+  }
+}

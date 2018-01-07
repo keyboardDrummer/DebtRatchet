@@ -5,8 +5,7 @@ using CodeFixVerifier = DebtRatchet.Test.Verifiers.CodeFixVerifier;
 using DiagnosticVerifier = DebtRatchet.Test.Verifiers.DiagnosticVerifier;
 
 namespace AttributeUpdater.Test
-{
-	
+{	
 	public class MissingAttributeAdderTest
 	{
 		public MissingAttributeAdderTest()

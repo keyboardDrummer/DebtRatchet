@@ -151,7 +151,7 @@ namespace DebtRatchet.Test.Verifiers
 			workspace.Options = workspace.Options.
 				WithChangedOption(FormattingOptions.NewLine, LanguageNames.CSharp, "\n").
 				WithChangedOption(FormattingOptions.UseTabs, LanguageNames.CSharp, false);
-	        var solution = workspace
+            var solution = workspace
                 .CurrentSolution
                 .AddProject(projectId, TestProjectName, TestProjectName, language)
                 .AddMetadataReference(projectId, CorlibReference)

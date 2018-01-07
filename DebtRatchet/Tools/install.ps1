@@ -1,30 +1,22 @@
-﻿param($installPath, $toolsPath, $package, $project)
+param($installPath, $toolsPath, $package, $project)
 
-$libsPaths = Join-Path (Join-Path (Split-Path -Path $toolsPath -Parent) "lib" ) * -Resolve
-foreach($libsPath in $libsPaths)
+if($project.Object.SupportsPackageDependencyResolution)
 {
-    # Install the language agnostic analyzers.
-    if (Test-Path $libsPath)
+    if($project.Object.SupportsPackageDependencyResolution())
     {
-        foreach ($libFilePath in Get-ChildItem $libsPath -Filter *.dll)
-        {
-            if($project.Object.References)
-            {
-                $project.Object.References.Add($libFilePath.FullName)
-            }
-        }
+        # Do not install analyzers via install.ps1, instead let the project system handle it.
+        return
     }
 }
 
-$analyzersPaths = Join-Path (Join-Path (Split-Path -Path $toolsPath -Parent) "analyzers" ) * -Resolve
-
+$analyzersPaths = Join-Path (Join-Path (Split-Path -Path $toolsPath -Parent) "analyzers") * -Resolve
 
 foreach($analyzersPath in $analyzersPaths)
 {
-    # Install the language agnostic analyzers.
     if (Test-Path $analyzersPath)
     {
-        foreach ($analyzerFilePath in Get-ChildItem $analyzersPath -Filter *.dll)
+        # Install the language agnostic analyzers.
+        foreach ($analyzerFilePath in Get-ChildItem -Path "$analyzersPath\*.dll" -Exclude *.resources.dll)
         {
             if($project.Object.AnalyzerReferences)
             {
@@ -55,7 +47,7 @@ foreach($analyzersPath in $analyzersPaths)
     $languageAnalyzersPath = join-path $analyzersPath $languageFolder
     if (Test-Path $languageAnalyzersPath)
     {
-        foreach ($analyzerFilePath in Get-ChildItem $languageAnalyzersPath -Filter *.dll)
+        foreach ($analyzerFilePath in Get-ChildItem -Path "$languageAnalyzersPath\*.dll" -Exclude *.resources.dll)
         {
             if($project.Object.AnalyzerReferences)
             {

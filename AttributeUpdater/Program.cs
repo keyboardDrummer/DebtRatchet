@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.CodeAnalysis.MSBuild;
 
 namespace AttributeUpdater
@@ -20,11 +21,12 @@ namespace AttributeUpdater
 			{
 				var solutionPath = args[0];
 				var addAnnotations = args.Contains("-a");
-				UpdateAnnotations(solutionPath, addAnnotations, true);
-			}
+                UpdateAnnotations(solutionPath, addAnnotations, true).GetAwaiter().GetResult();
+                Console.WriteLine("Updated annotations.");
+            }
 		}
 
-		static async void UpdateAnnotations(string solutionPath, bool addAnnotations, bool updateAttributes)
+		static async Task UpdateAnnotations(string solutionPath, bool addAnnotations, bool updateAttributes)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{

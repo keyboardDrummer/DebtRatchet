@@ -14,7 +14,8 @@ namespace StatisticsProvider
 			{
 				var compilation = await project.GetCompilationAsync();
 				var calculator = emptyStatistics == null ? new LinesCalculator(compilation.Assembly) : new LinesCalculator(emptyStatistics);
-				await Task.WhenAll(project.Documents.Select(async document =>
+                var documents = project.Documents;
+                await Task.WhenAll(documents.Select(async document =>
 				{
 					var root = await document.GetSyntaxRootAsync();
 					calculator.Visit(root);

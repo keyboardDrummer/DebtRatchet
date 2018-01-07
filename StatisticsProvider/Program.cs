@@ -23,7 +23,7 @@ namespace StatisticsProvider
 			else
 			{
 				var onlyNumbers = args.Contains("-n");
-				ProvideStatistics(args[0], onlyNumbers, GetEmptyStatistics(args));
+                ProvideStatistics(args[0], onlyNumbers, GetEmptyStatistics(args)).GetAwaiter().GetResult();
 			}
 		}
 
@@ -37,7 +37,7 @@ namespace StatisticsProvider
 			return new Statistics(typeStatistics, methodStatistics);
 		}
 
-		static async void ProvideStatistics(string solutionPath, bool onlyNumbers, Statistics statistics)
+		static async Task ProvideStatistics(string solutionPath, bool onlyNumbers, Statistics statistics)
 		{
 			try
 			{
@@ -53,14 +53,19 @@ namespace StatisticsProvider
 			catch (FileNotFoundException e)
 			{
 				Console.Write(e.Message);
-			}
-		}
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
+            Console.WriteLine("Done");
+        }
 
 		static async Task<Solution> GetSolution(string path)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{
-					return await workspace.OpenSolutionAsync(path);
+				return await workspace.OpenSolutionAsync(path);
 			}
 		}
 	}

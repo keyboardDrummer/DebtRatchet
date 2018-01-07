@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatisticsProvider", "Stati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StatisticsProvider.Test", "StatisticsProvider.Test\StatisticsProvider.Test.csproj", "{25967261-7D43-4A37-B3C3-16719F439B8F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeUpdate.Test", "AttributeUpdate.Test\AttributeUpdate.Test.csproj", "{D082DF05-B930-42F7-B31E-840D51C17C64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AttributeUpdater.Test", "AttributeUpdater.Test\AttributeUpdater.Test.csproj", "{D082DF05-B930-42F7-B31E-840D51C17C64}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DebtRatchet.Test", "DebtRatchet.Test\DebtRatchet.Test.csproj", "{26DE6C79-07E2-4F91-A8FB-F897A1214B86}"
 EndProject

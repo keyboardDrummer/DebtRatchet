@@ -1,6 +1,9 @@
 before_build:
   - nuget restore
 
+build:
+  project: DebtRatchet.sln
+
 test:
   assemblies:
     - '**\AttributeUpdater.Test\bin\Debug\AttributeUpdater.Test.dll'

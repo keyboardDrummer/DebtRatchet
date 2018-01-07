@@ -15,9 +15,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DebtRachet\DebtRachet.csproj" />
     <ProjectReference Include="..\AttributeUpdater\AttributeUpdater.csproj" />
     <ProjectReference Include="..\DebtRatchet.Test\DebtRatchet.Test.csproj" />
+    <ProjectReference Include="..\DebtRatchet\DebtRatchet.csproj" />
   </ItemGroup>
 
 </Project>

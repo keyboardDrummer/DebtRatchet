@@ -53,14 +53,18 @@ namespace StatisticsProvider
 			catch (FileNotFoundException e)
 			{
 				Console.Write(e.Message);
-			}
-		}
+            }
+            catch (Exception e)
+            {
+                Console.Write(e.Message);
+            }
+        }
 
 		static async Task<Solution> GetSolution(string path)
 		{
 			using (var workspace = MSBuildWorkspace.Create())
 			{
-					return await workspace.OpenSolutionAsync(path);
+				return await workspace.OpenSolutionAsync(path);
 			}
 		}
 	}

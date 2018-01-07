@@ -17,8 +17,10 @@
   <files>
     <file src="DebtRatchet.Library\bin\Release\netstandard1.3\DebtRatchet.Library.dll" target="lib\netstandard1.3"/>
     <file src="DebtRatchet\bin\Release\netstandard1.3\*.dll" target="analyzers\dotnet\cs\" exclude="**\Microsoft.CodeAnalysis.*;**\System.Collections.Immutable.*;**\System.Reflection.Metadata.*;**\System.Composition.*" />
-    <file src="AttributeUpdater\bin\Release\net471\AttributeUpdater.exe" target="tools\AttributeUpdater.exe"/>
-    <file src="StatisticsProvider\bin\Release\net471\StatisticsProvider.exe" target="tools\StatisticsProvider.exe" /> 
+    <file src="AttributeUpdater\bin\Release\net471\AttributeUpdater.exe" target="AttributeUpdater\AttributeUpdater.exe"/>
+    <file src="AttributeUpdater\bin\Release\net471\*.dll" target="AttributeUpdater\"/>
+    <file src="StatisticsProvider\bin\Release\net471\StatisticsProvider.exe" target="StatisticsProvider\StatisticsProvider.exe" /> 
+    <file src="StatisticsProvider\bin\Release\net471\*.dll" target="StatisticsProvider\" /> 
     <file src="DebtRatchet\Tools\*.ps1" target="tools\" />
   </files>
 </package>

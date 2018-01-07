@@ -17,6 +17,15 @@ namespace ExampleLibrary
             int c;
             int d;
         }
+
+        [MethodHasDebt(LineCount = 4, ParameterCount = 0)]
+        public void TooLongMethodWithAnnotation()
+        {
+            int a;
+            int b;
+            int c;
+            int d;
+        }
     }
 #pragma warning restore CS0168 // Variable is declared but never used
 }

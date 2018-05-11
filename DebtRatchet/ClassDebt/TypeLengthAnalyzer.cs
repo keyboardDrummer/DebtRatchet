@@ -13,6 +13,8 @@ namespace DebtRatchet.ClassDebt
 
 		public static int DefaultMaximumTypeLength = 1000;
 
+		public static bool DefaultIgnoreDesignerTypes = true;
+
 		public void AnalyzeSyntax(SyntaxNodeAnalysisContext context)
 		{
 			var type = (TypeDeclarationSyntax)context.Node;
@@ -58,6 +60,12 @@ namespace DebtRatchet.ClassDebt
 		{
 			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(MaxTypeLength).Name && data.ConstructorArguments.Length == 1).
 				Select(data => data.ConstructorArguments[0].Value as int?).FirstOrDefault() ?? DefaultMaximumTypeLength;
+		}
+
+		public static bool GetIgnoreDesignerTypes(IAssemblySymbol assembly)
+		{
+			return assembly.GetAttributes().Where(data => data.AttributeClass.Name == typeof(IgnoreDesignerTypes).Name && data.ConstructorArguments.Length == 1).
+				       Select(data => data.ConstructorArguments[0].Value as bool?).FirstOrDefault() ?? DefaultIgnoreDesignerTypes;
 		}
 	}
 }

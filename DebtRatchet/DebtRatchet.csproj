@@ -10,12 +10,13 @@
     <PackageId>DebtRachet</PackageId>
     <PackageVersion>1.0.0.0</PackageVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>DebtRachet</Description>
+    <Description>DebtRatchet</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
-    <PackageTags>DebtRachet, analyzers</PackageTags>
+    <PackageTags>DebtRatchet, analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <RootNamespace>DebtRachet</RootNamespace>
+    <Version>1.0.5</Version>
   </PropertyGroup>
 
   <ItemGroup>

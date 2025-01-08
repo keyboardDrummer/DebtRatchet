@@ -15,6 +15,7 @@ namespace DebtRatchet.MethodDebt
 
 		public override void Initialize(AnalysisContext context)
 		{
+			context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				startContext.RegisterSyntaxNodeAction(nodeContext => lengthAnalyzer.AnalyzeSyntax(nodeContext), SyntaxKind.MethodDeclaration, SyntaxKind.ConstructorDeclaration);

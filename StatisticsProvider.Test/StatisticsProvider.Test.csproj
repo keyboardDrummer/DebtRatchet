@@ -2,8 +2,8 @@
 
   <PropertyGroup>
     <OutputType>Library</OutputType>
-    <TargetFramework>net471</TargetFramework>
-    <Version>1.0.5</Version>
+    <TargetFramework>net481</TargetFramework>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

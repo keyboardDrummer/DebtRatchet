@@ -7,16 +7,17 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageId>DebtRachet</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageId>DebtRatchet</PackageId>
+    <PackageVersion>1.1.0</PackageVersion>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>DebtRatchet</Description>
     <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
     <PackageTags>DebtRatchet, analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
-    <RootNamespace>DebtRachet</RootNamespace>
-    <Version>1.0.5</Version>
+    <RootNamespace>DebtRatchet</RootNamespace>
+    <AssemblyName>DebtRatchet</AssemblyName>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

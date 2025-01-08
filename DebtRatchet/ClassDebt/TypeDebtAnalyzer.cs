@@ -15,6 +15,7 @@ namespace DebtRatchet.ClassDebt
 
 		public override void Initialize(AnalysisContext context)
 		{
+			context.ConfigureGeneratedCodeAnalysis(GeneratedCodeAnalysisFlags.None);
 			context.RegisterCompilationStartAction(startContext =>
 			{
 				var syntaxes = new List<SyntaxKind> {SyntaxKind.ClassDeclaration, SyntaxKind.StructDeclaration, SyntaxKind.InterfaceDeclaration}.ToImmutableArray();

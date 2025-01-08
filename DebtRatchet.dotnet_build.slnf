@@ -1,0 +1,14 @@
+﻿{
+  "solution": {
+    "path": "DebtRatchet.sln",
+    "projects": [
+      "AttributeUpdater.Test\\AttributeUpdater.Test.csproj",
+      "AttributeUpdater\\AttributeUpdater.csproj",
+      "DebtRatchet.Library\\DebtRatchet.Library.csproj",
+      "DebtRatchet.Test\\DebtRatchet.Test.csproj",
+      "DebtRatchet\\DebtRatchet.csproj",
+      "StatisticsProvider.Test\\StatisticsProvider.Test.csproj",
+      "StatisticsProvider\\StatisticsProvider.csproj"
+    ]
+  }
+}

@@ -16,6 +16,7 @@
     <PackageTags>DebtRatchet, analyzers</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <RootNamespace>DebtRachet</RootNamespace>
+    <AssemblyName>DebtRachet</AssemblyName>
     <Version>1.0.5</Version>
   </PropertyGroup>
 

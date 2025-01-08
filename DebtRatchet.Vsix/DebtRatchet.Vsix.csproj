@@ -35,8 +35,8 @@
     <ProjectGuid>{50D42E01-F2A7-4AB3-9FAA-DAADA1895498}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DebtRachet.Vsix</RootNamespace>
-    <AssemblyName>DebtRachet.Vsix</AssemblyName>
+    <RootNamespace>DebtRatchet.Vsix</RootNamespace>
+    <AssemblyName>DebtRatchet.Vsix</AssemblyName>
     <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>

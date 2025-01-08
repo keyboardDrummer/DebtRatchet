@@ -23,7 +23,7 @@ namespace DebtRatchet
 	}
 
 	/// <summary>
-	/// Determines what happens when DebtRachet finds code that is too debtful.
+	/// Determines what happens when DebtRatchet finds code that is too debtful.
 	/// </summary>
 	[AttributeUsage(AttributeTargets.Assembly)]
 	public class DebtSeverity : Attribute
